@@ -68,7 +68,7 @@ def caption(k, fallback):
 SHOTS = [(k, caption(k, cap), c, st) for k, cap, c, st in SHOTS]
 shots = '\n'.join('      <a class="v2-shot %s" href="#ukazka" data-vzhled="%s" style="%s" aria-label="Ukázka vzhledu %s"><img src="img/hero/%s.webp" alt="" width="520" height="650" decoding="async"><span>%s</span></a>' % (c, k, st, cap, k, cap) for k, cap, c, st in SHOTS)
 spark = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>'
-links = ''.join('<a href="#%s">%s</a>' % x for x in [('ukazka', 'Vzhledy'), ('administrace', 'Administrace'), ('postup', 'Jak to probíhá'), ('srovnani', 'Proč my'), ('aplikace', 'Aplikace na míru')])
+links = ''.join('<a href="#%s">%s</a>' % x for x in [('prinos', 'Výhody'), ('ukazka', 'Vzhledy'), ('administrace', 'Administrace'), ('postup', 'Jak to probíhá'), ('srovnani', 'Proč my'), ('aplikace', 'Aplikace na míru')])
 hero = ('<header class="v2-hero" data-review-id="header">\n'
         '  <div class="v2-stage">\n    <div class="v2-shots">\n' + shots + '\n    </div>\n'
         '    <span class="v2-spark" style="left:21%;top:70px" aria-hidden="true">' + spark + '</span>\n'
@@ -76,7 +76,7 @@ hero = ('<header class="v2-hero" data-review-id="header">\n'
         '    <span class="v2-spark" style="left:23%;top:660px;width:16px;height:16px;animation-delay:-2.2s" aria-hidden="true">' + spark + '</span>\n'
         '    <div class="v2-copy">\n      <h1>' + h1 + '</h1>\n      <p class="v2-sub">' + sub + '</p>\n'
         '      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout vzhledy</a><a class="v2-btn ghost" href="#kontakt" data-review-id="hero-kontakt">Chci kalendář na míru →</a></div>\n'
-        '      <p class="v2-proof"><span>Vlastní design</span><span>+10&nbsp;% obratu v prosinci</span><span>Bez licencí</span></p>\n'
+        '      <p class="v2-proof"><span>Vlastní design</span><span>Nárůst obratu v prosinci</span><span>Bez licencí</span></p>\n'
         '    </div>\n  </div>\n</header>')
 s = s[:a] + hero + s[b:]
 navbar = ('<div class="v2-navbar" id="v2-navbar" data-review-id="sticky-nav"><div class="v2-nav"><a class="v2-logo" href="#" aria-label="PragueBest, na začátek">' + logo + '</a>\n'
@@ -96,7 +96,7 @@ box = ''.join('<li>' + x + '<span><b>' + r[0] + '</b>' + r[1] + '</span></li>' f
 us = ''.join('<li>' + ok + '<span><b>' + r[0] + '</b>' + r[2] + '</span></li>' for r in rows)
 cmp = ('<div class="v2-cmp" data-review-id="tabulka-srovnani">\n'
        '    <div class="v2-plan box"><h3>Krabicová SaaS služba</h3><ul>' + box + '</ul></div>\n'
-       '    <div class="v2-plan us"><span class="v2-plan-tag">Doporučujeme</span><h3>Kalendář od PragueBest</h3><ul>' + us + '</ul><a class="v2-btn primary" href="#kontakt">Chci kalendář na míru</a></div>\n'
+       '    <div class="v2-plan us"><span class="v2-plan-tag">Doporučujeme</span><h3>Kalendář od PragueBest</h3><ul>' + us + '</ul><a class="v2-btn primary" href="#kontakt">Chci kalendář</a></div>\n'
        '  </div>')
 s = s[:t0] + cmp + s[t1:]
 
@@ -122,14 +122,10 @@ s = one(s, '<div class="callout" data-review-id="callout-vcas">', '<div class="c
 s = one(s, '<div class="callout ok" data-review-id="callout-nejen-advent">', '<div class="callout ok v2-has-ico" data-review-id="callout-nejen-advent">' + ico('rok'))
 s = one(s, '<div class="offer-card" data-review-id="nabidka-vyvoj">', '<div class="offer-card v2-has-ico" data-review-id="nabidka-vyvoj">' + ico('vyvoj'))
 s = one(s, '<div class="offer-card" data-review-id="nabidka-audit">', '<div class="offer-card v2-has-ico" data-review-id="nabidka-audit">' + ico('audit'))
-# --- 'we build contests and campaign pages too' belongs to custom apps, not the comparison ---
+# --- 'we build contests and campaign pages too' is dropped ---
 m = re.search(r'\n\s*<p>Stejně postavíme i[\s\S]*?</p>', s)
 assert m and s.index('<section id="srovnani"') < m.start() < s.index('<section id="okenko"')
-veta = m.group(0).strip().replace('<p>', '<p class="v2-tez">', 1)
 s = s[:m.start()] + s[m.end():]
-k = s.index('<section id="aplikace"')
-e = s.index('</section>', k)
-s = s[:e] + '  ' + veta + '\n' + s[e:]
 # --- the hint above the look picker is redundant in v2 ---
 s, nh = re.subn(r'\n\s*<p>Přepněte vzhled a(?:&nbsp;|\s)porovnejte je\. Dnešní okénko svítí\.</p>', '', s)
 assert nh == 1
@@ -140,10 +136,10 @@ assert n == 8, n
 s = one(s, '  <div class="keybox" data-review-id="cta">\n    <span class="label">Další krok</span>', '  <h2>Další <span class="accent">krok</span></h2>\n  <div class="keybox" data-review-id="cta">')
 k = s.index('<section id="kontakt"')
 e = s.index('</section>', k)
-s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn primary" href="mailto:produktaci@praguebest.cz">Napsat PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout vzhledy</a></div>\n' + s[e:]
+s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout vzhledy</a></div>\n' + s[e:]
 f0 = s.index('<footer class="doc-footer" data-review-id="footer">')
 f1 = s.index('</footer>', f0)
-s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 – S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořilo studio <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
+s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 – S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořil <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
 
 # --- layered snow canvas ---
 snow = r'''<canvas class="v2-snow" id="v2-snow" aria-hidden="true"></canvas>

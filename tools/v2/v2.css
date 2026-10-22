@@ -125,13 +125,14 @@
   #kontakt h2 .accent { color: var(--accent); }
   #prinos .lead, #postup .kb-lead, #kontakt .keybox p { color: rgba(255,246,240,.86); }
 
-  /* Co kalendář přinese: the +10 % claim as a giant statement */
+  /* Co kalendář přinese: the growth claim as a giant statement */
   #prinos .keybox.benefit { background: transparent; border: 0; box-shadow: none; padding: 0; color: var(--v2-on-red); }
   #prinos .keybox.benefit::before, #prinos .keybox.benefit::after { display: none; }
   #prinos .big-num { gap: 0 56px; margin-bottom: 40px; }
   #prinos .big-num .bn { flex-direction: column; gap: 22px; padding: 8px 0 8px; }
   #prinos .big-num .bn + .bn { border-left-color: rgba(255,246,240,.3); padding-left: 56px; }
   #prinos .big-num .bn b { font-size: clamp(64px, 8.5vw, 136px); font-weight: 600; letter-spacing: -0.05em; line-height: 1.04; padding-bottom: .06em; color: var(--v2-on-red); }
+  #prinos .big-num .bn b { font-size: clamp(44px, 5.2vw, 88px); }
   #prinos .big-num .bn span { font-size: 18px; color: rgba(255,246,240,.86); max-width: 34ch; }
   #prinos .keybox.benefit > h3 { color: var(--v2-on-red); opacity: .8; }
   #prinos .perks { gap: 16px; }
@@ -236,6 +237,8 @@
   #kontakt .keybox[data-review-id="cta"] p { color: rgba(246,240,226,.82); }
   #kontakt .keybox[data-review-id="cta"] strong { color: var(--paper-100); }
   #kontakt .keybox[data-review-id="cta"] a { color: var(--accent-bright); border-bottom-color: rgba(247,81,66,.5); }
+  #kontakt .keybox[data-review-id="cta"] p.kontakt-pm { margin-top: 22px; font-size: clamp(22px, 2vw, 30px); font-weight: 700; letter-spacing: -0.02em; color: var(--accent-bright); }
+  #kontakt .keybox[data-review-id="cta"] p.kontakt-zaloha { margin-top: 12px; font-size: 16px; color: rgba(246,240,226,.7); }
   #kontakt .v2-ctas { margin-top: 36px; }
   #kontakt .v2-btn.primary { background: var(--accent); color: #fff; box-shadow: 0 14px 30px -14px rgba(227,6,19,.7); }
   #kontakt .v2-btn.ghost { color: var(--paper-100); box-shadow: inset 0 0 0 1.5px rgba(246,240,226,.6); }
