@@ -53,7 +53,7 @@ old = s[a:b]
 h1 = re.search(r'<h1>([\s\S]*?)</h1>', old).group(1)
 sub = re.search(r'<p class="subtitle">([\s\S]*?)</p>', old).group(1)
 # v2 headline names the product: 'i své' gives way to 'adventním kalendářem'
-h1, nh = re.subn(r'Letos obdarujte i[\s ]+své zákazníky\.', 'Letos obdarujte zákazníky <span class="v2-mark">adventním kalendářem</span>.', h1)
+h1, nh = re.subn(r'Letos obdarujte i[\s ]+své zákazníky\.', 'Obdarujte zákazníky <span class="v2-mark">adventním kalendářem</span>.', h1)
 assert nh == 1, h1[-200:]
 SHOTS = [('fotoskoda', 'Dům s okny', 's1', '--x:-8%;--y:30px;--w:250px;--r:-7deg;--d:7s'),
          ('chata', 'Zasněžená chalupa', 's2', '--x:-3%;--y:420px;--w:214px;--r:5deg;--d:8.5s;--dl:-3s'),
@@ -68,14 +68,14 @@ def caption(k, fallback):
 SHOTS = [(k, caption(k, cap), c, st) for k, cap, c, st in SHOTS]
 shots = '\n'.join('      <a class="v2-shot %s" href="#ukazka" data-vzhled="%s" style="%s" aria-label="Ukázka vzhledu %s"><img src="img/hero/%s.webp" alt="" width="520" height="650" decoding="async"><span>%s</span></a>' % (c, k, st, cap, k, cap) for k, cap, c, st in SHOTS)
 spark = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>'
-links = ''.join('<a href="#%s">%s</a>' % x for x in [('prinos', 'Výhody'), ('ukazka', 'Vzhledy'), ('administrace', 'Administrace'), ('postup', 'Jak to probíhá'), ('srovnani', 'Proč my'), ('aplikace', 'Aplikace na míru')])
+links = ''.join('<a href="#%s">%s</a>' % x for x in [('prinos', 'Výhody'), ('ukazka', 'Inspirace'), ('administrace', 'Administrace'), ('postup', 'Jak to probíhá'), ('srovnani', 'Proč my'), ('aplikace', 'Aplikace na míru')])
 hero = ('<header class="v2-hero" data-review-id="header">\n'
         '  <div class="v2-stage">\n    <div class="v2-shots">\n' + shots + '\n    </div>\n'
         '    <span class="v2-spark" style="left:21%;top:70px" aria-hidden="true">' + spark + '</span>\n'
         '    <span class="v2-spark" style="right:22%;top:400px;animation-delay:-1.4s" aria-hidden="true">' + spark + '</span>\n'
         '    <span class="v2-spark" style="left:23%;top:660px;width:16px;height:16px;animation-delay:-2.2s" aria-hidden="true">' + spark + '</span>\n'
         '    <div class="v2-copy">\n      <h1>' + h1 + '</h1>\n      <p class="v2-sub">' + sub + '</p>\n'
-        '      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout vzhledy</a><a class="v2-btn ghost" href="#kontakt" data-review-id="hero-kontakt">Chci kalendář na míru →</a></div>\n'
+        '      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout inspirace</a><a class="v2-btn ghost" href="#kontakt" data-review-id="hero-kontakt">Chci kalendář</a></div>\n'
         '      <p class="v2-proof"><span>Vlastní design</span><span>Nárůst obratu v prosinci</span><span>Bez licencí</span></p>\n'
         '    </div>\n  </div>\n</header>')
 s = s[:a] + hero + s[b:]
@@ -116,7 +116,7 @@ assert nc == 1
 # --- PragueBest line icons (black with a pink accent) instead of numbers and generic glyphs ---
 def ico(name):
     return '<img class="v2-ico" src="img/icons/' + name + '.svg" alt="" width="56" height="56" decoding="async">'
-for name, start in [('hra', '<div class="perk"><h3>Hravost'), ('design', '<div class="perk"><h3>Vlastní design'), ('mereni', '<div class="perk"><h3>Měření'), ('kod', '<div class="perk"><h3>Funkce')]:
+for name, start in [('darek', '<div class="perk"><h3>Vy volíte'), ('design', '<div class="perk"><h3>Vlastní design'), ('mereni', '<div class="perk"><h3>Měření'), ('kod', '<div class="perk"><h3>Funkce')]:
     s = one(s, start, start.replace('<div class="perk">', '<div class="perk v2-has-ico">' + ico(name)))
 s = one(s, '<div class="callout" data-review-id="callout-vcas">', '<div class="callout v2-has-ico" data-review-id="callout-vcas">' + ico('raketa'))
 s = one(s, '<div class="callout ok" data-review-id="callout-nejen-advent">', '<div class="callout ok v2-has-ico" data-review-id="callout-nejen-advent">' + ico('rok'))
@@ -136,7 +136,7 @@ assert n == 8, n
 s = one(s, '  <div class="keybox" data-review-id="cta">\n    <span class="label">Další krok</span>', '  <h2>Další <span class="accent">krok</span></h2>\n  <div class="keybox" data-review-id="cta">')
 k = s.index('<section id="kontakt"')
 e = s.index('</section>', k)
-s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout vzhledy</a></div>\n' + s[e:]
+s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout inspirace</a></div>\n' + s[e:]
 f0 = s.index('<footer class="doc-footer" data-review-id="footer">')
 f1 = s.index('</footer>', f0)
 s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 – S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořil <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
