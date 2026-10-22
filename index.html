@@ -181,6 +181,44 @@
   .demo-bar .grp.device .seg button { background: #f4f4f5; border-color: transparent; }
   .demo-bar .grp.device .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
 
+  /* výběr vzhledu: jeden panel s náhledy, přepínačem zobrazení a názvem vybraného */
+  .demo-bar { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 0; margin: 0 0 22px; padding: 14px 16px 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+  .vz { min-width: 0; }
+  .vz-strip { display: flex; align-items: flex-start; gap: 18px; min-width: 0; padding-bottom: 14px; }
+  .vz-set { flex: none; }
+  .vz-k { display: block; margin: 0 0 8px; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+  .vz-thumbs { display: flex; gap: 6px; }
+  .vz-sep { align-self: stretch; flex: none; width: 1px; background: var(--line); }
+  .vz-th { position: relative; flex: none; width: 56px; height: 70px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: #ececef; cursor: pointer; opacity: .6; box-shadow: 0 0 0 1px rgba(0,0,0,.08); transition: opacity .15s ease, box-shadow .15s ease; }
+  .vz-th img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .vz-th-w { position: relative; flex: none; }
+  .vz-tip { position: absolute; left: 50%; top: calc(100% + 10px); z-index: 30; width: max-content; max-width: 220px; padding: 7px 11px 8px; border-radius: 10px; background: #14141a; color: #fff; text-align: left; box-shadow: 0 16px 36px rgba(0,0,0,.28); pointer-events: none; opacity: 0; visibility: hidden; translate: -50% 6px; transition: opacity .16s ease, translate .16s ease, visibility 0s .16s; }
+  .vz-tip::before { content: ""; position: absolute; left: 50%; bottom: 100%; margin-left: -7px; border: 7px solid transparent; border-bottom-color: #14141a; }
+  .vz-tip b { display: block; font-size: 13px; font-weight: 800; line-height: 1.2; }
+  .vz-tip small { display: block; margin-top: 2px; font-size: 12px; color: rgba(255,255,255,.7); }
+  .vz-th-w:hover .vz-tip, .vz-th:focus-visible + .vz-tip { opacity: 1; visibility: visible; translate: -50% 0; transition-delay: .12s, .12s, 0s; }
+  .vz-thumbs .vz-th-w:first-child .vz-tip { left: 0; translate: 0 6px; } .vz-thumbs .vz-th-w:first-child:hover .vz-tip { translate: 0 0; } .vz-thumbs .vz-th-w:first-child .vz-tip::before { left: 30px; }
+  @media (hover: none) { .vz-tip { display: none; } }
+  .vz-th:hover { opacity: 1; }
+  .vz-th:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; opacity: 1; }
+  .vz-th[aria-pressed="true"] { opacity: 1; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent); }
+  /* internal marker for new proposals: remove before publishing */
+  .vz-new { position: absolute; right: 4px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px #fff; }
+  .demo-bar .grp.device { display: block; margin-left: auto; padding: 0; border: 0; }
+  .demo-bar .grp.device .seg { display: flex; gap: 2px; padding: 3px; border-radius: 100px; background: #f1f1f3; }
+  .demo-bar .grp.device .seg button { border: 0; background: transparent; padding: 6px 12px; }
+  .demo-bar .grp.device .seg button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.14); }
+  .vz-cap { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 9px 0 10px; border-top: 1px solid var(--line); }
+  .vz-cap strong { font-size: 16px; font-weight: 800; color: var(--ink); }
+  .vz-cap-m { font-size: 13.5px; color: var(--ink-3); }
+  .vz-cap-s { padding: 3px 9px; border-radius: 100px; background: #f1f1f3; color: var(--ink); font-size: 11px; font-weight: 700; }
+  .vz-cap-s[hidden] { display: none; }
+  .vz-admin { display: none; font-size: 13px; font-weight: 700; }
+  @media (max-width: 899px) { .vz-admin { display: inline; } }
+  @media (max-width: 860px) {
+    .vz-strip { overflow-x: auto; margin: 0 -16px; padding: 0 16px 12px; scrollbar-width: thin; }
+  }
+  @media (prefers-reduced-motion: reduce) { .vz-th { transition: none; } }
   .demo-bar input[type=range] { accent-color: var(--accent); width: 170px; }
   .demo-bar output { font-weight: 800; font-size: 15px; min-width: 28px; display: inline-block; }
   .demo-note { font-size: 13px; color: var(--ink-3); margin: 10px 0 0; }
@@ -193,10 +231,10 @@
   .demo .d-wrap { position: relative; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 28px; align-items: start; }
   #demo-stage { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 560px; margin: 0 auto; aspect-ratio: 4 / 5; }
   #demo-stage .scene { margin: 0; max-height: 100%; max-width: calc(100% * var(--sc-ar, 0.8) / 0.8); }
-  .demo .scene.snow, .demo .scene.toy, .demo .scene.cake, .demo .scene.egg { --sc-ar: 0.8; }
+  .demo .scene.snow, .demo .scene.toy, .demo .scene.cake, .demo .scene.egg, .demo .scene.raketa, .demo .scene.spani, .demo .scene.pas-scene, .demo .scene.chalupa, .demo .scene.vzk-scene, .demo .scene.obl-scene { --sc-ar: 0.8; }
   .demo .scene.wardrobe { --sc-ar: 0.8003; }
   .demo .scene.basket { --sc-ar: 1.3333; }
-  .demo .scene:not(.snow):not(.toy):not(.cake):not(.egg):not(.wardrobe):not(.basket) { --sc-ar: 0.8056; }
+  .demo .scene:not(.snow):not(.toy):not(.cake):not(.egg):not(.wardrobe):not(.basket):not(.raketa):not(.spani):not(.pas-scene):not(.chalupa):not(.vzk-scene):not(.obl-scene) { --sc-ar: 0.8056; }
   #demo-stage .grid { width: 100%; align-self: start; }
   .demo .scene.basket { width: 100%; }
   .demo .d-top { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--d-ink-2); min-height: 28px; }
@@ -252,6 +290,295 @@
   .demo .win.today .b { background: #ffd21f; color: #14204a; }
   @keyframes glow { 50% { box-shadow: 0 0 0 3px #ffd21f, 0 0 10px 2px rgba(255,210,31,.4); } }
   @media (prefers-reduced-motion: reduce) { .demo .door.today, .demo .win.today { animation: none; } }
+
+  /* interakce: otevření okénka, karta dárku */
+  .demo .scene.spani .win:focus-visible, .demo .scene.chalupa .win:focus-visible { outline: none; }
+  .demo .scene.spani .win:focus-visible .b, .demo .scene.chalupa .win:focus-visible .b { outline: 3px solid var(--d-today); outline-offset: 3px; }
+  .demo .d-bubble { position: absolute; z-index: 15; max-width: 240px; display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 12px; background: #14141a; color: #fff; font-family: 'Inter', 'Inter Fallback', Arial, sans-serif; font-size: 13.5px; font-weight: 650; line-height: 1.3; box-shadow: 0 10px 24px rgba(0,0,0,.3); translate: -50% -100%; pointer-events: none; opacity: 0; visibility: hidden; }
+  .demo .d-bubble.dole { translate: -50% 0; }
+  .demo .d-bubble::after { content: ""; position: absolute; left: calc(50% + var(--sipka, 0px)); top: 100%; margin-left: -7px; border: 7px solid transparent; border-top-color: #14141a; }
+  .demo .d-bubble.dole::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #14141a; }
+  .demo .d-bubble svg { flex: none; width: 16px; height: 16px; color: #ffd21f; }
+  .demo .d-bubble.missed { background: #4a4a52; }
+  .demo .d-bubble.missed::after { border-top-color: #4a4a52; }
+  .demo .d-bubble.missed.dole::after { border-top-color: transparent; border-bottom-color: #4a4a52; }
+  .demo .d-bubble.on { visibility: visible; animation: dBub 2.8s ease both; }
+  @keyframes dBub { 0% { opacity: 0; transform: translateY(6px) scale(.92); } 8% { opacity: 1; transform: none; } 85% { opacity: 1; } 100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .demo .d-bubble.on { animation: none; opacity: 1; } }
+  .demo .win, .demo .door, .demo .dil { cursor: pointer; }
+  .demo .win:focus-visible, .demo .door:focus-visible, .demo .dil:focus-visible, .demo .d-btn:focus-visible { outline: 3px solid var(--d-today); outline-offset: 3px; }
+  .demo .d-btn { cursor: pointer; }
+  .demo .door.just, .demo .scene:not(.basket):not(.wardrobe):not(.spani):not(.chalupa) .win.just { animation: dOdkryt .6s cubic-bezier(.3,1.3,.5,1) both; }
+  @keyframes dOdkryt { 0% { transform: perspective(500px) rotateY(0) scale(1); } 40% { transform: perspective(500px) rotateY(-75deg) scale(1.08); } 100% { transform: perspective(500px) rotateY(0) scale(1); } }
+  .demo .shake { animation: dShake .45s ease both; }
+  @keyframes dShake { 20% { translate: -4px 0; } 40% { translate: 4px 0; } 60% { translate: -3px 0; } 80% { translate: 2px 0; } }
+  .demo .d-reveal { position: absolute; inset: 0; z-index: 20; background: rgba(8,14,32,.42); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  .demo .d-reveal[hidden] { display: none; }
+  .demo .d-card { position: absolute; left: var(--cx, 50%); top: var(--cy, 50%); translate: -50% -50%; width: min(calc(100% - 32px), 360px); background: #fff; color: #14204a; border-radius: 20px; padding: 26px 24px 22px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,.35); font-family: 'Inter', 'Inter Fallback', Arial, sans-serif; animation: dcIn .55s cubic-bezier(.2,1.35,.4,1) both; }
+  .demo .d-card::before { content: ""; position: absolute; left: 50%; top: -9px; width: 64px; height: 18px; translate: -50% 0; border-radius: 0 0 10px 10px; background: var(--d-today); }
+  @keyframes dcIn { 0% { opacity: 0; transform: translateY(60px) scale(.86) rotate(-3deg); } 100% { opacity: 1; transform: none; } }
+  .demo .dc-x { position: absolute; right: 10px; top: 10px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #f1f3f8; color: #14204a; font-size: 20px; line-height: 1; cursor: pointer; }
+  .demo .dc-ico { width: 64px; height: 64px; margin: 4px auto 12px; border-radius: 18px; display: grid; place-items: center; background: var(--d-today); color: var(--d-today-ink); }
+  .demo .dc-ico svg { width: 32px; height: 32px; }
+  .demo .dc-k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: #5d6785; }
+  .demo .dc-t { font-family: var(--d-font); font-size: 24px; line-height: 1.15; font-weight: 800; margin: 6px 0 14px; color: #14204a; }
+  .demo .dc-code { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 2px dashed #c9d0e2; border-radius: 12px; padding: 8px 8px 8px 14px; margin-bottom: 14px; }
+  .demo .dc-code code { font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: .06em; color: #14204a; }
+  .demo .dc-copy { border: 0; border-radius: 8px; padding: 8px 12px; background: #14204a; color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .demo .dc-cta { display: block; width: 100%; border: 0; border-radius: 100px; padding: 13px 18px; background: var(--d-btn); color: var(--d-btn-ink); font: inherit; font-size: 15px; font-weight: 800; cursor: pointer; }
+  .demo .dc-note { font-size: 12.5px; color: #5d6785; margin: 12px 0 0; }
+  .demo .dc-again { border: 0; background: none; padding: 0; margin-top: 10px; font: inherit; font-size: 12.5px; color: #5d6785; text-decoration: underline; cursor: pointer; }
+  .demo .dc-fx { position: absolute; left: var(--cx, 50%); top: var(--cy, 50%); width: 9px; height: 5px; border-radius: 2px; pointer-events: none; animation: dcFx .95s cubic-bezier(.15,.7,.3,1) both; }
+  @keyframes dcFx { 0% { opacity: 1; transform: translate(-50%,-50%) scale(.3); } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--r)) scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .demo .d-card, .demo .dc-fx, .demo .shake, .demo .door.just, .demo .win.just { animation: none !important; } .demo .dc-fx { display: none; } }
+
+  /* téma: Odpočet ke startu (stavebnice, kreslené v kódu) */
+  .demo[data-theme="raketa"] { --d-bg: #d4edfc; --d-ink: #0b093b; --d-ink-2: #3d4a7a; --d-today: #ffcd00; --d-today-ink: #0b093b; --d-btn: #52c018; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #b9dcf3; }
+  .demo[data-theme="raketa"] .d-title { font-weight: 900; letter-spacing: -0.035em; }
+  .demo .scene.raketa { aspect-ratio: 4 / 5; max-width: 480px; display: flex; flex-direction: column; background: #f3faff; border: 1px solid #b9dcf3; box-shadow: 0 16px 40px rgba(11,31,68,.16); }
+  .demo .scene.raketa .rk { display: block; width: 100%; flex: 1 1 auto; min-height: 0; }
+  .demo .rk .rk-l { transform-box: view-box; }
+  .demo .rk .rk-l.today { animation: rkHint 1.6s ease-in-out infinite; }
+  @keyframes rkHint { 50% { opacity: .35; } }
+  .demo .rk .rk-l.drop { animation: rkDrop .7s cubic-bezier(.3,1.5,.55,1) both; }
+  @keyframes rkDrop { 0% { transform: translateY(-150px); opacity: 0; } 55% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+  .demo .rk .rk-ring { transform-box: fill-box; transform-origin: center; animation: rkRing .7s .45s ease-out both; }
+  @keyframes rkRing { 0% { opacity: .8; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.6); } }
+  .demo .rk .rk-flame { opacity: 0; transform-box: fill-box; transform-origin: 50% 0; }
+  .demo .rk.launch .rk-flame { opacity: 1; animation: rkFlame .12s linear infinite alternate; }
+  @keyframes rkFlame { to { transform: scaleY(1.25) scaleX(.9); } }
+  .demo .rk.launch .rk-ship { animation: rkLift 3s cubic-bezier(.5,0,.8,.4) .5s both; }
+  @keyframes rkLift { 0% { transform: translate(0,0); } 6% { transform: translate(-1.5px,0); } 12% { transform: translate(1.5px,0); } 18% { transform: translate(0,0); } 100% { transform: translate(0,-460px); } }
+  .demo .rk .rk-smoke circle { opacity: 0; }
+  .demo .rk.launch .rk-smoke circle { animation: rkSmoke 2.4s ease-out both; }
+  @keyframes rkSmoke { 0% { opacity: 0; transform: scale(.2); } 20% { opacity: .9; } 100% { opacity: 0; transform: scale(1.8); } }
+  .demo .rk .rk-done { opacity: 0; }
+  .demo .rk.launch .rk-done { animation: rkDone .6s 2.6s ease both; }
+  @keyframes rkDone { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .demo .rk-dily { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px 8px; padding: 4px 16px 14px; }
+  .demo .dil { position: relative; aspect-ratio: 2 / 1.15; border: 0; border-radius: 4px; padding: 0; font: inherit; font-weight: 900; font-size: clamp(13px, 1.6vw, 17px); color: #fff; background: var(--c, #004996); box-shadow: inset 0 -5px 0 rgba(0,0,0,.18), 0 3px 6px rgba(11,31,68,.18); display: flex; align-items: center; justify-content: center; gap: 4px; transition: transform .15s ease; }
+  .demo .dil::before, .demo .dil::after { content: ""; position: absolute; top: -6px; width: 26%; height: 7px; border-radius: 3px 3px 0 0; background: inherit; box-shadow: inset 0 2px 0 rgba(255,255,255,.35); }
+  .demo .dil::before { left: 13%; } .demo .dil::after { right: 13%; }
+  .demo .dil:hover { transform: translateY(-2px); }
+  .demo .dil svg { width: 15px; height: 15px; }
+  .demo .dil.locked, .demo .dil.missed { background: transparent; color: #3d4a7a; box-shadow: none; outline: 2px dashed rgba(0,73,150,.45); outline-offset: -2px; }
+  .demo .dil.locked::before, .demo .dil.locked::after, .demo .dil.missed::before, .demo .dil.missed::after { background: transparent; box-shadow: none; outline: 2px dashed rgba(0,73,150,.35); outline-offset: -2px; }
+  .demo .dil.missed { color: #8a94a8; text-decoration: line-through; outline-color: rgba(138,148,168,.6); }
+  .demo .dil.today { background: #ffcd00; color: #0b093b; animation: rkPulse 1.6s ease-in-out infinite; }
+  @keyframes rkPulse { 50% { box-shadow: inset 0 -5px 0 rgba(0,0,0,.12), 0 0 0 6px rgba(255,204,0,.35); } }
+  .demo .rk-start { align-self: center; margin: -4px 0 10px; border: 0; background: none; font: inherit; font-size: 12.5px; font-weight: 700; color: #004996; text-decoration: underline; cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) { .demo .rk .rk-l.today, .demo .rk .rk-l.drop, .demo .rk .rk-ring, .demo .dil.today, .demo .rk.launch .rk-ship, .demo .rk.launch .rk-flame { animation: none; } .demo .rk.launch .rk-done { animation: none; opacity: 1; } }
+  /* téma: 7 nocí pro lepší spánek (fotka z Higgsfieldu; měsíc, ovečky, světla a visačky v kódu) */
+  .demo[data-theme="spani"] { --d-bg: #f5f1ec; --d-ink: #483628; --d-ink-2: #7d6b5c; --d-today: #c3a15a; --d-today-ink: #fff; --d-btn: #0e8348; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #e2dfdd; }
+  .demo[data-theme="spani"] .d-title { font-weight: 800; letter-spacing: -0.025em; }
+  .demo[data-theme="spani"] .d-btn { border-radius: 100px; }
+  .demo .scene.spani { aspect-ratio: 4 / 5; max-width: 480px; background: #483628 url('img/spani.webp') center / cover no-repeat; }
+  .demo .scene.spani::after { content: ""; position: absolute; inset: 0; z-index: 2; background: #0b1226; opacity: 0; pointer-events: none; transition: opacity 1.6s ease; }
+  .demo .scene.spani.finale::after { opacity: .55; }
+  .demo .scene.spani .sp-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+  .demo .sp-dim { opacity: .62; animation: spDim 1s ease both; }
+  @keyframes spDim { from { opacity: 0; } }
+  .demo .sp-star { animation: spTw 3s ease-in-out infinite; }
+  @keyframes spTw { 50% { opacity: .15; } }
+  .demo .sp-halo { animation: spHalo 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes spHalo { 50% { transform: scale(1.12); } }
+  .demo .sp-cloud { animation: spCloud 22s linear infinite; }
+  .demo .sp-cloud2 { animation-duration: 34s; animation-delay: -12s; }
+  @keyframes spCloud { from { transform: translateX(-320px); } to { transform: translateX(860px); } }
+  .demo .sp-meteor { opacity: 0; stroke-dasharray: 170; stroke-dashoffset: 170; animation: spMeteor 7s ease-out infinite 2s; }
+  @keyframes spMeteor { 0% { opacity: 0; stroke-dashoffset: 170; transform: translate(0,0); } 3% { opacity: 1; } 10% { opacity: 0; stroke-dashoffset: -170; transform: translate(-90px,42px); } 100% { opacity: 0; } }
+  .demo .sp-lamp { animation: spBreath 4s ease-in-out infinite; }
+  .demo .sp-candle { transform-box: fill-box; transform-origin: 50% 70%; animation: spFlick .16s steps(2) infinite alternate; }
+  @keyframes spBreath { 50% { opacity: .65; } }
+  @keyframes spFlick { from { opacity: .8; transform: scale(1); } to { opacity: 1; transform: scale(1.08, .95); } }
+  .demo .sp-mote { animation: spMote 6s ease-in-out infinite; }
+  @keyframes spMote { 0%, 100% { opacity: 0; transform: translate(0,0); } 50% { opacity: .9; transform: translate(14px,-40px); } }
+  .demo .sp-steam path { opacity: 0; animation: spSteam 3.3s ease-in-out infinite; }
+  @keyframes spSteam { 0% { opacity: 0; transform: translateY(24px); } 30% { opacity: .75; } 100% { opacity: 0; transform: translateY(-70px); } }
+  .demo .sp-done { opacity: 0; transition: opacity 1.2s 1s ease; }
+  .demo .scene.spani.finale .sp-done { opacity: 1; }
+  .demo .scene.spani.finale .sp-lamp, .demo .scene.spani.finale .sp-candle, .demo .scene.spani.finale .sp-steam, .demo .scene.spani.finale .sp-mote { opacity: 0; animation: none; transition: opacity 1.2s; }
+  /* okénka: visačky na šňůrce */
+  .demo .scene.spani .win { z-index: 3; border-radius: 26px; background: transparent; transition: box-shadow .3s ease; }
+  .demo .scene.spani .win:hover { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+  .demo .scene.spani .win.today, .demo .scene.spani .win.open, .demo .scene.spani .win.missed { background: transparent; box-shadow: none; animation: none; }
+  .demo .scene.spani .win .b { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 42px; height: 54px; min-width: 0; padding: 8px 0 0; border-radius: 7px 7px 10px 10px; transform: none; translate: -50% -50%; transform-origin: 50% -16px; background: #fff; color: #483628; font-family: 'Inter', Arial, sans-serif; font-size: 19px; font-weight: 900; line-height: 1; box-shadow: 0 6px 16px rgba(0,0,0,.4), inset 0 0 0 2px #fff, inset 0 0 0 3.5px rgba(195,161,90,.6); }
+  .demo .scene.spani .win .b::before { content: ""; position: absolute; top: 5px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: rgba(72,54,40,.35); }
+  .demo .scene.spani .win .b::after { content: ""; position: absolute; bottom: 100%; left: 50%; width: 2px; height: 18px; margin-left: -1px; background: rgba(255,255,255,.85); }
+  .demo .scene.spani .win .b small { font-size: 8.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+  .demo .scene.spani .win .b svg { position: static; width: 20px; height: 20px; transform: none; color: #0e8348; }
+  .demo .scene.spani .win.open .b { box-shadow: 0 6px 16px rgba(0,0,0,.4), inset 0 0 0 2px #fff, inset 0 0 0 3.5px #0e8348; }
+  .demo .scene.spani .win.open .b small { color: #0e8348; opacity: 1; }
+  .demo[data-theme="spani"] .d-umi li::before { background: #0e8348; }
+  .demo .scene.spani .win.open .b { display: flex; }
+  .demo .scene.spani .win.locked .b { background: rgba(255,255,255,.72); color: #7d6b5c; }
+  .demo .scene.spani .win.missed .b { background: #9a9590; color: #ece8e2; rotate: 9deg; box-shadow: 0 4px 10px rgba(0,0,0,.35); }
+  .demo .scene.spani .win.missed .b > :first-child { text-decoration: line-through; }
+  .demo .scene.spani .win.today .b { width: 50px; height: 64px; background: #c3a15a; color: #fff; font-size: 23px; box-shadow: 0 0 0 4px rgba(255,255,255,.35), 0 0 34px 10px rgba(255,214,140,.75), 0 8px 18px rgba(0,0,0,.4); animation: spSwing 2.4s ease-in-out infinite; }
+  .demo .scene.spani .win.today .b::before { background: rgba(255,255,255,.6); }
+  @keyframes spSwing { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+  .demo .scene.spani .win.just .b { animation: spFlip .8s cubic-bezier(.3,1.4,.5,1) both; }
+  @keyframes spFlip { 0% { transform: rotateY(0) scale(1.3); } 100% { transform: rotateY(360deg) scale(1); } }
+  .demo .scene.spani .win.just { animation: spOn 1.1s ease-out both; }
+  @keyframes spOn { 0% { box-shadow: 0 0 0 0 rgba(255,214,150,.95), inset 0 0 0 999px rgba(255,214,150,.55); } 100% { box-shadow: 0 0 80px 40px rgba(255,214,150,0), inset 0 0 0 999px rgba(255,214,150,0); } }
+  .demo .d-finale { position: absolute; left: 12px; top: 12px; z-index: 4; border: 0; border-radius: 100px; padding: 7px 14px; background: rgba(72,54,40,.82); color: #fff; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+  .demo[data-theme="spani"] .d-finale { background: rgba(14,131,72,.92); }
+  @media (prefers-reduced-motion: reduce) { .demo .sp-star, .demo .sp-halo, .demo .sp-cloud, .demo .sp-meteor, .demo .sp-lamp, .demo .sp-candle, .demo .sp-mote, .demo .sp-steam path, .demo .sp-dim, .demo .scene.spani .win.today .b, .demo .scene.spani .win.just, .demo .scene.spani .win.just .b { animation: none; } .demo .sp-steam path { opacity: .5; } }
+
+  /* téma: Cestovní pas (stůl z Higgsfieldu, pas a razítka v kódu) */
+  .demo[data-theme="pas"] { --d-bg: #f6f4f4; --d-ink: #242527; --d-ink-2: #75727e; --d-today: #f1c86f; --d-today-ink: #242527; --d-btn: #e30613; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #e4e1e1; }
+  .demo[data-theme="pas"] .d-title { font-weight: 900; letter-spacing: -0.03em; }
+  .demo .scene.pas-scene { aspect-ratio: 4 / 5; max-width: 480px; background: #b07a3e url('img/pas-stul.webp') center / cover no-repeat; }
+  .demo .pas { position: absolute; left: 9%; width: 82%; top: 21%; aspect-ratio: 176 / 124; padding: 9px; border-radius: 12px; background: linear-gradient(160deg, #e30613, #a6040e); box-shadow: 0 22px 34px rgba(50,25,5,.45), 0 3px 6px rgba(50,25,5,.3); display: grid; grid-template-columns: 1fr 1fr; perspective: 1800px; }
+  .demo .pas .pg { position: relative; min-width: 0; background-color: #fbf9f6; background-image: repeating-radial-gradient(circle at 18% 28%, rgba(227,6,19,0) 0 7px, rgba(227,6,19,.045) 7px 8px), repeating-radial-gradient(circle at 82% 82%, rgba(36,37,39,0) 0 9px, rgba(36,37,39,.04) 9px 10px); padding: 7%; display: flex; flex-direction: column; }
+  .demo .pas .pg-l { border-radius: 6px 0 0 6px; box-shadow: inset -16px 0 18px -14px rgba(70,35,10,.4); }
+  .demo .pas .pg-r { border-radius: 0 6px 6px 0; box-shadow: inset 16px 0 18px -14px rgba(70,35,10,.4); }
+  .demo .pg-h { display: flex; justify-content: space-between; font-family: var(--mono); font-size: clamp(7px, .9vw, 10px); letter-spacing: .14em; color: rgba(36,37,39,.5); font-weight: 700; margin-bottom: 6%; }
+  .demo .pg-g { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8%; }
+  .demo .raz { position: relative; min-width: 0; border: 1.5px dashed rgba(36,37,39,.25); border-radius: 8px; background: transparent; padding: 0; font: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: rgba(36,37,39,.5); transition: border-color .2s ease; }
+  .demo .raz:hover { border-color: rgba(227,6,19,.6); }
+  .demo .raz .pas-n { font-family: 'Inter', Arial, sans-serif; font-weight: 900; font-size: clamp(14px, 2vw, 22px); font-weight: 700; line-height: 1; }
+  .demo .raz .pas-s { display: flex; max-width: 100%; overflow: hidden; font-size: clamp(6.5px, .8vw, 9.5px); letter-spacing: .06em; text-transform: uppercase; font-weight: 700; }
+  .demo .raz .pas-s svg { width: 12px; height: 12px; }
+  .demo .raz.missed { color: rgba(110,100,95,.55); border-color: rgba(110,100,95,.3); }
+  .demo .raz.missed .pas-n { text-decoration: line-through; }
+  .demo .raz.today { border: 2px solid #f1c86f; background: rgba(241,200,111,.22); color: #8a6412; animation: pasPulse 1.8s ease-in-out infinite; }
+  @keyframes pasPulse { 50% { box-shadow: 0 0 0 6px rgba(241,200,111,.35); } }
+  .demo .raz.open { border-color: transparent; }
+  .demo .pas-raz { position: absolute; left: -8%; top: -8%; width: 116%; height: 116%; transform: rotate(var(--rot)); mix-blend-mode: multiply; opacity: .9; pointer-events: none; }
+  .demo .raz.just .pas-raz { animation: pasStamp .45s cubic-bezier(.3,1.5,.5,1) both; }
+  @keyframes pasStamp { 0% { transform: rotate(calc(var(--rot) - 14deg)) scale(1.9); opacity: 0; } 60% { opacity: .95; } 100% { transform: rotate(var(--rot)) scale(1); opacity: .9; } }
+  .demo .pas.thud { animation: pasThud .3s .3s ease both; }
+  @keyframes pasThud { 35% { translate: 0 3px; } 70% { translate: 0 -1px; } }
+  .demo .pg-emb { display: grid; place-items: center; opacity: .45; }
+  .demo .pg-emb svg { width: 72%; height: auto; }
+  .demo .pas-velke { position: absolute; left: 50%; top: 50%; width: 54%; margin: -15% 0 0 -27%; transform: rotate(-11deg); filter: drop-shadow(0 1px 0 rgba(246,239,223,.9)); z-index: 3; pointer-events: none; animation: pasVelke .55s .3s cubic-bezier(.3,1.5,.5,1) both; }
+  @keyframes pasVelke { 0% { transform: rotate(-24deg) scale(2); opacity: 0; } 100% { transform: rotate(-11deg) scale(1); opacity: .92; } }
+  .demo .pas-nav { position: absolute; left: 50%; top: 70.5%; translate: -50% 0; display: flex; align-items: center; gap: 10px; padding: 5px; border-radius: 100px; background: rgba(36,37,39,.82); color: #fff; font-family: var(--mono); font-size: 11.5px; font-weight: 700; white-space: nowrap; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+  .demo .pas-sip { width: 30px; height: 30px; border: 0; border-radius: 50%; background: #fff; color: #e30613; font-size: 18px; line-height: 1; cursor: pointer; }
+  .demo .pas-sip:disabled { opacity: .35; cursor: default; }
+  .demo .pas-hold, .demo .pas-turn { position: absolute; top: 9px; bottom: 9px; width: calc(50% - 9px); z-index: 5; pointer-events: none; }
+  .demo .pas-hold.l, .demo .pas-turn.l { left: 9px; }
+  .demo .pas-hold.r, .demo .pas-turn.r { left: 50%; }
+  .demo .pas-hold .pg, .demo .pas-turn .pg { position: absolute; inset: 0; }
+  .demo .pas-turn { transform-style: preserve-3d; }
+  .demo .pas-turn.r { transform-origin: left center; animation: pasTurnR .75s ease-in-out both; }
+  .demo .pas-turn.l { transform-origin: right center; animation: pasTurnL .75s ease-in-out both; }
+  @keyframes pasTurnR { to { transform: rotateY(-180deg); } }
+  @keyframes pasTurnL { to { transform: rotateY(180deg); } }
+  .demo .pas-turn .f, .demo .pas-turn .b { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .demo .pas-turn .b { transform: rotateY(180deg); }
+  @media (prefers-reduced-motion: reduce) { .demo .raz.today, .demo .raz.just .pas-raz, .demo .pas.thud, .demo .pas-velke { animation: none; } }
+  /* téma: Víkendy na chalupě (mapa z Higgsfieldu, trasa, špendlíky a turista v kódu) */
+  .demo[data-theme="chalupa"] { --d-bg: #eef6d3; --d-ink: #1f2a10; --d-ink-2: #55623e; --d-today: #ffd200; --d-today-ink: #1f2a10; --d-btn: #7a9b0a; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #d5e6a3; }
+  .demo[data-theme="chalupa"] .d-title { color: #6e8c00; font-weight: 800; letter-spacing: -0.02em; }
+  .demo[data-theme="chalupa"] .d-btn { border-radius: 100px; }
+  .demo[data-theme="chalupa"] .d-finale { background: rgba(122,155,10,.95); }
+  .demo .scene.chalupa { aspect-ratio: 4 / 5; max-width: 480px; background: #7fa65a url('img/chalupa-mapa.webp') center / cover no-repeat; }
+  .demo .scene.chalupa .ch-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
+  .demo .ch-rest { opacity: .9; }
+  .demo .ch-smoke circle { opacity: 0; transform-box: fill-box; transform-origin: center; animation: chSmoke 4s ease-out infinite; }
+  @keyframes chSmoke { 0% { opacity: 0; transform: translate(0,0) scale(.6); } 20% { opacity: .75; } 100% { opacity: 0; transform: translate(30px,-170px) scale(1.6); } }
+  .demo .ch-glint path { opacity: 0; animation: chGlint 4s ease-in-out infinite; }
+  @keyframes chGlint { 50% { opacity: .8; } }
+  .demo .ch-pulse { opacity: .35; transform-box: fill-box; transform-origin: center; animation: chPulse 1.8s ease-out infinite; }
+  @keyframes chPulse { 0% { transform: scale(.7); opacity: .5; } 100% { transform: scale(1.7); opacity: 0; } }
+  .demo .ch-done { opacity: 0; transition: opacity .8s ease; }
+  .demo .scene.chalupa.finale .ch-done { opacity: 1; transition-delay: 3.2s; }
+  .demo .scene.chalupa .win { z-index: 3; border-radius: 30px; background: transparent; box-shadow: none; animation: none; }
+  .demo .scene.chalupa .win:hover { box-shadow: none; }
+  .demo .scene.chalupa .win .b { display: grid; place-items: center; width: 38px; height: 38px; min-width: 0; padding: 0; border-radius: 50% 50% 50% 8px; transform: none; translate: -50% -100%; rotate: -45deg; background: #fffaf0; color: #23382a; box-shadow: 0 6px 12px rgba(0,0,0,.35), inset 0 0 0 3px #7a9b0a; transition: scale .15s ease; }
+  .demo .scene.chalupa .win .b > * { rotate: 45deg; }
+  .demo .scene.chalupa .win .b span { font-family: Georgia, serif; font-size: 16px; font-weight: 700; line-height: 1; }
+  .demo .scene.chalupa .win .b svg { position: static; width: 18px; height: 18px; transform: none; color: #fff; }
+  .demo .scene.chalupa .win:hover .b { scale: 1.12; }
+  .demo .scene.chalupa .win.open .b { display: grid; background: #7a9b0a; box-shadow: 0 6px 12px rgba(0,0,0,.35), inset 0 0 0 3px #fff; }
+  .demo .scene.chalupa .win.locked .b { background: rgba(255,250,240,.8); color: #5d6b5a; box-shadow: 0 4px 10px rgba(0,0,0,.25), inset 0 0 0 2px rgba(122,155,10,.55); }
+  .demo .scene.chalupa .win.missed .b { background: #a7a59c; color: #f2efe6; box-shadow: 0 4px 10px rgba(0,0,0,.25), inset 0 0 0 2px #fff; }
+  .demo .scene.chalupa .win.missed .b span { text-decoration: line-through; }
+  .demo .scene.chalupa .win.today .b { width: 48px; height: 48px; background: #ffd200; color: #1f2a10; box-shadow: 0 0 0 6px rgba(255,210,0,.35), 0 8px 16px rgba(0,0,0,.35), inset 0 0 0 3px #fff; animation: chBob 1.6s ease-in-out infinite; }
+  .demo .scene.chalupa .win.today .b span { font-size: 20px; }
+  @keyframes chBob { 50% { translate: -50% -118%; } }
+  .demo .scene.chalupa .win.just .b { animation: chDrop .6s cubic-bezier(.3,1.6,.5,1) both; }
+  @keyframes chDrop { 0% { translate: -50% -260%; opacity: 0; } 100% { translate: -50% -100%; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .demo .ch-smoke circle, .demo .ch-glint path, .demo .ch-pulse, .demo .scene.chalupa .win.today .b, .demo .scene.chalupa .win.just .b { animation: none; } }
+  /* téma: Archiv v barvách (prémiový nábytek; černobílá fotka z Higgsfieldu, barva a vzorky v kódu) */
+  .demo[data-theme="vzorky"] { --d-bg: #ebecee; --d-ink: #000; --d-ink-2: #565968; --d-today: #3b7a78; --d-today-ink: #fff; --d-btn: #000; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #d7d8dc; --d-radius: 0; }
+  .demo[data-theme="vzorky"] .d-title { font-weight: 300; text-transform: uppercase; letter-spacing: .01em; }
+  .demo[data-theme="vzorky"] .d-btn, .demo[data-theme="vzorky"] .dc-cta { border-radius: 0; text-transform: uppercase; letter-spacing: .06em; font-size: 13px; }
+  .demo[data-theme="vzorky"] .d-today, .demo[data-theme="vzorky"] .d-card { border-radius: 0; }
+  .demo[data-theme="vzorky"] .d-finale { left: auto; right: 12px; background: #000; border-radius: 0; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+  .demo .scene.vzk-scene { aspect-ratio: 4 / 5; max-width: 480px; border-radius: 0; background: #bdb6ad; box-shadow: 0 16px 40px rgba(0,0,0,.14); }
+  .demo .vzk-photo { position: absolute; inset: 0; background: url('img/showroom.webp') center / cover no-repeat; pointer-events: none; }
+  .demo .vzk-gray { filter: grayscale(1) contrast(1.04) brightness(1.03); }
+  .demo .vzk-col { clip-path: inset(var(--t) var(--r) var(--b) var(--l) round 6px); }
+  .demo .vzk-col.just { animation: vzkCol 1.1s cubic-bezier(.3,1,.4,1) both; }
+  @keyframes vzkCol { from { clip-path: inset(calc(var(--t) + 3.8%) calc(var(--r) + 4.5%) calc(var(--b) + 3.8%) calc(var(--l) + 4.5%) round 6px); } }
+  .demo .vzk-all { animation: vzkAll 1.6s ease both; }
+  @keyframes vzkAll { from { clip-path: circle(0 at 50% 44%); } to { clip-path: circle(150% at 50% 44%); } }
+  .demo .vzk-head { position: absolute; left: 7%; top: 8%; z-index: 2; font-family: 'Inter', Arial, sans-serif; text-transform: uppercase; line-height: 1.02; color: #111; }
+  .demo .vzk-head b { display: block; font-size: clamp(17px, 2.5vw, 28px); font-weight: 800; letter-spacing: .01em; }
+  .demo .vzk-head span { display: block; font-size: clamp(17px, 2.5vw, 28px); font-weight: 200; letter-spacing: .02em; }
+  .demo .vzk-pol { position: absolute; z-index: 3; padding: 0; border: 0; border-radius: 6px; background: transparent; cursor: pointer; }
+  .demo .vzk-pol { transition: box-shadow .2s ease; }
+  .demo .vzk-pol:hover { box-shadow: 0 0 0 2px #fff, 0 6px 16px rgba(0,0,0,.25); }
+  .demo .vzk-num { position: absolute; left: 50%; top: 100%; translate: -50% 6px; display: grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: #fff; color: #000; font-family: 'Inter', Arial, sans-serif; font-size: 10.5px; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  .demo .vzk-num::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px; height: 7px; background: rgba(255,255,255,.9); }
+  .demo .vzk-num svg { width: 11px; height: 11px; }
+  .demo .vzk-pol.open .vzk-num { background: #3b7a78; color: #fff; }
+  .demo .vzk-pol.locked .vzk-num { color: #8c8e98; }
+  .demo .vzk-pol.missed .vzk-num { background: #c9cacf; color: #fff; text-decoration: line-through; }
+  .demo .vzk-pol.today .vzk-num { background: #3b7a78; color: #fff; scale: 1.15; }
+  .demo .vzk-pol.today { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3b7a78, 0 0 22px 6px rgba(255,255,255,.7); animation: vzkPol 1.8s ease-in-out infinite; }
+  .demo .vzk-pol.today::after { content: "Dnes"; position: absolute; left: 50%; bottom: calc(100% + 8px); translate: -50% 0; padding: 3px 7px; background: #3b7a78; color: #fff; font-family: 'Inter', Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+  @keyframes vzkPol { 50% { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(59,122,120,.5), 0 0 10px 2px rgba(255,255,255,.4); } }
+  .demo .vzk-row { position: absolute; left: 4%; right: 4%; bottom: 5%; z-index: 3; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1.6%; }
+  .demo .vzk { position: relative; aspect-ratio: 3 / 5; padding: 0; border: 0; background: #fff; font: inherit; display: flex; flex-direction: column; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,.18); transition: translate .25s ease, box-shadow .25s ease; }
+  .demo .vzk:hover { translate: 0 -4px; }
+  .demo .vzk-chip { flex: 0 0 64%; display: grid; place-items: center; background: #d9d9dc; color: rgba(0,0,0,.35); clip-path: polygon(0 6%, 8% 0, 16% 6%, 25% 0, 33% 6%, 42% 0, 50% 6%, 58% 0, 67% 6%, 75% 0, 84% 6%, 92% 0, 100% 6%, 100% 100%, 0 100%); }
+  .demo .vzk-chip svg { width: 15px; height: 15px; }
+  .demo .vzk.open .vzk-chip { background: var(--c); color: rgba(255,255,255,.88); }
+  .demo .vzk.today .vzk-chip { background: repeating-linear-gradient(45deg, #3b7a78 0 5px, #46898a 5px 10px); }
+  .demo .vzk.missed .vzk-chip { background: repeating-linear-gradient(-45deg, #e4e4e7 0 4px, #d5d5d9 4px 8px); }
+  .demo .vzk-lab { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 1px; padding: 0 5px; text-align: left; font-family: 'Inter', Arial, sans-serif; }
+  .demo .vzk-lab b { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #000; }
+  .demo .vzk-lab i { overflow: hidden; font-style: normal; font-size: 7.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; text-overflow: ellipsis; color: #565968; }
+  .demo .vzk.today { translate: 0 -8px; box-shadow: 0 0 0 2px #3b7a78, 0 12px 22px rgba(0,0,0,.25); }
+  .demo .vzk.today .vzk-lab i { color: #3b7a78; }
+  .demo .vzk.missed .vzk-lab b { text-decoration: line-through; color: #8c8e98; }
+  .demo .vzk.just { animation: vzkPull .6s ease both; }
+  @keyframes vzkPull { 0% { translate: 0 -8px; } 45% { translate: 0 -26px; } 100% { translate: 0 0; } }
+  .demo .vzk-done { position: absolute; left: 7%; top: 8%; z-index: 4; padding: 14px 16px; background: #3b7a78; color: #fff; font-family: 'Inter', Arial, sans-serif; clip-path: polygon(0 0, 100% 0, 100% 72%, 94% 72%, 94% 100%, 0 100%); animation: vzkDone .6s 1s ease both; }
+  .demo .vzk-done b { display: block; font-size: 15px; font-weight: 700; color: #f1e7cf; }
+  .demo .vzk-done span { display: block; max-width: 210px; margin-top: 4px; font-size: 19px; font-weight: 700; line-height: 1.15; }
+  @keyframes vzkDone { from { opacity: 0; transform: translateY(10px); } }
+  .demo .scene.vzk-scene.finale .vzk-head { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .demo .vzk-col.just, .demo .vzk-all, .demo .vzk-pol.today, .demo .vzk.just, .demo .vzk-done { animation: none; } }
+  /* téma: Deset let, deset obálek (mřížka obálek na fotce z Higgsfieldu, otevírání v kódu) */
+  .demo[data-theme="obalky"] { --d-bg: #f6f3ee; --d-ink: #2b2523; --d-ink-2: #6d625c; --d-today: #b3262c; --d-today-ink: #fff; --d-btn: #b3262c; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: #fff; --d-card-line: #e7e0d6; }
+  .demo[data-theme="obalky"] .d-title { font-weight: 900; letter-spacing: -0.03em; }
+  .demo[data-theme="obalky"] .d-btn { border-radius: 100px; }
+  .demo[data-theme="obalky"] .d-finale { top: auto; bottom: 12px; background: rgba(43,37,35,.82); }
+  .demo .scene.obl-scene { aspect-ratio: 4 / 5; max-width: 480px; background: #ece8e1 url('img/obalky-stena.webp') center / cover no-repeat; }
+  .demo .obl { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 4px; background: transparent; font: inherit; cursor: pointer; transition: box-shadow .2s ease; }
+  .demo .obl:hover { box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 8px 18px rgba(60,20,10,.25); }
+  .demo .obl-n { position: absolute; right: 10%; bottom: 10%; display: flex; align-items: center; gap: 3px; color: #fff; font-family: 'Inter', Arial, sans-serif; font-size: clamp(12px, 1.7vw, 17px); font-weight: 800; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,.35); rotate: var(--rot); }
+  .demo .obl-n svg { width: 11px; height: 11px; opacity: .85; }
+  .demo .obl.missed { backdrop-filter: grayscale(1) brightness(1.75) contrast(.6); -webkit-backdrop-filter: grayscale(1) brightness(1.75) contrast(.6); }
+  .demo .obl.missed .obl-n { text-decoration: line-through; opacity: .8; }
+  .demo .obl.today { background: radial-gradient(closest-side, rgba(255,214,120,.55), rgba(255,214,120,0)); box-shadow: 0 0 0 2px #fff, 0 0 0 4px #b3262c, 0 0 28px 8px rgba(255,210,110,.75); animation: oblGlow 1.8s ease-in-out infinite; }
+  .demo .obl.today::after { content: "Dnes"; position: absolute; left: 50%; bottom: calc(100% + 9px); translate: -50% 0; padding: 3px 8px; border-radius: 4px; background: #b3262c; color: #fff; font-family: 'Inter', Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  @keyframes oblGlow { 50% { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(179,38,44,.5), 0 0 12px 3px rgba(255,210,110,.45); } }
+  /* opened: a cream card pulled halfway out of the envelope */
+  .demo .obl-card { position: absolute; left: 14%; right: 14%; top: 8%; height: 78%; rotate: var(--rot); translate: 0 -56%; z-index: -1; clip-path: inset(-20% -20% 46% -20%); display: grid; place-items: center; border-radius: 2px; background: #fffaf2; box-shadow: 0 4px 10px rgba(0,0,0,.18); }
+  .demo .obl-card > span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #b3262c; color: #fff; }
+  .demo .obl-card svg { width: 13px; height: 13px; }
+  .demo .obl.open { z-index: 1; }
+  .demo .obl.just .obl-card { animation: oblPull .7s cubic-bezier(.3,1.4,.5,1) both; }
+  @keyframes oblPull { from { translate: 0 0; opacity: 0; } 30% { opacity: 1; } to { translate: 0 -56%; } }
+  .demo .obl-done { position: absolute; left: 50%; top: 41%; z-index: 5; padding: 8px 22px; translate: -50% 0; rotate: -3deg; background: rgba(227,208,168,.94); color: #5a4126; font-family: 'Inter', Arial, sans-serif; font-size: clamp(14px, 2vw, 20px); font-weight: 800; letter-spacing: .02em; box-shadow: 0 3px 8px rgba(0,0,0,.15); clip-path: polygon(2% 0, 98% 4%, 100% 100%, 0 96%); animation: oblDone .6s .4s ease both; }
+  @keyframes oblDone { from { opacity: 0; translate: -50% -10px; } }
+  @media (prefers-reduced-motion: reduce) { .demo .obl.today, .demo .obl.just .obl-card, .demo .obl-done { animation: none; } }
 
   /* téma: Sněhulák a sobi (vymyšlené, kreslené) */
   .demo[data-theme="snehulak"] { --d-bg: #0f3d2e; --d-ink: #f4f7ff; --d-ink-2: #bfd5c8; --d-today: #ffd21f; --d-today-ink: #132747; --d-btn: #DA2A49; --d-btn-ink: #fff; --d-font: 'Inter', 'Inter Fallback', Arial, sans-serif; --d-card: rgba(255,255,255,.08); --d-card-line: rgba(255,255,255,.16); }
@@ -489,6 +816,26 @@
 
   /* přepínač Počítač / Mobil: telefon jako rámeček, rozložení jako na mobilu */
   .demo-frame { transition: max-width .25s ease; }
+  /* desktop mockup: black monitor bezel with an address bar and a reload button, like the phone frame */
+  .dm-bar { display: none; }
+  @media (min-width: 900px) {
+    .demo-frame:not(.is-mobile) { position: relative; margin-bottom: 64px; padding: 12px 12px 16px; border-radius: 22px; background: #111; box-shadow: 0 30px 70px rgba(0,0,0,.3), inset 0 0 0 2px #2a2a2a; }
+    .demo-frame:not(.is-mobile)::after { content: ""; position: absolute; left: 50%; top: 100%; width: 180px; height: 50px; translate: -50% 0; background: linear-gradient(#1d1d20, #0d0d0f); clip-path: polygon(34% 0, 66% 0, 72% 78%, 100% 84%, 100% 100%, 0 100%, 0 84%, 28% 78%); }
+    .demo-frame:not(.is-mobile) .dm-bar { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; padding: 0 4px; }
+    .demo-frame:not(.is-mobile) .demo { border-radius: 10px; box-shadow: none; }
+  }
+  .dm-reload { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 50%; background: #26262a; color: #e6e6ea; cursor: pointer; transition: background .15s ease; }
+  .dm-reload:hover { background: #38383d; }
+  .dm-reload svg { width: 15px; height: 15px; }
+  .dm-reload.spin svg { animation: dmSpin .6s ease; }
+  @keyframes dmSpin { to { transform: rotate(360deg); } }
+  .dm-url { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; height: 30px; border-radius: 15px; background: #26262a; color: #c9c9cf; font-size: 12.5px; font-weight: 600; letter-spacing: .01em; }
+  .dm-url svg { width: 12px; height: 12px; opacity: .7; }
+  .dm-admin { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 13px; border: 0; border-radius: 15px; background: #fff; color: #111; font-size: 12.5px; font-weight: 700; text-decoration: none; transition: background .15s ease; }
+  .dm-admin:hover { background: #e9e9ee; border: 0; }
+  .dm-admin svg { width: 14px; height: 14px; }
+  .dm-tag { flex: none; padding: 0 10px; height: 30px; display: grid; place-items: center; border-radius: 15px; background: #26262a; color: #8d8d95; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { .dm-reload.spin svg { animation: none; } }
   .demo-frame.is-mobile { max-width: 412px; margin: 0 auto; padding: 12px; border-radius: 44px; background: #111; box-shadow: 0 30px 70px rgba(0,0,0,.35), inset 0 0 0 2px #2a2a2a; position: relative; }
   .demo-frame.is-mobile::before { content: ""; position: absolute; left: 50%; top: 20px; width: 96px; height: 22px; border-radius: 12px; background: #111; transform: translateX(-50%); z-index: 5; }
   .demo-frame.is-mobile .demo { border-radius: 34px; padding: 44px 14px 22px; }
@@ -612,11 +959,18 @@
     --tag-ok-bg: #e4f7ec; --tag-ok-fg: #15783f; --tag-live-bg: #fff3dc; --tag-live-fg: #9a5f05; --tag-err-bg: #fdecec; --tag-err-fg: #b91c1c;
     --c-gifts: #db2777; --c-people: #0d9488; --c-campaigns: #d97706; --c-texts: #0284c7;
     box-shadow: 0 30px 70px rgba(20,20,60,.14); }
+  /* admin preview: smaller monitor than the calendar, colours follow the chosen calendar look */
+  @media (min-width: 900px) {
+    .demo-frame.kd-frame { padding: 10px 10px 12px; border-radius: 20px; margin-bottom: 56px; }
+    .demo-frame.kd-frame::after { width: 150px; height: 42px; }
+    .kd-frame .kd { border-radius: 10px; box-shadow: none; }
+  }
+  .kd h4, .kd h5 { font-family: var(--k-font, inherit); }
   .kd .ico { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
   .kd button { font: inherit; }
-  .kd-side { width: 236px; flex: 0 0 236px; background: var(--side-grad); border-radius: 20px; display: flex; flex-direction: column; color: #fff; box-shadow: 0 20px 50px rgba(91,46,230,.3); overflow: hidden; }
+  .kd-side { width: 236px; flex: 0 0 236px; background: var(--side-grad); border-radius: 20px; display: flex; flex-direction: column; color: #fff; box-shadow: 0 20px 50px var(--pb-shadow); overflow: hidden; }
   .kd-brand { display: flex; align-items: center; gap: 12px; padding: 20px 18px 12px; }
-  .kd-brand .mark { width: 40px; height: 40px; border-radius: 12px; background: #fff; color: #5b2ee6; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+  .kd-brand .mark { width: 40px; height: 40px; border-radius: 12px; background: #fff; color: var(--pb); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,.18); }
   .kd-brand .mark .ico { width: 20px; height: 20px; stroke-width: 2.2; }
   .kd-brand .txt { font-size: 13px; line-height: 1.2; color: rgba(255,255,255,.8); }
   .kd-brand .txt b { display: block; font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
@@ -624,13 +978,13 @@
   .kd-camp .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.65); margin-bottom: 3px; }
   .kd-camp .nm { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13.5px; }
   .kd-camp .nm .ico { margin-left: auto; color: rgba(255,255,255,.7); width: 14px; height: 14px; }
-  .kd-camp .tag { margin-top: 8px; background: rgba(52,211,153,.32); color: #fff; box-shadow: none; }
+  .kd .kd-camp .tag { margin-top: 8px; background: rgba(255,255,255,.92); color: #11804f; box-shadow: none; }
   .kd-nav { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 3px; }
   .kd-nav .grp { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); padding: 12px 12px 4px; }
   .kd-nav button { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 12px; font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,.86); background: none; border: 0; text-align: left; cursor: pointer; transition: background .12s; }
   .kd-nav button .ico { width: 17px; height: 17px; stroke-width: 1.9; }
   .kd-nav button:hover { background: rgba(255,255,255,.12); color: #fff; }
-  .kd-nav button[aria-current="page"] { background: rgba(255,255,255,.22); color: #fff; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+  .kd-nav button[aria-current="page"] { background: #fff; color: var(--pb); font-weight: 700; box-shadow: 0 6px 16px rgba(0,0,0,.16); }
   .kd-nav button[aria-disabled="true"] { cursor: default; }
   .kd-nav button[aria-disabled="true"]:hover { background: none; color: rgba(255,255,255,.86); }
   .kd-foot { padding: 12px 16px 16px; border-top: 1px solid rgba(255,255,255,.14); display: flex; align-items: center; gap: 10px; }
@@ -642,11 +996,6 @@
   .kd-crumbs { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--k-ink-3); background: var(--k-card); border: 1px solid var(--k-line); border-radius: 12px; padding: 7px 13px; }
   .kd-crumbs .ico { width: 11px; height: 11px; color: var(--k-ink-4); }
   .kd-crumbs b { color: var(--k-ink); font-weight: 600; }
-  .kd-tgl { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--k-line-strong); background: var(--k-card); color: var(--k-ink-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
-  .kd-tgl:hover { color: var(--k-ink); }
-  .kd-tgl .sun { display: none; }
-  .kd[data-theme="light"] .kd-tgl .sun { display: block; }
-  .kd[data-theme="light"] .kd-tgl .moon { display: none; }
   .kd-page { padding: 4px 10px 10px 6px; }
   .kd-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
   .kd-head h4 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0; color: var(--k-ink); }
@@ -661,22 +1010,35 @@
   .kd-card .mut { color: var(--k-ink-3); font-size: 13px; margin: 0; }
   .kd-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
   .kd-stat { background: var(--k-card); border: 1px solid var(--k-line); border-radius: 16px; padding: 16px 18px; position: relative; overflow: hidden; }
-  .kd-stat::before { content: ""; position: absolute; right: 14px; top: 14px; width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--c, var(--pb)) 18%, transparent); }
-  .kd-stat::after { content: ""; position: absolute; right: 25px; top: 25px; width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid var(--c, var(--pb)); }
+  .kd-stat .ic { position: absolute; right: 14px; top: 14px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--c, var(--pb)) 14%, transparent); color: var(--c, var(--pb)); }
+  .kd-stat .ic .ico { width: 17px; height: 17px; }
+  .kd-stat .tr { display: block; margin-top: 6px; font-size: 11.5px; color: var(--k-ink-3); }
   .kd-stat .l { font-size: 12.5px; font-weight: 500; color: var(--k-ink-3); }
   .kd-stat b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; margin-top: 8px; color: var(--k-ink); font-variant-numeric: tabular-nums; }
   .kd-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 18px; align-items: start; }
-  .kd-mini { padding-top: 40px !important; border-radius: 12px; overflow: hidden; border: 1px solid var(--k-line); background: #14243f; padding: 12px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; align-content: end; position: relative; }
-  .kd-mini::before { content: "Adventní kalendář"; position: absolute; left: 12px; top: 10px; font-family: Georgia, serif; font-weight: 700; color: #fff; font-size: 17px; }
-  .kd-mini i { aspect-ratio: 1; border-radius: 5px; background: #22396a; }
-  .kd-mini i.t { background: #F7C948; }
-  .kd-mini i.o { background: rgba(255,255,255,.12); }
+  .kd-mini { position: relative; overflow: hidden; aspect-ratio: 4 / 5; max-height: 240px; justify-self: end; border-radius: 12px; border: 1px solid var(--k-line); background: var(--k-raised); box-shadow: 0 10px 24px rgba(20,20,40,.14); }
+  .kd-mini img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .kd-mini-l { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 10px 9px; background: linear-gradient(transparent, rgba(0,0,0,.72)); color: #fff; line-height: 1.2; }
+  .kd-mini-l b { display: block; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+  .kd-mini-l span { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 700; }
   .kd-steps { display: grid; gap: 10px; }
   .kd-step { display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; background: var(--k-card); border: 1px solid var(--k-line); border-radius: 16px; }
   .kd-step .n { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; background: color-mix(in srgb, var(--k-success) 20%, transparent); color: var(--k-success); }
   .kd-step.todo .n { background: var(--pb-soft); color: var(--pb); }
   .kd-step b { display: block; font-size: 14px; color: var(--k-ink); font-weight: 600; }
   .kd-step .mut { color: var(--k-ink-3); font-size: 12.5px; }
+  .kd-prog { margin-top: 16px; }
+  .kd-prog-h { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--k-ink-3); margin-bottom: 6px; }
+  .kd-prog-h b { color: var(--k-ink); font-weight: 600; }
+  .kd-bar { height: 8px; border-radius: 99px; background: var(--k-raised); overflow: hidden; }
+  .kd-bar i { display: block; height: 100%; border-radius: 99px; background: var(--pb); }
+  .kd-tools { display: flex; align-items: center; gap: 8px; }
+  .kd-ib { position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--k-line); background: var(--k-card); color: var(--k-ink-2); }
+  .kd-ib.dot::after { content: ""; position: absolute; right: 7px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--pb); box-shadow: 0 0 0 2px var(--k-card); }
+  .kd-av { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--pb); color: #fff; font-size: 12px; font-weight: 700; }
+  .kd-typ { display: inline-flex; align-items: center; gap: 8px; }
+  .kd-typ .ti { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: var(--pb-soft); color: var(--pb); }
+  .kd-typ .ti svg { width: 13px; height: 13px; }
   .kd-sub { font-size: 15px; font-weight: 600; margin: 18px 0 10px; color: var(--k-ink); }
   .kd table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; min-width: 620px; }
   .kd thead th { padding: 11px 14px; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--k-ink-3); border-bottom: 1px solid var(--k-line); white-space: nowrap; background: none; }
@@ -710,6 +1072,8 @@
     .kd-nav button { white-space: nowrap; }
     .kd-hero { grid-template-columns: 1fr; }
     .kd-stats { grid-template-columns: 1fr 1fr; }
+    .kd-mini { justify-self: start; max-height: 200px; }
+    .kd-tools .kd-ib:not(.dot) { display: none; }
     .kd-step { grid-template-columns: 38px 1fr; }
     .kd-step .kd-btn { grid-column: 2; justify-self: start; }
   }
@@ -993,30 +1357,40 @@
   <p>Přepněte vzhled a&nbsp;porovnejte je. Dnešní okénko svítí.</p>
 
   <div class="demo-bar" data-review-id="demo-ovladani">
-    <div class="grp"><span class="lbl" id="lbl-vzhled">Vzhled</span>
-      <div class="seg" role="group" aria-labelledby="lbl-vzhled">
-        <button type="button" data-theme="fotoskoda" aria-pressed="true" data-review-id="demo-vzhled-fotoskoda"><i style="background:#0d1f52"></i>Dům s okny</button>
-        <button type="button" data-theme="snehulak" aria-pressed="false" data-review-id="demo-vzhled-snehulak"><i style="background:#1d3a66"></i>Sněhulák a sobi</button>
-        <button type="button" data-theme="hracky" aria-pressed="false" data-review-id="demo-vzhled-hracky"><i style="background: linear-gradient(135deg,#ff0066 50%,#002651 50%)"></i>Hračkářství</button>
-        <button type="button" data-theme="jidlo" aria-pressed="false" data-review-id="demo-vzhled-jidlo"><i style="background:#b4452c"></i>Dárkový koš</button>
-        <button type="button" data-theme="moda" aria-pressed="false" data-review-id="demo-vzhled-moda"><i style="background:#2f6b3a"></i>Skříň se šuplíky</button>
+    <div class="vz" data-review-id="demo-vzhledy">
+      <div class="vz-strip" role="group" aria-label="Vzhled kalendáře">
+        <div class="vz-set" role="group" aria-label="Vánoce a advent"><span class="vz-k" aria-hidden="true">Vánoce a advent</span><div class="vz-thumbs">
+          <button type="button" class="vz-th" data-theme="fotoskoda" aria-pressed="true" aria-label="Dům s okny" title="Dům s okny" data-kat="Vánoce a advent" data-meta="Fototechnika · 24 dní" data-stitek="Skutečná kampaň" data-review-id="demo-vzhled-fotoskoda"><img src="img/nahledy/fotoskoda.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="snehulak" aria-pressed="false" aria-label="Sněhulák a sobi" title="Sněhulák a sobi" data-kat="Vánoce a advent" data-meta="Jakýkoli e‑shop · 24 dní" data-stitek="" data-review-id="demo-vzhled-snehulak"><img src="img/nahledy/snehulak.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="hracky" aria-pressed="false" aria-label="Vánoční pinball" title="Vánoční pinball" data-kat="Vánoce a advent" data-meta="Hračkářství · 24 dní" data-stitek="" data-review-id="demo-vzhled-hracky"><img src="img/nahledy/hracky.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="jidlo" aria-pressed="false" aria-label="Dárkový koš" title="Dárkový koš" data-kat="Vánoce a advent" data-meta="Delikatesy · 24 dní" data-stitek="" data-review-id="demo-vzhled-jidlo"><img src="img/nahledy/jidlo.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="moda" aria-pressed="false" aria-label="Skříň se šuplíky" title="Skříň se šuplíky" data-kat="Vánoce a advent" data-meta="Móda · 24 dní" data-stitek="" data-review-id="demo-vzhled-moda"><img src="img/nahledy/moda.webp" alt="" width="60" height="75" decoding="async"></button>
+        </div></div>
+        <span class="vz-sep" aria-hidden="true"></span>
+        <div class="vz-set" role="group" aria-label="Kdykoli během roku"><span class="vz-k" aria-hidden="true">Kdykoli během roku</span><div class="vz-thumbs">
+          <button type="button" class="vz-th" data-theme="harfa" aria-pressed="false" aria-label="Slavíme 30 let" title="Slavíme 30 let" data-kat="Kdykoli během roku" data-meta="Sportovní e‑shop · 30 dní" data-stitek="Skutečná kampaň" data-review-id="demo-vzhled-harfa"><img src="img/nahledy/harfa.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="obalky" aria-pressed="false" aria-label="Deset let, deset obálek" title="Deset let, deset obálek" data-kat="Kdykoli během roku" data-meta="Výročí e‑shopu · 10 dní" data-stitek="" data-review-id="demo-vzhled-obalky"><img src="img/nahledy/obalky.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+          <button type="button" class="vz-th" data-theme="velikonoce" aria-pressed="false" aria-label="Velikonoční kraslice" title="Velikonoční kraslice" data-kat="Kdykoli během roku" data-meta="Zahrada a jaro · 24 dní" data-stitek="" data-review-id="demo-vzhled-velikonoce"><img src="img/nahledy/velikonoce.webp" alt="" width="60" height="75" decoding="async"></button>
+          <button type="button" class="vz-th" data-theme="raketa" aria-pressed="false" aria-label="Odpočet ke startu" title="Odpočet ke startu" data-kat="Kdykoli během roku" data-meta="Stavebnice · 10 dní" data-stitek="" data-review-id="demo-vzhled-raketa"><img src="img/nahledy/raketa.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+          <button type="button" class="vz-th" data-theme="spani" aria-pressed="false" aria-label="7 nocí pro spánek" title="7 nocí pro spánek" data-kat="Kdykoli během roku" data-meta="Bytový textil · 7 nocí" data-stitek="" data-review-id="demo-vzhled-spani"><img src="img/nahledy/spani.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+          <button type="button" class="vz-th" data-theme="pas" aria-pressed="false" aria-label="Cestovní pas" title="Cestovní pas" data-kat="Kdykoli během roku" data-meta="Duty free na hranici · 14 dní" data-stitek="" data-review-id="demo-vzhled-pas"><img src="img/nahledy/pas.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+          <button type="button" class="vz-th" data-theme="chalupa" aria-pressed="false" aria-label="Víkendy na chalupě" title="Víkendy na chalupě" data-kat="Kdykoli během roku" data-meta="Chaty a chalupy · 8 víkendů" data-stitek="" data-review-id="demo-vzhled-chalupa"><img src="img/nahledy/chalupa.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+          <button type="button" class="vz-th" data-theme="vzorky" aria-pressed="false" aria-label="Archiv v barvách" title="Archiv v barvách" data-kat="Kdykoli během roku" data-meta="Prémiový nábytek · 8 dní" data-stitek="" data-review-id="demo-vzhled-vzorky"><img src="img/nahledy/vzorky.webp" alt="" width="60" height="75" decoding="async"><i class="vz-new" aria-hidden="true"></i></button>
+        </div></div>
       </div>
     </div>
-    <div class="grp"><span class="lbl" id="lbl-jindy">Jindy v roce</span>
-      <div class="seg" role="group" aria-labelledby="lbl-jindy">
-        <button type="button" data-theme="harfa" aria-pressed="false" data-review-id="demo-vzhled-harfa"><i style="background:#4ead9e"></i>Slavíme 30 let</button>
-        <button type="button" data-theme="velikonoce" aria-pressed="false" data-review-id="demo-vzhled-velikonoce"><i style="background:#8bc34a"></i>Velikonoce</button>
-      </div>
-    </div>
-    <div class="grp device"><span class="lbl" id="lbl-zarizeni">Zobrazení</span>
-      <div class="seg" role="group" aria-labelledby="lbl-zarizeni">
+    <div class="vz-cap" id="vz-cap" aria-live="polite"><strong id="vz-cap-t">Dům s okny</strong><span class="vz-cap-m" id="vz-cap-m">Fototechnika · 24 dní</span><span class="vz-cap-s" id="vz-cap-s">Skutečná kampaň</span><a class="vz-admin" href="#administrace">Administrace →</a>
+    <div class="grp device">
+      <div class="seg" role="group" aria-label="Zobrazení">
         <button type="button" data-device="desktop" aria-pressed="true" data-review-id="demo-zobrazeni-pocitac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Počítač</button>
         <button type="button" data-device="mobile" aria-pressed="false" data-review-id="demo-zobrazeni-mobil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Mobil</button>
       </div>
     </div>
+    </div>
   </div>
 
   <div class="demo-frame" id="demo-frame" data-review-id="demo-ram">
+  <div class="dm-bar"><button type="button" class="dm-reload" id="dm-reload" aria-label="Načíst kalendář znovu" title="Načíst kalendář znovu" data-review-id="demo-reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg></button><span class="dm-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>advent.vasweb.cz</span><span class="dm-tag" aria-hidden="true">Ukázka</span><a class="dm-admin" href="#administrace" data-review-id="demo-do-administrace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>Administrace</a></div>
   <div class="demo" id="demo" data-theme="fotoskoda" data-review-id="demo-kalendar">
     <svg class="deco" id="demo-deco" aria-hidden="true"></svg>
     <div class="d-wrap">
@@ -1030,7 +1404,7 @@
             <div class="k">Dnešní dárek · den <span id="demo-today-n">7</span></div>
             <div class="t" id="demo-today-t">Překvapení čeká</div>
             <div class="cd">Zmizí za <span id="demo-cd">--:--:--</span></div>
-            <span class="d-btn" id="demo-today-btn" aria-hidden="true">Odkrýt dnešní dárek</span>
+            <button type="button" class="d-btn" id="demo-today-btn">Odkrýt dnešní dárek</button>
           </div>
         </div>
 <div class="d-umi" data-review-id="kalendar-umi">
@@ -1049,9 +1423,9 @@
       <div id="demo-stage"></div>
     </div>
     <div class="d-toast" id="demo-toast" role="status" aria-live="polite"></div>
+    <div class="d-reveal" id="demo-reveal" hidden></div>
   </div>
   </div>
-  <p class="demo-note">Celý kalendář je responzivní: přepněte na Mobil a uvidíte ho tak, jak ho uvidí zákazník v telefonu.</p>
 
 
 </section>
@@ -1060,6 +1434,8 @@
   <span class="section-label">03 - Administrace</span>
   <h2>Administrace, <span class="accent">kterou zvládne každý</span></h2>
   <p class="lead">Funkce a&nbsp;vzhled ladíme na&nbsp;webu pro zákazníky. Administrace zůstává jednoduchá: dárky a&nbsp;texty máte pod kontrolou sami, bez programování.</p>
+  <div class="demo-frame kd-frame" data-review-id="admin-ram">
+  <div class="dm-bar"><span class="dm-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>advent.vasweb.cz/admin</span><span class="dm-tag" aria-hidden="true">Administrace</span><a class="dm-admin" href="#ukazka" data-review-id="admin-zpet-kalendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/></svg>Kalendář</a></div>
   <div class="kd" id="kd" data-theme="light" data-review-id="admin-ukazka">
     <aside class="kd-side">
       <div class="kd-brand"><span class="mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg></span><span class="txt"><b>Kalendář dárků</b>Vaše značka</span></div>
@@ -1080,7 +1456,7 @@
     <div class="kd-main">
       <div class="kd-top">
         <span class="kd-crumbs">Advent 2026<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg><b id="kd-crumb">Přehled</b></span>
-        <button type="button" class="kd-tgl" id="kd-tgl" aria-label="Přepnout světlou a tmavou verzi administrace" title="Světlá / tmavá verze" data-review-id="admin-prepinac-vzhledu"><svg class="ico sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ico moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+        <span class="kd-tools" aria-hidden="true"><span class="kd-ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><span class="kd-ib"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="kd-ib dot"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span><span class="kd-av">VZ</span></span>
       </div>
 
       <div class="kd-page">
@@ -1092,12 +1468,13 @@
                 <h5>Kampaň běží</h5>
                 <p class="mut">Každý den se odkryje jeden dárek. Nic dalšího hlídat nemusíte.</p>
                 <div class="kd-stats">
-                  <div class="kd-stat" style="--c: var(--c-gifts)"><span class="l">Odkrytí dnes</span><b>312</b></div>
-                  <div class="kd-stat" style="--c: var(--c-people)"><span class="l">Účastníci</span><b>2&nbsp;846</b></div>
-                  <div class="kd-stat" style="--c: var(--c-campaigns)"><span class="l">Dárky</span><b>24/24</b></div>
+                  <div class="kd-stat" style="--c: var(--c-gifts)"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="l">Odkrytí dnes</span><b>312</b><span class="tr">+18 % proti včerejšku</span></div>
+                  <div class="kd-stat" style="--c: var(--c-people)"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="l">Účastníci</span><b>2&nbsp;846</b><span class="tr">64 % se souhlasem</span></div>
+                  <div class="kd-stat" style="--c: var(--c-campaigns)"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg></span><span class="l">Dárky</span><b>24/24</b><span class="tr">vše připraveno</span></div>
                 </div>
+                <div class="kd-prog"><div class="kd-prog-h"><span>Průběh kampaně</span><b>den 7 z&nbsp;24</b></div><div class="kd-bar"><i style="width:29%"></i></div></div>
               </div>
-              <div class="kd-mini" aria-hidden="true"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="t"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="kd-mini" aria-hidden="true"><img src="img/nahledy/fotoskoda.webp" alt="" width="240" height="300"><span class="kd-mini-l"><b>Náhled kampaně</b><span>Vánoce v našem domě</span></span></div>
             </div>
           </div>
           <div class="kd-sub">Co udělat, aby kalendář běžel</div>
@@ -1149,7 +1526,7 @@
       </div>
     </div>
   </div>
-  <p class="demo-note">Vpravo nahoře přepnete světlou a tmavou verzi administrace.</p>
+  </div>
 
   <h3>Co v administraci najdete</h3>
   <ul class="dots cols" data-review-id="admin-umi">
@@ -1310,6 +1687,7 @@
     vyroci: seznam([['sleva', 'Výroční sleva 10 %'], ['doprava', 'Doprava zdarma'], ['sleva', 'Sleva 20 % na bestsellery'], ['darek', 'Dárek pro věrné zákazníky'], ['akce', 'Výroční edice v akci'], ['prodejna', 'Poradenství zdarma na prodejně'], ['sleva', 'Kousek z roku 2016 za tehdejší cenu'], ['sleva', 'Sleva 25 % na novou kolekci']], 24, 'VY'),
     sever: seznam([['doprava', 'Doprava zdarma'], ['sleva', 'Sleva 20 % na svetry'], ['sleva', 'Sleva 15 % na značku měsíce'], ['akce', 'Druhý kus za polovic'], ['darek', 'Ponožky k nákupu'], ['sleva', 'Hero produkt za vánoční cenu'], ['prodejna', 'Balení dárků zdarma'], ['sleva', 'Sleva 25 % na doplňky']], 24, 'NO')
   };
+  DARKY.raketa = seznam([['sleva', 'Sleva 10 % na stavebnice'], ['doprava', 'Doprava zdarma'], ['darek', 'Minifigurka k nákupu'], ['sleva', 'Sleva 15 % na novou řadu'], ['prodejna', 'Stavění s námi na prodejně'], ['akce', 'Sáčky dílků 2 + 1 zdarma'], ['sleva', 'Sleva 20 % na stavebnice nad 1 000 Kč'], ['doprava', 'Doprava zdarma'], ['darek', 'Plakát nové řady k objednávce'], ['sleva', 'Sleva 25 % na celou novou řadu']], 10, 'RK');
   // souřadnice oken na ilustraci domu (z návrhu kampaně, obrázek 1856 × 2304)
   var OKNA = {1:[868,1577,117,168],2:[868,915,117,185],3:[619,915,172,185],4:[625,1232,152,211],5:[1294,1522,155,196],6:[1278,555,169,229],7:[392,555,171,229],8:[619,1521,144,197],9:[1081,1232,151,211],10:[1137,1970,271,226],11:[1070,555,169,229],12:[880,605,101,179],13:[1280,915,168,185],14:[1091,1523,143,195],15:[867,1268,118,134],16:[627,555,171,229],17:[437,1970,271,226],18:[1290,1231,158,212],19:[405,1231,153,212],20:[864,1978,119,222],21:[1068,915,172,185],22:[402,915,168,185],23:[400,1520,157,198],24:[789,246,276,144]};
   var OKNA_SN = {1:[398,262,56,56],2:[546,262,56,56],3:[470,198,60,60],4:[420,535,70,70],5:[510,535,70,70],6:[420,630,70,70],7:[510,630,70,70],8:[465,712,70,70],9:[362,842,76,76],10:[462,830,76,76],11:[562,842,76,76],12:[354,937,76,76],13:[462,937,76,76],14:[570,937,76,76],15:[407,1032,76,76],16:[517,1032,76,76],17:[202,628,60,60],18:[110,876,80,80],19:[738,628,60,60],20:[810,876,80,80],21:[46,1140,70,70],22:[232,1160,70,70],23:[698,1160,70,70],24:[884,1140,70,70]};
@@ -1396,7 +1774,7 @@
     '<ellipse cx="581" cy="480" rx="48" ry="44" fill="#000" opacity=".35"/><circle cx="575" cy="468" r="47" fill="#ffd400"/><circle cx="575" cy="468" r="45" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="575" cy="472" r="38" fill="#c2004e"/><circle cx="575" cy="468" r="37" fill="#ff0066"/><circle cx="575" cy="466" r="27" fill="#fff"/><circle cx="575" cy="466" r="25" fill="none" stroke="#ffd1e3" stroke-width="4"/><path d="M545 454 A33 33 0 0 1 569 434" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".75"/>' +
     '<ellipse cx="471" cy="584" rx="48" ry="44" fill="#000" opacity=".35"/><circle cx="465" cy="572" r="47" fill="#44bdb4"/><circle cx="465" cy="572" r="45" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="465" cy="576" r="38" fill="#c2004e"/><circle cx="465" cy="572" r="37" fill="#ff0066"/><circle cx="465" cy="570" r="27" fill="#fff"/><circle cx="465" cy="570" r="25" fill="none" stroke="#ffd1e3" stroke-width="4"/><path d="M435 558 A33 33 0 0 1 459 538" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".75"/>' +
     '<circle cx="144" cy="484" r="32" fill="#000" opacity=".3"/><circle cx="144" cy="480" r="32" fill="#002651"/><circle cx="144" cy="480" r="27" fill="#ff0066"/><circle cx="144" cy="480" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="144" cy="480" r="27" fill="url(#pb-shine)"/><path d="M135.6 433.6 L144 425.2 L152.4 433.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="144" cy="584" r="32" fill="#000" opacity=".3"/><circle cx="144" cy="580" r="32" fill="#002651"/><circle cx="144" cy="580" r="27" fill="#ff0066"/><circle cx="144" cy="580" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="144" cy="580" r="27" fill="url(#pb-shine)"/><path d="M135.6 533.6 L144 525.2 L152.4 533.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="144" cy="684" r="32" fill="#000" opacity=".3"/><circle cx="144" cy="680" r="32" fill="#002651"/><circle cx="144" cy="680" r="27" fill="#ff0066"/><circle cx="144" cy="680" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="144" cy="680" r="27" fill="url(#pb-shine)"/><path d="M135.6 633.6 L144 625.2 L152.4 633.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="788" cy="484" r="32" fill="#000" opacity=".3"/><circle cx="788" cy="480" r="32" fill="#002651"/><circle cx="788" cy="480" r="27" fill="#ff0066"/><circle cx="788" cy="480" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="788" cy="480" r="27" fill="url(#pb-shine)"/><path d="M779.6 433.6 L788 425.2 L796.4 433.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="788" cy="584" r="32" fill="#000" opacity=".3"/><circle cx="788" cy="580" r="32" fill="#002651"/><circle cx="788" cy="580" r="27" fill="#ff0066"/><circle cx="788" cy="580" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="788" cy="580" r="27" fill="url(#pb-shine)"/><path d="M779.6 533.6 L788 525.2 L796.4 533.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="788" cy="684" r="32" fill="#000" opacity=".3"/><circle cx="788" cy="680" r="32" fill="#002651"/><circle cx="788" cy="680" r="27" fill="#ff0066"/><circle cx="788" cy="680" r="25" fill="none" stroke="#c2004e" stroke-width="4"/><circle cx="788" cy="680" r="27" fill="url(#pb-shine)"/><path d="M779.6 633.6 L788 625.2 L796.4 633.6" fill="none" stroke="#ff0066" stroke-width="3.5999999999999996" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>' +
-    '<rect x="240" y="716" width="450" height="20" rx="8" fill="#002651"/><rect x="240" y="716" width="450" height="20" rx="8" fill="none" stroke="url(#pb-chrome)" stroke-width="3"/><rect x="261" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="256" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="256" y="668" width="58" height="44" rx="9" fill="#ffcc00"/><rect x="264" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="351" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="346" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="346" y="668" width="58" height="44" rx="9" fill="#ffcc00"/><rect x="354" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="441" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="436" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="436" y="668" width="58" height="44" rx="9" fill="#ffcc00"/><rect x="444" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="531" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="526" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="526" y="668" width="58" height="44" rx="9" fill="#ffcc00"/><rect x="534" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="621" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="616" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="616" y="668" width="58" height="44" rx="9" fill="#ffcc00"/><rect x="624" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/>' +
+    '<rect x="240" y="716" width="450" height="20" rx="8" fill="#002651"/><rect x="240" y="716" width="450" height="20" rx="8" fill="none" stroke="url(#pb-chrome)" stroke-width="3"/><rect x="261" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="256" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="256" y="668" width="58" height="44" rx="9" fill="#ffcd00"/><rect x="264" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="351" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="346" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="346" y="668" width="58" height="44" rx="9" fill="#ffcd00"/><rect x="354" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="441" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="436" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="436" y="668" width="58" height="44" rx="9" fill="#ffcd00"/><rect x="444" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="531" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="526" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="526" y="668" width="58" height="44" rx="9" fill="#ffcd00"/><rect x="534" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/><rect x="621" y="675" width="58" height="50" rx="9" fill="#000" opacity=".3"/><rect x="616" y="668" width="58" height="52" rx="9" fill="#c79a00"/><rect x="616" y="668" width="58" height="44" rx="9" fill="#ffcd00"/><rect x="624" y="675" width="42" height="9" rx="4.5" fill="#fff" opacity=".45"/>' +
     '<circle cx="465" cy="819" r="32" fill="#000" opacity=".3"/><circle cx="465" cy="815" r="32" fill="#002651"/><circle cx="465" cy="815" r="27" fill="#1dca62"/><circle cx="465" cy="815" r="25" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="465" cy="815" r="27" fill="url(#pb-shine)"/><circle cx="465" cy="899" r="32" fill="#000" opacity=".3"/><circle cx="465" cy="895" r="32" fill="#002651"/><circle cx="465" cy="895" r="27" fill="#ffd400"/><circle cx="465" cy="895" r="25" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="465" cy="895" r="27" fill="url(#pb-shine)"/><circle cx="465" cy="979" r="32" fill="#000" opacity=".3"/><circle cx="465" cy="975" r="32" fill="#002651"/><circle cx="465" cy="975" r="27" fill="#44bdb4"/><circle cx="465" cy="975" r="25" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="465" cy="975" r="27" fill="url(#pb-shine)"/>' +
     '<path d="M122 845 L122 1030 L282 1075 Z" fill="#000" opacity=".3" transform="translate(6 8)" stroke="#000" stroke-width="16" stroke-linejoin="round"/><path d="M122 845 L122 1030 L282 1075 Z" fill="#ff0066" stroke="#fff" stroke-width="16" stroke-linejoin="round"/><path d="M122 845 L122 1030 L282 1075 Z" fill="none" stroke="#c2004e" stroke-width="3" stroke-linejoin="round"/><circle cx="170" cy="1004" r="29" fill="#000" opacity=".3"/><circle cx="170" cy="1000" r="29" fill="#002651"/><circle cx="170" cy="1000" r="24" fill="#1dca62"/><circle cx="170" cy="1000" r="22" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="170" cy="1000" r="24" fill="url(#pb-shine)"/>' +
     '<path d="M808 845 L808 1030 L648 1075 Z" fill="#000" opacity=".3" transform="translate(6 8)" stroke="#000" stroke-width="16" stroke-linejoin="round"/><path d="M808 845 L808 1030 L648 1075 Z" fill="#ff0066" stroke="#fff" stroke-width="16" stroke-linejoin="round"/><path d="M808 845 L808 1030 L648 1075 Z" fill="none" stroke="#c2004e" stroke-width="3" stroke-linejoin="round"/><circle cx="760" cy="1004" r="29" fill="#000" opacity=".3"/><circle cx="760" cy="1000" r="29" fill="#002651"/><circle cx="760" cy="1000" r="24" fill="#ffd400"/><circle cx="760" cy="1000" r="22" fill="none" stroke="#c9a200" stroke-width="4"/><circle cx="760" cy="1000" r="24" fill="url(#pb-shine)"/>' +
@@ -1419,64 +1797,536 @@
     velikonoce: { dni: 24, layout: 'scene', top: '', eyebrow: 'Velikonoce · 24' + NB + 'dní', t: 'Velikonoční kraslice', l: 'Každý den odkryjete jeden ornament na' + NB + 'kraslici. Otevřít jde jen ten dnešní.', btn: 'Odkrýt dnešní dárek', den: 'okénko' },
     narozeniny: { dni: 20, layout: 'scene', top: '', eyebrow: 'Narozeniny · 20 dní oslav', t: 'Slavíme 50' + NB + 'let!', l: 'Padesát let s' + NB + 'vámi. Každá svíčka a' + NB + 'každé patro dortu skrývá jedno okénko.', btn: 'Odkrýt dnešní dárek', den: 'okénko' },
     vyroci: { dni: 10, layout: 'grid', top: '', eyebrow: 'Výročí · 10 let, 10 dnů', t: '10' + NB + 'let s' + NB + 'vámi', l: 'Deset let, deset tisíc objednávek. Děkujeme každý den jedním dárkem.', btn: 'Odkrýt dnešní dárek', den: 'okénko' },
-    sever: { dni: 24, layout: 'grid', top: '', eyebrow: 'Vaše značka · advent 2026', t: 'Útulné Vánoce', l: 'Každý den jedno okénko a' + NB + 'jeden důvod udělat si radost.', btn: 'Odkrýt dnešní dárek', den: 'okénko' }
+    sever: { dni: 24, layout: 'grid', top: '', eyebrow: 'Vaše značka · advent 2026', t: 'Útulné Vánoce', l: 'Každý den jedno okénko a' + NB + 'jeden důvod udělat si radost.', btn: 'Odkrýt dnešní dárek', den: 'okénko' },
+    raketa: { dni: 10, layout: 'raketa', top: '', eyebrow: 'Hračky a stavebnice · nová řada', t: 'Odpočet ke startu', l: 'Deset dní, deset dílků. Každý den přidáte na' + NB + 'raketu jeden dílek a' + NB + 'k' + NB + 'němu dostanete dárek. Desátý den je raketa celá a' + NB + 'startuje s' + NB + 'ní nová řada stavebnic.', btn: 'Přidat dnešní dílek', den: 'dílek', odkryto: { 1: true, 2: true, 3: true, 5: true, 6: true },
+      umi: ['Otevřít jde jen <strong>dnešní dílek</strong>. Propásnutý v' + NB + 'raketě chybí, budoucí jsou zatím jen v' + NB + 'plánu.', 'Délka podle kampaně: <strong>10 dní</strong>, 4 týdny nebo celý advent. Poslední den nejvyšší dárek.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba na' + NB + 'prodejně, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] }
   };
+
+  // raketa ze stavebnice: izometrické kostky v SVG, jedna vrstva = jeden den
+  var RK = [
+    { w: 2, h: 1, c: '#3b4357' },
+    { w: 4, h: 1.2, c: '#ee1d23', fins: 1 },
+    { w: 3, h: 1.2, c: '#f2f5fa' },
+    { w: 3, h: 1.2, c: '#f2f5fa', win: 1 },
+    { w: 3, h: 0.4, c: '#ee1d23' },
+    { w: 3, h: 1.2, c: '#004996' },
+    { w: 3, h: 1.2, c: '#f2f5fa', win: 1 },
+    { w: 3, h: 0.4, c: '#ffcd00' },
+    { w: 2, h: 1.2, c: '#52c018' },
+    { w: 1, h: 1.2, c: '#ee1d23', ant: 1 }
+  ];
+  function odstin(hex, f) {
+    var n = parseInt(hex.slice(1), 16), r = n >> 16, g = n >> 8 & 255, b = n & 255, t = f < 0 ? 0 : 255, p = Math.abs(f);
+    return 'rgb(' + Math.round(r + (t - r) * p) + ',' + Math.round(g + (t - g) * p) + ',' + Math.round(b + (t - b) * p) + ')';
+  }
+  function raketaSVG(stavy, padajici, vse) {
+    var U = 21, CX = 222, CY = 300, K = 0.866;
+    function P(x, y, z) { return (CX + (x - y) * K * U).toFixed(1) + ',' + (CY + (x + y) * 0.5 * U - z * U).toFixed(1); }
+    function kvadr(x0, y0, z0, w, d, h, c, styl) {
+      var x1 = x0 + w, y1 = y0 + d, z1 = z0 + h;
+      var top = [P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)], pr = [P(x1, y0, z1), P(x1, y1, z1), P(x1, y1, z0), P(x1, y0, z0)], lv = [P(x0, y1, z1), P(x1, y1, z1), P(x1, y1, z0), P(x0, y1, z0)];
+      if (styl) return '<polygon points="' + top.join(' ') + '" ' + styl + '/><polygon points="' + pr.join(' ') + '" ' + styl + '/><polygon points="' + lv.join(' ') + '" ' + styl + '/>';
+      return '<polygon points="' + lv.join(' ') + '" fill="' + odstin(c, -0.22) + '"/><polygon points="' + pr.join(' ') + '" fill="' + c + '"/><polygon points="' + top.join(' ') + '" fill="' + odstin(c, 0.28) + '"/>';
+    }
+    function cudliky(x0, y0, z, w, c) {
+      var s = '', i, j, rx = 0.3 * 1.2247 * U, ry = 0.3 * 0.7071 * U, sh = 0.22 * U;
+      for (var k = 0; k <= 2 * (w - 1); k++) for (i = 0; i < w; i++) { j = k - i; if (j < 0 || j >= w) continue;
+        var p = P(x0 + i + 0.5, y0 + j + 0.5, z).split(','), x = +p[0], y = +p[1];
+        s += '<path d="M' + (x - rx).toFixed(1) + ' ' + y + 'v' + (-sh) + 'h' + (2 * rx).toFixed(1) + 'v' + sh + 'z" fill="' + odstin(c, -0.12) + '"/><ellipse cx="' + x + '" cy="' + y + '" rx="' + rx.toFixed(1) + '" ry="' + ry.toFixed(1) + '" fill="' + odstin(c, -0.12) + '"/><ellipse cx="' + x + '" cy="' + (y - sh).toFixed(1) + '" rx="' + rx.toFixed(1) + '" ry="' + ry.toFixed(1) + '" fill="' + odstin(c, 0.42) + '"/>'; }
+      return s;
+    }
+    function okynko(x, z) {
+      var p = P(x, 0, z).split(','), a = -K * U * 0.55, b = 0.5 * U * 0.55, d = -U * 0.55;
+      return '<g transform="matrix(' + a.toFixed(2) + ' ' + b.toFixed(2) + ' 0 ' + d.toFixed(2) + ' ' + p[0] + ' ' + p[1] + ')"><circle r="1" fill="#c9d6ea"/><circle r=".72" fill="#0b093b"/><circle cx="-.25" cy=".25" r=".22" fill="#7fb2ff"/></g>';
+    }
+    function vrstva(L, z, s) {
+      var x0 = -L.w / 2, out = '';
+      var ghost = s === 'missed' ? 'fill="none" stroke="#8a94a8" stroke-width="1.4" stroke-dasharray="4 3"' : s === 'today' ? 'fill="rgba(255,204,0,.22)" stroke="#e0a800" stroke-width="2" stroke-dasharray="5 3"' : 'fill="none" stroke="#004996" stroke-opacity=".45" stroke-width="1.2" stroke-dasharray="3 3"';
+      if (s !== 'open') {
+        if (L.fins) out += kvadr(x0 - 1.2, -0.2, z, 1.2, 0.4, L.h, '', ghost) + kvadr(-0.2, x0 - 1.2, z, 0.4, 1.2, L.h, '', ghost);
+        out += kvadr(x0, x0, z, L.w, L.w, L.h, '', ghost);
+        if (L.fins) out += kvadr(-x0, -0.2, z, 1.2, 0.4, L.h, '', ghost) + kvadr(-0.2, -x0, z, 0.4, 1.2, L.h, '', ghost);
+        return out;
+      }
+      if (L.fins) out += kvadr(x0 - 1.2, -0.2, z - 0.3, 1.2, 0.4, L.h + 0.3, L.c) + kvadr(-0.2, x0 - 1.2, z - 0.3, 0.4, 1.2, L.h + 0.3, L.c);
+      out += kvadr(x0, x0, z, L.w, L.w, L.h, L.c);
+      if (L.win) out += okynko(-x0, z + L.h / 2);
+      if (L.ant) out += kvadr(-0.15, -0.15, z + L.h, 0.3, 0.3, 0.9, '#9aa3b5') + '<circle cx="' + P(0, 0, z + L.h + 1.05).split(',')[0] + '" cy="' + P(0, 0, z + L.h + 1.05).split(',')[1] + '" r="3.2" fill="#ffcd00"/>';
+      else out += cudliky(x0, x0, z + L.h, L.w, L.c);
+      if (L.fins) out += kvadr(-x0, -0.2, z - 0.3, 1.2, 0.4, L.h + 0.3, L.c) + kvadr(-0.2, -x0, z - 0.3, 0.4, 1.2, L.h + 0.3, L.c);
+      return out;
+    }
+    var s = '<svg class="rk' + (vse ? ' launch' : '') + '" viewBox="0 0 420 400" aria-hidden="true"><defs><pattern id="rk-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#004996" stroke-opacity=".09"/></pattern></defs><rect width="420" height="400" fill="url(#rk-grid)"/>';
+    // rampa a věž
+    s += '<g stroke="#9aa3b5" stroke-width="3" fill="none"><path d="M78 302V44M110 318V60M78 44l32 16"/><path d="M78 80l32 16M78 120l32 16M78 160l32 16M78 200l32 16M78 240l32 16M78 280l32 16" stroke-width="2"/><path d="M78 80l32 56M78 160l32 56M78 240l32 56" stroke-width="1.5"/><path d="M110 120h52M110 200h46" stroke-width="2.5"/></g>';
+    s += kvadr(-3.5, -3.5, -0.5, 7, 7, 0.5, '#c3cad8') + cudliky(-3.5, -3.5, 0, 7, '#c3cad8');
+    s += '<g class="rk-smoke">';
+    for (var m = 0; m < 7; m++) s += '<circle cx="' + (150 + m * 24) + '" cy="' + (330 + (m % 2) * 10) + '" r="' + (18 + (m * 7) % 13) + '" fill="#dfe6f1" style="transform-box:fill-box;transform-origin:center;animation-delay:' + (0.4 + m * 0.07).toFixed(2) + 's"/>';
+    s += '</g><g class="rk-ship"><path class="rk-flame" d="M' + CX + ' ' + CY + ' l-11 0 l11 46 l11 -46z" fill="#ffb000"/><path class="rk-flame" d="M' + CX + ' ' + CY + ' l-6 0 l6 28 l6 -28z" fill="#fff3b0"/>';
+    var z = 0, d, kolem = '';
+    for (d = 1; d <= RK.length; d++) {
+      var st = vse ? 'open' : stavy[d - 1];
+      s += '<g class="rk-l ' + st + (padajici === d ? ' drop' : '') + '">' + vrstva(RK[d - 1], z, st) + '</g>';
+      if (padajici === d) { var pc = P(0, 0, z).split(','); kolem = '<ellipse class="rk-ring" cx="' + pc[0] + '" cy="' + pc[1] + '" rx="' + (RK[d - 1].w * U * 0.9) + '" ry="' + (RK[d - 1].w * U * 0.5) + '" fill="none" stroke="#ffcd00" stroke-width="3"/>'; }
+      z += RK[d - 1].h;
+    }
+    s += kolem + '</g>';
+    var hotovo = stavy.filter(function (x) { return x === 'open'; }).length, zbyva = vse ? 0 : RK.length - dnes;
+    s += '<g font-family="JetBrains Mono, monospace" font-weight="700"><rect x="268" y="22" width="134" height="62" rx="10" fill="#0b093b"/><text x="282" y="42" font-size="10" fill="#7fb2ff" letter-spacing="1.5">ODPOČET</text><text x="282" y="68" font-size="22" fill="#ffcd00">' + (zbyva ? 'T−' + zbyva + (zbyva === 1 ? ' DEN' : zbyva < 5 ? ' DNY' : ' DNÍ') : 'START') + '</text>';
+    s += '<text x="268" y="102" font-size="10.5" fill="#3d4a7a">DÍLKY ' + (vse ? RK.length : hotovo) + '/' + RK.length + '</text></g>';
+    s += '<g class="rk-done" font-family="Inter, Arial, sans-serif" text-anchor="middle"><text x="232" y="190" font-size="30" font-weight="900" fill="#0b093b">Start!</text><text x="232" y="216" font-size="14" font-weight="600" fill="#3d4a7a">Nová řada je venku.</text></g>';
+    return s + '</svg>';
+  }
+
+  // 7 nocí pro lepší spánek: fotka ložnice (1792 × 2240), okénka = předměty, měsíc za oknem roste s každou odkrytou nocí
+  var OKNA_SP = { 1: [923, 1890, 372, 240], 2: [140, 820, 170, 150], 3: [10, 560, 210, 360], 4: [250, 1080, 1290, 230], 5: [300, 1480, 1200, 280], 6: [420, 680, 980, 260], 7: [1600, 810, 160, 170] };
+  DARKY.spani = seznam([['darek', 'Plstěné papuče k nákupu nad 1 500 Kč'], ['prodejna', 'Čaj a poradna o spánku na prodejně'], ['sleva', 'Sleva 15 % na lampy a světla'], ['sleva', 'Sleva 20 % na deky a plédy'], ['doprava', 'Doprava zdarma na peřiny'], ['akce', 'Polštáře 2 + 1 zdarma'], ['sleva', 'Sleva 25 % na celou novou kolekci']], 7, 'SP');
+  TEMATA.spani = { dni: 7, dnes: 5, layout: 'scene', top: '', eyebrow: 'Bytový textil · nová kolekce', t: '7 nocí pro lepší spánek', l: 'Každý večer odkryjete jeden předmět v' + NB + 'ložnici a' + NB + 'k' + NB + 'němu dárek. Měsíc za' + NB + 'oknem s' + NB + 'každou nocí roste. Sedmou noc je úplněk a' + NB + 'nejlepší dárek.', btn: 'Odkrýt dnešní noc', den: 'noc', tip: 'Klikněte na' + NB + 'svítící předmět v' + NB + 'ložnici a' + NB + 'odkryjte dárek.', finale: 'Ukázat 7. noc: úplněk', odkryto: { 1: true, 2: true, 4: true },
+    umi: ['Otevřít jde jen <strong>dnešní noc</strong>. Propásnutá zůstane potmě, další se odemknou postupně.', 'Délka podle kampaně: <strong>7 nocí</strong>, týden před uvedením kolekce nebo celý advent.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba na' + NB + 'prodejně, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] };
+  function spaniSVG() {
+    var n = 0, k;
+    for (k in odkryto) if (odkryto[k] && +k <= 7) n++;
+    if (finale) n = 7;
+    var p = 0.1 + 0.9 * n / 7, R = 96, cx = 1060, cy = 250, rx = Math.abs(1 - 2 * p) * R;
+    var lit = p >= 0.995 ? '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="url(#sp-moon)"/>' : '<path d="M' + cx + ' ' + (cy - R) + 'A' + R + ' ' + R + ' 0 0 1 ' + cx + ' ' + (cy + R) + 'A' + rx.toFixed(1) + ' ' + R + ' 0 0 ' + (p < 0.5 ? 0 : 1) + ' ' + cx + ' ' + (cy - R) + 'Z" fill="url(#sp-moon)"/>';
+    var s = '<svg class="sp-fx" viewBox="0 0 1792 2240" preserveAspectRatio="none" aria-hidden="true"><defs>' +
+      '<radialGradient id="sp-glow"><stop offset="0" stop-color="#ffd59a" stop-opacity=".95"/><stop offset=".45" stop-color="#ffc56e" stop-opacity=".45"/><stop offset="1" stop-color="#ffc56e" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="sp-moon" cx=".4" cy=".38"><stop offset="0" stop-color="#fffbea"/><stop offset="1" stop-color="#f3dc9a"/></radialGradient>' +
+      '<linearGradient id="sp-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1033" stop-opacity=".75"/><stop offset="1" stop-color="#3d3a8c" stop-opacity=".15"/></linearGradient>' +
+      '<radialGradient id="sp-soft-w"><stop offset="0" stop-color="#fdf0c4" stop-opacity="1"/><stop offset="1" stop-color="#fdf0c4" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="sp-cl"><stop offset="0" stop-color="#c9cfe8" stop-opacity="1"/><stop offset=".6" stop-color="#c9cfe8" stop-opacity=".5"/><stop offset="1" stop-color="#c9cfe8" stop-opacity="0"/></radialGradient>' +
+      '<filter id="sp-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>' +
+      '<clipPath id="sp-okno"><rect x="520" y="0" width="752" height="634"/></clipPath>';
+    // spotlight on today's object: the rest of the room dims
+    var spot = !finale && !odkryto[dnes] && OKNA_SP[dnes];
+    if (spot) s += '<mask id="sp-m"><rect width="1792" height="2240" fill="#fff"/><ellipse cx="' + (spot[0] + spot[2] / 2) + '" cy="' + (spot[1] + spot[3] / 2) + '" rx="' + (spot[2] * 0.62 + 90) + '" ry="' + (spot[3] * 0.62 + 90) + '" fill="#000" filter="url(#sp-soft)"/></mask>';
+    s += '</defs>';
+    // window: deeper sky, stars, drifting clouds, moon with craters, shooting star, sheep jumping a fence
+    s += '<g clip-path="url(#sp-okno)"><rect x="520" y="0" width="752" height="634" fill="url(#sp-sky)"/>';
+    var r = rnd(17), i;
+    for (i = 0; i < 40; i++) s += '<circle class="sp-star" cx="' + (530 + r() * 732).toFixed(0) + '" cy="' + (10 + r() * 470).toFixed(0) + '" r="' + (1.8 + r() * 3.4).toFixed(1) + '" fill="#fff" style="animation-delay:' + (r() * 3).toFixed(2) + 's;animation-duration:' + (2 + r() * 2.5).toFixed(2) + 's"/>';
+    s += '<circle class="sp-halo" cx="' + cx + '" cy="' + cy + '" r="' + (R * 2.3) + '" fill="url(#sp-soft-w)" opacity="' + (0.25 + 0.5 * p).toFixed(2) + '"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff" opacity=".1"/>' + lit;
+    if (p > 0.4) s += '<g fill="#d9bf78" opacity="' + ((p - 0.4) * 0.9).toFixed(2) + '"><circle cx="' + (cx + 28) + '" cy="' + (cy - 22) + '" r="16"/><circle cx="' + (cx + 42) + '" cy="' + (cy + 34) + '" r="10"/><circle cx="' + (cx - 30) + '" cy="' + (cy + 20) + '" r="12"/></g>';
+    s += '<g class="sp-cloud" fill="url(#sp-cl)" opacity=".55"><ellipse cx="560" cy="330" rx="190" ry="52"/><ellipse cx="620" cy="300" rx="120" ry="50"/></g>';
+    s += '<g class="sp-cloud sp-cloud2" fill="url(#sp-cl)" opacity=".4"><ellipse cx="560" cy="150" rx="150" ry="40"/><ellipse cx="610" cy="128" rx="95" ry="38"/></g>';
+    s += '<path class="sp-meteor" d="M760 80l-150 70" stroke="#fff" stroke-width="5" stroke-linecap="round"/>';
+    s += '<g fill="#0e1430" opacity=".9"><path d="M520 634V598c120-26 260-30 380-18s240 8 372-14v68z"/></g>';
+    s += '</g>';
+    if (spot) s += '<rect class="sp-dim" width="1792" height="2240" fill="#120c22" mask="url(#sp-m)"/>';
+    s += '<ellipse class="sp-lamp" cx="110" cy="640" rx="380" ry="330" fill="url(#sp-glow)"/>';
+    s += '<ellipse class="sp-candle" cx="1676" cy="855" rx="200" ry="230" fill="url(#sp-glow)"/>';
+    for (i = 0; i < 9; i++) s += '<circle class="sp-mote" cx="' + (40 + r() * 300).toFixed(0) + '" cy="' + (560 + r() * 360).toFixed(0) + '" r="' + (3 + r() * 4).toFixed(1) + '" fill="#ffe3b0" style="animation-delay:' + (r() * 6).toFixed(2) + 's"/>';
+    s += '<g class="sp-steam" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"><path d="M205 830c-22-40 22-60 0-100s20-60 0-100"/><path d="M245 840c-22-40 22-60 0-100s20-60 0-100" style="animation-delay:1.1s"/><path d="M225 835c-22-40 22-60 0-100s20-60 0-100" style="animation-delay:2.2s"/></g>';
+    s += '<g class="sp-done" font-family="Inter, Arial, sans-serif" text-anchor="middle"><text x="896" y="470" font-size="104" font-weight="800" fill="#fdf3d0">Dobrou noc.</text><text x="896" y="548" font-size="40" font-weight="600" fill="#f1e3c0">Úplněk a&#160;nejlepší dárek sezóny.</text></g>';
+    return s + '</svg>';
+  }
+
+  // Vzorkovník archivu: černobílá fotka showroomu z Higgsfieldu; každý odkrytý den vrátí barvu jednomu polštáři, vzorky látek jsou okénka
+  // [název látky, barva vzorku, polštář ve fotce: left, top, width, height v %]
+  var VZORKY = [['Bouclé Écru', '#d6cbbb', 9.17, 39.78, 9.72, 7.67], ['Velluto Petrolio', '#123a4a', 19.86, 39.78, 9.31, 7.67], ['Lino Sabbia', '#b8a895', 30.42, 39.78, 9.17, 7.67], ['Terracotta', '#9c5a3f', 40.97, 39.78, 9.03, 7.67], ['Oliva', '#69654c', 51.39, 39.78, 9.17, 7.67], ['Antracite', '#45454a', 62.08, 39.78, 9.17, 7.67], ['Cipria', '#cfaea8', 72.64, 39.78, 9.44, 7.67], ['Oceano', '#6a7f97', 83.33, 39.78, 9.44, 7.67]];
+  DARKY.vzorky = seznam([['sleva', 'Sleva 40 % na křesla ze showroomu'], ['doprava', 'Doprava a montáž zdarma'], ['darek', 'Polštář v látce dne ke křeslu'], ['sleva', 'Sleva 30 % na konferenční stolky'], ['prodejna', 'Konzultace s architektem zdarma'], ['akce', 'Předpremiéra výprodeje jen pro vás'], ['sleva', 'Sleva 35 % na jídelní židle'], ['sleva', 'Sleva 50 % na vybraný solitér']], 8, 'KA');
+  TEMATA.vzorky = { dni: 8, dnes: 5, layout: 'vzorky', top: '', eyebrow: 'Prémiový nábytek · výprodej skladového archivu', t: 'Archiv v barvách', l: 'Osm dní před velkým výprodejem je showroom černobílý. Každý den vrátíte barvu jednomu polštáři a' + NB + 'jeho látka vám otevře dárek. Osmý den je celý archiv v' + NB + 'barvách a' + NB + 'otevíráme sklad pro všechny.', btn: 'Odkrýt dnešní látku', den: 'látka', tip: 'Klikněte na' + NB + 'dnešní vzorek látky nebo na' + NB + 'polštář, který svítí.', finale: 'Ukázat 8. den: archiv v barvách', odkryto: { 1: true, 2: true, 3: true },
+    umi: ['Otevřít jde jen <strong>dnešní látku</strong>. Propásnutý polštář zůstane šedý.', 'Krátká kampaň před akcí: <strong>8 dní</strong> do' + NB + 'výprodeje, otevření showroomu nebo nové kolekce.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba ve' + NB + 'showroomu, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] };
+  function vzorkyHTML() {
+    var T = TEMATA.vzorky, D = DARKY.vzorky, n = T.dni, d, h = '<div class="scene vzk-scene' + (finale ? ' finale' : '') + '">';
+    h += '<div class="vzk-photo vzk-gray"></div>';
+    // one full-size colour copy per opened cushion, clipped to that cushion
+    for (d = 1; d <= n; d++) {
+      var v = VZORKY[d - 1], st = stav(d), cx = v[2] + v[4] / 2, cy = v[3] + v[5] / 2;
+      if (st === 'open') h += '<div class="vzk-photo vzk-col' + (padajici === d ? ' just' : '') + '" style="--t:' + (v[3] - 0.3).toFixed(2) + '%;--r:' + (100 - v[2] - v[4] - 0.3).toFixed(2) + '%;--b:' + (100 - v[3] - v[5] - 0.3).toFixed(2) + '%;--l:' + (v[2] - 0.3).toFixed(2) + '%;--cx:' + cx.toFixed(2) + '%;--cy:' + cy.toFixed(2) + '%"></div>';
+    }
+    if (finale) h += '<div class="vzk-photo vzk-all"></div>';
+    h += '<div class="vzk-head" aria-hidden="true"><b>Otevíráme náš</b><span>skladový archiv</span></div>';
+    for (d = 1; d <= n; d++) {
+      var c = VZORKY[d - 1], s2 = stav(d);
+      h += '<button type="button" class="vzk-pol ' + s2 + '" data-den="' + d + '" tabindex="-1" aria-hidden="true" style="left:' + c[2] + '%;top:' + c[3] + '%;width:' + c[4] + '%;height:' + c[5] + '%"><span class="vzk-num">' + (s2 === 'open' ? ICO[DARKY.vzorky[d - 1].typ] : s2 === 'locked' ? ICO.zamek : d) + '</span></button>';
+    }
+    h += '<div class="vzk-row" role="group" aria-label="Vzorky látek">';
+    for (d = 1; d <= n; d++) {
+      var w = VZORKY[d - 1], s3 = stav(d);
+      h += '<button type="button" class="vzk ' + s3 + (padajici === d ? ' just' : '') + '" data-den="' + d + '" data-review-id="demo-vzorek-' + d + '" aria-label="Látka ' + d + ': ' + popisek(s3) + '" style="--c:' + w[1] + '">' +
+        '<span class="vzk-chip">' + (s3 === 'open' ? ICO[D[d - 1].typ] : s3 === 'locked' ? ICO.zamek : '') + '</span>' +
+        '<span class="vzk-lab"><b>' + (d < 10 ? '0' : '') + d + '</b><i>' + (s3 === 'open' || finale ? w[0] : s3 === 'today' ? 'Dnes' : s3 === 'missed' ? 'Propásnuto' : 'Archiv') + '</i></span></button>';
+    }
+    h += '</div>';
+    if (finale) h += '<div class="vzk-done" aria-hidden="true"><b>24.–26. 9.</b><span>Velký výprodej pokladů ze showroomu a skladu</span></div>';
+    return h + '<button type="button" class="d-finale" data-review-id="demo-finale">' + T.finale + '</button></div>';
+  }
+  // Deset let, deset obálek: fotka z Higgsfieldu, na stěně mřížka 2 × 5 skutečných obálek; otevírání v kódu
+  // [left, top, width, height v %, natočení obálky ve stupních]
+  var OBALKY = [[12.5, 15.0, 12.5, 7.2, 0], [28.1, 15.0, 12.5, 7.2, 0], [43.6, 15.0, 12.4, 7.2, 0], [59.1, 15.0, 12.4, 7.2, 0], [74.6, 15.0, 12.5, 7.2, 0], [12.5, 27.6, 12.5, 7.2, 0], [28.1, 27.6, 12.5, 7.2, 0], [43.6, 27.6, 12.4, 7.2, 0], [59.1, 27.6, 12.4, 7.2, 0], [74.6, 27.6, 12.5, 7.2, 0]];
+  DARKY.obalky = seznam([['sleva', 'Výroční sleva 10 %'], ['doprava', 'Doprava zdarma'], ['darek', 'Dárek k objednávce'], ['sleva', 'Sleva 20 % na bestsellery'], ['akce', 'Výroční akce 2 + 1'], ['prodejna', 'Poradenství zdarma na prodejně'], ['sleva', 'Sleva 15 % na novinky'], ['doprava', 'Doprava zdarma'], ['darek', 'Překvapení pro věrné zákazníky'], ['sleva', 'Sleva 30 % na celý nákup']], 10, 'VY');
+  TEMATA.obalky = { dni: 10, dnes: 6, layout: 'obalky', top: '', eyebrow: 'Výročí e‑shopu · 10 let', t: 'Deset let, deset obálek', l: 'Na' + NB + 'stěně visí deset obálek, jedna za' + NB + 'každý rok s' + NB + 'vámi. Každý den otevřete jednu a' + NB + 'vytáhnete z' + NB + 'ní dárek. Desátý den čeká ten největší.', btn: 'Otevřít dnešní obálku', den: 'obálka', tip: 'Klikněte na' + NB + 'obálku, která svítí, a' + NB + 'vytáhněte z' + NB + 'ní dárek.', finale: 'Ukázat 10. den: všechny obálky', odkryto: { 1: true, 2: true, 3: true, 5: true },
+    umi: ['Otevřít jde jen <strong>dnešní obálku</strong>. Propásnutá zůstane zavřená a zešedne.', 'Počet podle výročí: <strong>10 let, 10 obálek</strong>, ale i' + NB + '5, 15 nebo 30. Poslední den největší dárek.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba na' + NB + 'prodejně, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] };
+  function obalkyHTML() {
+    var T = TEMATA.obalky, D = DARKY.obalky, d, h = '<div class="scene obl-scene' + (finale ? ' finale' : '') + '" role="group" aria-label="Obálky kalendáře">';
+    for (d = 1; d <= T.dni; d++) {
+      var o = OBALKY[d - 1], st = stav(d);
+      h += '<button type="button" class="obl ' + st + (padajici === d ? ' just' : '') + '" data-den="' + d + '" data-review-id="demo-obalka-' + d + '" aria-label="Obálka ' + d + ': ' + popisek(st) + '" style="left:' + o[0] + '%;top:' + o[1] + '%;width:' + o[2] + '%;height:' + o[3] + '%;--rot:' + o[4] + 'deg">' +
+        (st === 'open' ? '<span class="obl-card"><span>' + ICO[D[d - 1].typ] + '</span></span>' : '') +
+        '<span class="obl-n">' + (st === 'locked' ? ICO.zamek : '') + d + '</span></button>';
+    }
+    if (finale) h += '<div class="obl-done" aria-hidden="true">Děkujeme za 10 let</div>';
+    return h + '<button type="button" class="d-finale" data-review-id="demo-finale">' + T.finale + '</button></div>';
+  }
+  // Víkendy na chalupě: malovaná mapa z Higgsfieldu (1792 × 2240), trasa, špendlíky a turista v kódu; 1 okénko = 1 víkend
+  var OKNA_CH = { 1: [594, 1826, 347, 246], 2: [134, 1378, 918, 302], 3: [806, 1154, 314, 123], 4: [930, 918, 235, 112], 5: [538, 638, 246, 224], 6: [918, 314, 560, 426], 7: [627, 213, 134, 190], 8: [941, 18, 90, 150] };
+  // the sandy footpath in the painting, bottom to top (image px); stops snap to its nearest point
+  var CH_TRASA = [[980, 2240], [1050, 2156], [1106, 2086], [1092, 2030], [1036, 1974], [1022, 1904], [1064, 1848], [1162, 1792], [1176, 1750], [1106, 1708], [1008, 1680], [924, 1638], [910, 1596], [952, 1561], [1050, 1533], [1176, 1498], [1246, 1463], [1267, 1407], [1232, 1358], [1134, 1316], [1008, 1288], [868, 1260], [770, 1232], [707, 1183], [694, 1120], [896, 1093], [1098, 1053], [1154, 1026], [938, 966], [868, 938], [854, 896], [896, 868], [1008, 840], [1092, 826], [1106, 798], [1064, 770], [952, 742], [868, 714], [819, 672], [826, 644], [868, 602], [910, 574], [938, 539], [868, 518], [847, 490], [854, 462], [896, 420], [980, 378], [1078, 350], [1099, 322], [1036, 301], [924, 287], [882, 266], [910, 245], [980, 210], [994, 182]];
+  // where each stop sits along the drawn curve (0 = start, 1 = lookout tower); measured once from the path,
+  // hardcoded because sampling the curve at runtime froze the page for seconds
+  var chFrakce = [0, 0.0858, 0.2125, 0.3858, 0.595, 0.7808, 0.9108, 0.9675, 1], chOd = null;
+  DARKY.chalupa = seznam([['sleva', 'Sleva 10 % na víkendový pobyt'], ['darek', 'Snídaně na chalupě zdarma'], ['akce', 'Last minute víkendy v akci'], ['sleva', 'Sleva 15 % na outdoorovou výbavu'], ['prodejna', 'Kola k zapůjčení zdarma'], ['darek', 'Pozdní odjezd v neděli zdarma'], ['doprava', 'Doprava výbavy na chatu zdarma'], ['sleva', 'Víkend pro dva za polovic']], 8, 'CH');
+  TEMATA.chalupa = { dni: 8, dnes: 5, tydny: true, layout: 'scene', top: '', eyebrow: 'Chaty a chalupy · letní sezóna', t: 'Víkendy na chalupě', l: 'Osm víkendů, osm zastávek na jedné trase. Každý pátek se otevře další zastávka a' + NB + 's' + NB + 'ní dárek k' + NB + 'pobytu nebo k' + NB + 'výbavě. Kdo dojde až na' + NB + 'rozhlednu, má víkend pro dva za' + NB + 'polovic.', btn: 'Otevřít víkendovou zastávku', den: 'víkend', tip: 'Klikněte na' + NB + 'zastávku, která svítí, a' + NB + 'turista dojde o' + NB + 'kus dál.', finale: 'Ukázat 8. víkend: rozhledna', odkryto: { 1: true, 2: true, 4: true },
+    umi: ['Otevřít jde jen <strong>tento víkend</strong>. Propásnutá zastávka zůstane šedá, trasa ale pokračuje.', 'Kalendář <strong>po týdnech</strong>: zastávka se otevře každý pátek. Délka podle sezóny.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba na' + NB + 'místě, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] };
+  function chalupaSVG() {
+    // smooth Catmull-Rom curve through the footpath points
+    var P = CH_TRASA, d = 'M' + P[0][0] + ' ' + P[0][1], i;
+    for (i = 0; i < P.length - 1; i++) {
+      var p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+      d += 'C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(0) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(0) + ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(0) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(0) + ' ' + p2[0] + ' ' + p2[1];
+    }
+    var s = '<svg class="ch-fx" viewBox="0 0 1792 2240" preserveAspectRatio="none" aria-hidden="true"><defs><path id="ch-route" d="' + d + '"/></defs>';
+    s += '<use href="#ch-route" class="ch-rest" fill="none" stroke="#fffaf0" stroke-width="9" stroke-linecap="round" stroke-dasharray="2 22"/>';
+    s += '<use href="#ch-route" class="ch-walk ch-walk-c" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round"/><use href="#ch-route" class="ch-walk" fill="none" stroke="#7a9b0a" stroke-width="12" stroke-linecap="round"/>';
+    s += '<g class="ch-smoke" fill="#f4f1ea">';
+    for (i = 0; i < 3; i++) s += '<circle cx="800" cy="1830" r="' + (20 + i * 6) + '" style="animation-delay:' + (i * 1.3).toFixed(1) + 's"/>';
+    s += '</g><g class="ch-glint" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M330 1470h70"/><path d="M560 1540h90" style="animation-delay:1.4s"/><path d="M420 1610h60" style="animation-delay:2.6s"/></g>';
+    s += '<g class="ch-hiker"><circle class="ch-pulse" r="60" fill="#ffd200"/><g transform="translate(0 -98) scale(1.75)">' +
+      '<ellipse cx="0" cy="58" rx="26" ry="8" fill="#000" opacity=".25"/><path d="M-10 30v26M10 30v26" stroke="#5a3b22" stroke-width="9" stroke-linecap="round"/>' +
+      '<rect x="-27" y="-6" width="22" height="36" rx="8" fill="#5e7d00"/><rect x="-16" y="-8" width="32" height="42" rx="12" fill="#ffd200" stroke="#fff" stroke-width="4"/>' +
+      '<circle cx="0" cy="-24" r="17" fill="#f6d2b0" stroke="#fff" stroke-width="4"/><path d="M-18-28a18 16 0 0 1 36 0h10v6h-46z" fill="#7a9b0a"/></g>' +
+      '<animateMotion dur="1s" begin="indefinite" fill="freeze" calcMode="linear" keyPoints="0;0" keyTimes="0;1"><mpath href="#ch-route"/></animateMotion></g>';
+    s += '<g class="ch-done"><rect x="476" y="300" width="840" height="150" rx="75" fill="#7a9b0a" opacity=".95"/><text x="896" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="62" font-weight="700" fill="#fffaf0">Rozhledna dobyta!</text><text x="896" y="420" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600" fill="#f3e6c8">Víkend pro dva za polovic je váš</text></g>';
+    return s + '</svg>';
+  }
+  function chalupaTrasa() {
+    var route = stage.querySelector('#ch-route');
+    if (!route) return;
+    var L = route.getTotalLength();
+    var ted = odkryto[dnes] ? dnes : dnes - 1, cil2 = finale ? 8 : ted, start = chOd === null ? cil2 : chOd;
+    var a = chFrakce[start], b = chFrakce[cil2], walks = stage.querySelectorAll('.ch-walk'), anim = stage.querySelector('.ch-hiker animateMotion');
+    var klid = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (klid) a = b;
+    Array.prototype.forEach.call(walks, function (w) { w.style.strokeDasharray = (a * L).toFixed(0) + ' ' + L.toFixed(0); });
+    anim.setAttribute('keyPoints', a.toFixed(4) + ';' + b.toFixed(4));
+    anim.setAttribute('dur', Math.max(0.01, (b - a) * 7).toFixed(2) + 's');
+    anim.beginElement();
+    if (b > a) requestAnimationFrame(function () { requestAnimationFrame(function () { Array.prototype.forEach.call(walks, function (w) { w.style.transition = 'stroke-dasharray ' + ((b - a) * 7).toFixed(2) + 's linear'; w.style.strokeDasharray = (b * L).toFixed(0) + ' ' + L.toFixed(0); }); }); });
+    chOd = null;
+  }
+
+  // Cestovní pas: stůl z Higgsfieldu, pas, razítka a listování v kódu; 7 razítek na dvoustranu
+  // anonymous border-shop stamps: which border the branch sits on, no real place names
+  var PAS = ['CZ/DE', 'CZ/AT', 'CZ/DE', 'CZ/DE', 'CZ/AT', 'CZ/DE', 'CZ/AT', 'CZ/DE', 'CZ/AT', 'CZ/DE', 'CZ/DE', 'CZ/AT', 'CZ/DE', 'CZ/AT'];
+  var PAS_INK = ['#e30613', '#1d4e9e', '#242527', '#b8862b', '#e30613'];
+  var pasStrana = 0;
+  DARKY.pas = seznam([['sleva', 'Sleva 10 % na kávu'], ['darek', 'Čokoláda k nákupu nad 500 Kč'], ['sleva', 'Sleva 15 % na kosmetiku'], ['akce', 'Sladkosti 2 + 1 zdarma'], ['prodejna', 'Ochutnávka kávy na prodejně'], ['sleva', 'Sleva 20 % na parfémy'], ['doprava', 'Doprava zdarma na e‑shopu'], ['sleva', 'Sleva 10 % na dárkové koše'], ['darek', 'Cestovní taška k nákupu nad 1 000 Kč'], ['akce', 'Víkend slev na čokoládu'], ['sleva', 'Sleva 15 % na sýry a delikatesy'], ['prodejna', 'Balení dárků zdarma na prodejně'], ['sleva', 'Sleva 20 % na čaje a kávu'], ['darek', 'Velký cestovní koš k nákupu nad 2 000 Kč']], 14, 'DF');
+  TEMATA.pas = { dni: 14, dnes: 9, layout: 'pas', top: '', eyebrow: 'Duty free na hranici · léto na cestách', t: 'Cestovní pas plný razítek', l: 'Čtrnáct dní, čtrnáct razítek z' + NB + 'našich prodejen na' + NB + 'hranicích s' + NB + 'Německem a' + NB + 'Rakouskem. Ke' + NB + 'každému razítku dárek. Kdo nasbírá celý pas, toho čtrnáctý den čeká velký cestovní koš.', btn: 'Orazítkovat dnešní den', den: 'razítko', tip: 'Klikněte na' + NB + 'dnešní políčko v' + NB + 'pasu a' + NB + 'dostanete razítko s' + NB + 'dárkem.', finale: 'Ukázat 14. den: plný pas', odkryto: { 1: true, 2: true, 3: true, 5: true, 6: true, 8: true },
+    umi: ['Otevřít jde jen <strong>dnešní razítko</strong>. Propásnuté políčko zůstane v' + NB + 'pasu prázdné.', 'Délka podle kampaně: <strong>14 dní</strong>, celé prázdniny nebo advent. Pas se listuje jako opravdový.', 'Odkrytí <strong>za e&#8209;mail, nebo bez něj</strong>. S' + NB + 'e&#8209;mailem sbíráte kontakty.', 'Sleva, doprava zdarma, dárek, služba na' + NB + 'prodejně, plošná akce. Kód dárku jde zkopírovat jedním klikem.', 'Měření v' + NB + 'GTM a' + NB + 'Google Analytics po' + NB + 'souhlasu s' + NB + 'cookies. Česky i' + NB + 'v' + NB + 'dalších jazycích.'] };
+  var PAS_ZNAK = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#e30613" stroke-width="2"><circle cx="50" cy="44" r="26"/><ellipse cx="50" cy="44" rx="11" ry="26"/><path d="M24 44h52M28 31h44M28 57h44"/></g><text x="50" y="88" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" letter-spacing="2" fill="#e30613">DUTY FREE</text></svg>';
+  function pasRazitko(d) {
+    var c = PAS_INK[d * 3 % 5], m = 'HRANICE ' + PAS[d - 1], tvar = d % 4, id = 'pas-ink' + d, mono = 'font-family="JetBrains Mono, monospace" font-weight="700" fill="' + c + '" stroke="none"';
+    var ic = ICO[DARKY.pas[d - 1].typ].replace('<svg ', '<svg x="44" y="44" width="32" height="32" ');
+    var s = '<svg class="pas-raz" viewBox="0 0 120 120" aria-hidden="true" style="--rot:' + (d * 37 % 24 - 12) + 'deg"><defs><filter id="' + id + '" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="' + d + '"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter>' +
+      '<path id="' + id + 't" d="M16 60a44 44 0 0 1 88 0"/><path id="' + id + 'b" d="M10 60a50 50 0 0 0 100 0"/></defs><g filter="url(#' + id + ')" fill="none" stroke="' + c + '" style="color:' + c + '">';
+    if (tvar === 0) s += '<circle cx="60" cy="60" r="56" stroke-width="4"/><circle cx="60" cy="60" r="37" stroke-width="1.5"/><text ' + mono + ' font-size="12" letter-spacing="1"><textPath href="#' + id + 't" startOffset="50%" text-anchor="middle">' + m + '</textPath></text><text ' + mono + ' font-size="10" letter-spacing="2"><textPath href="#' + id + 'b" startOffset="50%" text-anchor="middle">DEN ' + d + '</textPath></text>' + ic;
+    else if (tvar === 1) s += '<rect x="5" y="20" width="110" height="80" rx="9" stroke-width="4"/><rect x="12" y="27" width="96" height="66" rx="5" stroke-width="1.2"/><text x="60" y="47" text-anchor="middle" ' + mono + ' font-size="11.5">' + m + '</text><path d="M20 54h80" stroke-width="1.2"/>' + ic.replace('x="44" y="44" width="32" height="32"', 'x="22" y="60" width="24" height="24"') + '<text x="82" y="80" text-anchor="middle" ' + mono + ' font-size="15">DEN ' + d + '</text>';
+    else if (tvar === 2) s += '<ellipse cx="60" cy="60" rx="57" ry="42" stroke-width="4"/><ellipse cx="60" cy="60" rx="49" ry="34" stroke-width="1.2"/><text x="60" y="50" text-anchor="middle" ' + mono + ' font-size="11">' + m + '</text><text x="60" y="80" text-anchor="middle" ' + mono + ' font-size="17">DEN ' + d + '</text><path d="M30 58h60" stroke-width="1.2"/>';
+    else s += '<path d="M38 5h44l33 33v44l-33 33H38L5 82V38z" stroke-width="4"/><path d="M41 13h38l28 28v38l-28 28H41L13 79V41z" stroke-width="1.2"/><text x="60" y="38" text-anchor="middle" ' + mono + ' font-size="9">' + m + '</text>' + ic.replace('x="44" y="44"', 'x="44" y="45"') + '<text x="60" y="96" text-anchor="middle" ' + mono + ' font-size="13">DEN ' + d + '</text>';
+    return s + '</g></svg>';
+  }
+  function pasPolicko(d) {
+    var s = stav(d), inner = s === 'open' ? pasRazitko(d) : '<span class="pas-n">' + d + '</span><span class="pas-s">' + (s === 'today' ? 'Dnes' : s === 'locked' ? ICO.zamek : 'Propadlo') + '</span>';
+    return '<button type="button" class="raz ' + s + (padajici === d ? ' just' : '') + '" data-den="' + d + '" data-review-id="demo-razitko-' + d + '" aria-label="Razítko ' + d + ': ' + popisek(s) + '">' + inner + '</button>';
+  }
+  function pasStranka(sp, prava) {
+    var a = sp * 7 + (prava ? 5 : 1), b = sp * 7 + (prava ? 7 : 4), h = '<div class="pg pg-' + (prava ? 'r' : 'l') + '"><div class="pg-h">VÍZA · VISAS<span>' + (sp * 2 + (prava ? 2 : 1)) + '</span></div><div class="pg-g">';
+    for (var d = a; d <= b; d++) h += pasPolicko(d);
+    if (prava) h += '<div class="pg-emb">' + PAS_ZNAK + '</div>';
+    return h + '</div></div>';
+  }
+  function pasHTML() {
+    var T = TEMATA.pas, sp = pasStrana, n = 0, k;
+    for (k in odkryto) if (odkryto[k]) n++;
+    if (finale) n = T.dni;
+    var velke = finale ? '<svg class="pas-velke" viewBox="0 0 240 120" aria-hidden="true"><defs><filter id="pas-ink-v"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.5"/></filter></defs><g filter="url(#pas-ink-v)" fill="none" stroke="#e30613"><rect x="6" y="6" width="228" height="108" rx="10" fill="rgba(246,239,223,.82)" stroke="none"/><rect x="6" y="6" width="228" height="108" rx="10" stroke-width="6"/><rect x="16" y="16" width="208" height="88" rx="6" stroke-width="2"/><text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="25" fill="#e30613" stroke="none" letter-spacing="2">PAS JE PLNÝ</text><text x="120" y="86" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="17" fill="#e30613" stroke="none">Velký cestovní koš je váš</text></g></svg>' : '';
+    return '<div class="scene pas-scene' + (finale ? ' finale' : '') + '"><div class="pas' + (padajici ? ' thud' : '') + '" role="group" aria-label="Cestovní pas, strana ' + (sp + 1) + ' ze 2">' + pasStranka(sp, 0) + pasStranka(sp, 1) + velke + '</div>' +
+      '<div class="pas-nav"><button type="button" class="pas-sip" data-sip="-1" aria-label="Předchozí dvoustrana"' + (sp === 0 ? ' disabled' : '') + '>‹</button><span>Strana ' + (sp + 1) + '/2 · razítka ' + n + '/' + T.dni + '</span><button type="button" class="pas-sip" data-sip="1" aria-label="Další dvoustrana"' + (sp === 1 ? ' disabled' : '') + '>›</button></div>' +
+      '<button type="button" class="d-finale" data-review-id="demo-finale">' + T.finale + '</button></div>';
+  }
+  function pasListuj(smer) {
+    var pas = stage.querySelector('.pas'), nova = pasStrana + smer;
+    if (!pas || nova < 0 || nova > 1) return;
+    var staraL = pas.querySelector('.pg-l').outerHTML, staraR = pas.querySelector('.pg-r').outerHTML;
+    pasStrana = nova; vykresli();
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    pas = stage.querySelector('.pas');
+    var novaL = pas.querySelector('.pg-l').outerHTML, novaR = pas.querySelector('.pg-r').outerHTML;
+    // a still copy of the old facing page plus a page that turns over the spine
+    var drz = document.createElement('div'), list = document.createElement('div');
+    drz.className = 'pas-hold ' + (smer > 0 ? 'l' : 'r'); drz.innerHTML = smer > 0 ? staraL : staraR;
+    list.className = 'pas-turn ' + (smer > 0 ? 'r' : 'l');
+    list.innerHTML = '<div class="f">' + (smer > 0 ? staraR : staraL) + '</div><div class="b">' + (smer > 0 ? novaL : novaR) + '</div>';
+    pas.appendChild(drz); pas.appendChild(list);
+    setTimeout(function () { drz.remove(); list.remove(); }, 760);
+  }
 
   var demo = document.getElementById('demo'); if (!demo) return;
   var stage = document.getElementById('demo-stage');
   var toast = document.getElementById('demo-toast');
   var deco = document.getElementById('demo-deco');
-  var tema = 'fotoskoda', dnes = 7, odkryto = { 2: true, 5: true, 6: true };
+  var tema = 'fotoskoda', dnes = 7, ODKRYTO = { 2: true, 5: true, 6: true }, odkryto = {}, padajici = 0;
+  var reveal = document.getElementById('demo-reveal'), umiUl = demo.querySelector('.d-umi ul'), umiPuvodni = umiUl ? umiUl.innerHTML : '', navrat = null, startTimer = 0, finale = false;
 
   function stav(d) {
+    if (finale) return 'open';
     if (d === dnes) return odkryto[d] ? 'open' : 'today';
     if (d > dnes) return 'locked';
     return odkryto[d] ? 'open' : 'missed';
   }
   function popisek(s) { return s === 'today' ? 'Dnes' : s === 'locked' ? 'Zamčeno' : s === 'missed' ? 'Propásnuto' : 'Odkryto'; }
+  function dni(n) { return n + NB + (n === 1 ? 'den' : n < 5 ? 'dny' : 'dní'); }
+  function tydny(n) { return n + NB + (n === 1 ? 'týden' : n < 5 ? 'týdny' : 'týdnů'); }
+  function velke(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
 
   function vykresli() {
     var T = TEMATA[tema], D = DARKY[tema], s, d, html = '';
-    if (T.layout === 'scene') {
-      var SC = { snehulak: { o: OKNA_SN, w: 10, hh: 12.5, svg: SNEHULAK, cls: ' snow' }, narozeniny: { o: OKNA_NA, w: 10, hh: 12.5, svg: DORT, cls: ' cake' }, hracky: { o: OKNA_HR, w: 10, hh: 12.5, svg: AUTOMAT, cls: ' toy' }, velikonoce: { o: OKNA_VE, w: 10, hh: 12.5, svg: KRASLICE, swing: KRASLICE_VEJCE, cls: ' egg' }, jidlo: { o: OKNA_KO, w: 14, hh: 10.5, svg: '', cls: ' basket' }, moda: { o: OKNA_SK, w: 11.22, hh: 14.02, svg: '', cls: ' wardrobe' } }[tema] || { o: OKNA, w: 18.56, hh: 23.04, svg: '', cls: '' };
+    if (T.layout === 'pas') html = pasHTML();
+    else if (T.layout === 'vzorky') html = vzorkyHTML();
+    else if (T.layout === 'obalky') html = obalkyHTML();
+    else if (T.layout === 'raketa') {
+      var stavy = [];
+      for (d = 1; d <= T.dni; d++) stavy.push(stav(d));
+      html = '<div class="scene raketa">' + raketaSVG(stavy, padajici) + '<div class="rk-dily" role="group" aria-label="Dílky rakety">';
+      for (d = 1; d <= T.dni; d++) {
+        s = stavy[d - 1];
+        var c = RK[d - 1].c, svetla = c === '#f2f5fa' || c === '#ffcc00';
+        html += '<button type="button" class="dil ' + s + '" data-den="' + d + '" data-review-id="demo-dilek-' + d + '" aria-label="Dílek ' + d + ': ' + popisek(s) + '"' + (s === 'open' ? ' style="--c:' + c + (svetla ? ';color:#0b1f44' : '') + '"' : '') + '>' + (s === 'open' ? ICO[D[d - 1].typ] : s === 'locked' ? ICO.zamek : '') + d + '</button>';
+      }
+      html += '</div><button type="button" class="rk-start" data-review-id="demo-raketa-start">Ukázat 10. den: start</button></div>';
+    } else if (T.layout === 'scene') {
+      var SC = { snehulak: { o: OKNA_SN, w: 10, hh: 12.5, svg: SNEHULAK, cls: ' snow' }, narozeniny: { o: OKNA_NA, w: 10, hh: 12.5, svg: DORT, cls: ' cake' }, hracky: { o: OKNA_HR, w: 10, hh: 12.5, svg: AUTOMAT, cls: ' toy' }, velikonoce: { o: OKNA_VE, w: 10, hh: 12.5, svg: KRASLICE, swing: KRASLICE_VEJCE, cls: ' egg' }, jidlo: { o: OKNA_KO, w: 14, hh: 10.5, svg: '', cls: ' basket' }, moda: { o: OKNA_SK, w: 11.22, hh: 14.02, svg: '', cls: ' wardrobe' }, spani: { o: OKNA_SP, w: 17.92, hh: 22.4, svg: spaniSVG(), cls: ' spani' + (finale ? ' finale' : '') }, chalupa: { o: OKNA_CH, w: 17.92, hh: 22.4, svg: chalupaSVG(), cls: ' chalupa' + (finale ? ' finale' : '') } }[tema] || { o: OKNA, w: 18.56, hh: 23.04, svg: '', cls: '' };
       var O = SC.o, W = SC.w, HH = SC.hh;
       html = '<div class="scene' + SC.cls + '" role="group" aria-label="Okénka kalendáře">' + SC.svg + (SC.swing ? '<div class="swing">' + SC.swing : '');
       for (d = 1; d <= T.dni; d++) {
         var o = O[d]; s = stav(d);
-        html += '<div class="win ' + s + '" data-den="' + d + '" data-review-id="demo-okno-' + d + '" aria-label="Okénko ' + d + ': ' + popisek(s) + '" style="left:' + (o[0] / W).toFixed(2) + '%;top:' + (o[1] / HH).toFixed(2) + '%;width:' + (o[2] / W).toFixed(2) + '%;height:' + (o[3] / HH).toFixed(2) + '%">' + (s === 'open' ? ICO[D[d - 1].typ] : '') + '<span class="b">' + d + '</span></div>';
+        html += '<button type="button" class="win ' + s + (padajici === d ? ' just' : '') + '" data-den="' + d + '" data-review-id="demo-okno-' + d + '" aria-label="Okénko ' + d + ': ' + popisek(s) + '" style="left:' + (o[0] / W).toFixed(2) + '%;top:' + (o[1] / HH).toFixed(2) + '%;width:' + (o[2] / W).toFixed(2) + '%;height:' + (o[3] / HH).toFixed(2) + '%">' + (tema === 'chalupa' ? '<span class="b">' + (s === 'open' ? ICO[D[d - 1].typ] : '<span>' + d + '</span>') + '</span>' : tema === 'spani' ? '<span class="b">' + (s === 'open' ? ICO[D[d - 1].typ] : '<span>' + d + '</span>') + '<small>' + (s === 'open' ? 'noc' + NB + d : s === 'today' ? 'dnes' : 'noc') + '</small></span>' : (s === 'open' ? ICO[D[d - 1].typ] : '') + '<span class="b">' + d + '</span>') + '</button>';
       }
-      html += (SC.swing ? '</div>' : '') + '</div>';
+      html += (SC.swing ? '</div>' : '') + (T.finale ? '<button type="button" class="d-finale" data-review-id="demo-finale">' + T.finale + '</button>' : '') + '</div>';
     } else {
       html = '<div class="grid" role="group" aria-label="Okénka kalendáře"' + (tema === 'harfa' ? ' style="grid-template-columns:repeat(5,minmax(0,1fr))"' : '') + '>';
       for (d = 1; d <= T.dni; d++) {
         s = stav(d);
         var ik = s === 'open' ? ICO[D[d - 1].typ] : s === 'locked' ? ICO.zamek : '';
         if (tema === 'harfa' && s !== 'open') ik = ICO.darek;
-        html += '<div class="door ' + s + '" aria-label="Den ' + d + ': ' + popisek(s) + '"' + (tema === 'harfa' ? ' style="aspect-ratio:3/2"' : '') + '>' + ik + '<span class="n">' + d + '</span>' + (tema === 'harfa' ? '' : '<span class="s">' + popisek(s) + '</span>') + '</div>';
+        html += '<button type="button" class="door ' + s + (padajici === d ? ' just' : '') + '" data-den="' + d + '" aria-label="Den ' + d + ': ' + popisek(s) + '"' + (tema === 'harfa' ? ' style="aspect-ratio:3/2"' : '') + '>' + ik + '<span class="n">' + d + '</span>' + (tema === 'harfa' ? '' : '<span class="s">' + popisek(s) + '</span>') + '</button>';
       }
       html += '</div>';
     }
     stage.innerHTML = html;
-    var g = D[dnes - 1];
+    if (tema === 'chalupa') chalupaTrasa();
+    var g = D[dnes - 1], ok = odkryto[dnes];
     document.getElementById('demo-today-n').textContent = dnes;
-    document.getElementById('demo-today-art').innerHTML = ICO.darek;
-    document.getElementById('demo-today-t').textContent = 'Překvapení čeká';
-    document.getElementById('demo-today-btn').textContent = T.btn;
+    document.getElementById('demo-today-art').innerHTML = ok ? ICO[g.typ] : ICO.darek;
+    document.getElementById('demo-today-t').textContent = ok ? g.t : 'Překvapení čeká';
+    document.getElementById('demo-today-btn').textContent = ok ? 'Zobrazit dárek' : T.btn;
+  }
+
+  // karta dárku po otevření okénka
+  function karta(d, nove) {
+    var T = TEMATA[tema], g = DARKY[tema][d - 1], fx = '', i, barvy = ['var(--d-today)', 'var(--d-btn)', '#7fb2ff', '#ffffff'];
+    if (nove) for (i = 0; i < 18; i++) { var a = i / 18 * Math.PI * 2, r = 120 + (i % 3) * 40; fx += '<i class="dc-fx" style="--x:' + Math.round(Math.cos(a) * r) + 'px;--y:' + Math.round(Math.sin(a) * r * 0.8) + 'px;--r:' + (i * 47 % 360) + 'deg;background:' + barvy[i % 4] + '"></i>'; }
+    var zbyva = T.dni - d, pozn;
+    if (tema === 'raketa') pozn = zbyva ? 'Dílek ' + d + ' je na' + NB + 'raketě. Do' + NB + 'startu ' + (zbyva === 1 ? 'zbývá 1' + NB + 'dílek.' : zbyva < 5 ? 'zbývají ' + zbyva + NB + 'dílky.' : 'zbývá ' + zbyva + NB + 'dílků.') : 'Raketa je kompletní. Start!';
+    else if (tema === 'obalky') pozn = zbyva ? 'Obálka ' + d + ' je otevřená. Do' + NB + 'té největší zbývá ' + dni(zbyva) + '.' : 'Všech deset obálek otevřeno. Děkujeme za' + NB + '10' + NB + 'let!';
+    else if (tema === 'vzorky') pozn = zbyva ? 'Polštář v' + NB + 'látce ' + VZORKY[d - 1][0] + ' je zase barevný. Do' + NB + 'otevření archivu zbývá ' + dni(zbyva) + '.' : 'Celý archiv je v' + NB + 'barvách. Přijďte si vybrat svůj kousek.';
+    else if (tema === 'chalupa') pozn = zbyva ? 'Turista došel k' + NB + 'zastávce ' + d + '. Do' + NB + 'rozhledny zbývá ' + (zbyva === 1 ? '1' + NB + 'víkend.' : zbyva < 5 ? zbyva + NB + 'víkendy.' : zbyva + NB + 'víkendů.') : 'Rozhledna dobyta. Víkend pro dva za' + NB + 'polovic je váš.';
+    else if (tema === 'pas') pozn = zbyva ? 'Razítko prodejny na' + NB + 'hranici ' + PAS[d - 1] + ' je v' + NB + 'pasu. Do' + NB + 'plného pasu zbývá ' + dni(zbyva) + ', čtrnáctý den čeká velký cestovní koš.' : 'Pas je plný. Velký cestovní koš je váš.';
+    else if (tema === 'spani') pozn = zbyva ? 'Do' + NB + 'úplňku ' + (zbyva === 1 ? 'zbývá 1' + NB + 'noc.' : zbyva < 5 ? 'zbývají ' + zbyva + NB + 'noci.' : 'zbývá ' + zbyva + NB + 'nocí.') + ' Měsíc za' + NB + 'oknem roste s' + NB + 'každou odkrytou nocí.' : 'Úplněk. Dobrou noc!';
+    else pozn = 'Platí do půlnoci. V' + NB + 'ostrém kalendáři přijde dárek i' + NB + 'e&#8209;mailem.';
+    reveal.innerHTML = fx + '<div class="d-card" role="dialog" aria-modal="true" aria-labelledby="dc-t" data-review-id="demo-karta-darku">' +
+      '<button type="button" class="dc-x" data-akce="zavrit" aria-label="Zavřít">×</button>' +
+      '<div class="dc-ico" aria-hidden="true">' + ICO[g.typ] + '</div>' +
+      '<div class="dc-k">' + velke(T.den) + ' ' + d + (nove ? ' · právě odkryto' : ' · odkryto dříve') + '</div>' +
+      '<div class="dc-t" id="dc-t">' + g.t + '</div>' +
+      (g.kod ? '<div class="dc-code"><code>' + g.kod + '</code><button type="button" class="dc-copy" data-akce="kopirovat" data-kod="' + g.kod + '">Kopírovat</button></div>' : '') +
+      '<button type="button" class="dc-cta" data-akce="eshop">' + (g.kod ? 'Uplatnit v' + NB + 'e&#8209;shopu' : 'Do' + NB + 'e&#8209;shopu') + '</button>' +
+      '<p class="dc-note">' + pozn + '</p>' +
+      (d === dnes ? '<button type="button" class="dc-again" data-akce="znovu">Zavřít okénko a' + NB + 'zkusit znovu</button>' : '') + '</div>';
+    // anchor the card over the calendar stage, not the centre of the whole demo
+    var dr = demo.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    reveal.style.setProperty('--cx', (sr.left - dr.left + sr.width / 2) + 'px');
+    reveal.style.setProperty('--cy', Math.max(260, Math.min(dr.height - 260, sr.top - dr.top + sr.height / 2)) + 'px');
+    reveal.hidden = false;
+    var card = reveal.querySelector('.d-card');
+    reveal.querySelector('.dc-x').focus({ preventScroll: true });
+    var cr = card.getBoundingClientRect();
+    if (cr.top < 70 || cr.bottom > window.innerHeight) card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+  function zavriKartu() {
+    if (reveal.hidden) return;
+    reveal.hidden = true; reveal.innerHTML = '';
+    var el = navrat && stage.querySelector('[data-den="' + navrat + '"]:not([tabindex="-1"])');
+    if (el) el.focus();
+  }
+  var bubTimer = 0;
+  function bublina(el, txt, s) {
+    var b = demo.querySelector('.d-bubble');
+    if (!b) { b = document.createElement('div'); b.className = 'd-bubble'; b.setAttribute('aria-hidden', 'true'); demo.appendChild(b); }
+    b.className = 'd-bubble ' + s;
+    b.innerHTML = (s === 'locked' ? ICO.zamek : '') + '<span>' + txt + '</span>';
+    var dr = demo.getBoundingClientRect(), er = el.getBoundingClientRect(), x = er.left - dr.left + er.width / 2, y = er.top - dr.top;
+    var dole = y < 90;
+    b.style.left = Math.max(120, Math.min(dr.width - 120, x)) + 'px';
+    b.style.top = (dole ? er.bottom - dr.top + 10 : y - 10) + 'px';
+    b.classList.toggle('dole', dole);
+    b.style.setProperty('--sipka', (x - Math.max(120, Math.min(dr.width - 120, x))) + 'px');
+    b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
+    clearTimeout(bubTimer);
+    bubTimer = setTimeout(function () { b.classList.remove('on'); }, 2800);
+  }
+  function klik(d, el) {
+    var s = stav(d), T = TEMATA[tema];
+    navrat = d;
+    if (s === 'locked' || s === 'missed') {
+      if (el) { el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+      var txt = s === 'locked' ? velke(T.den) + ' ' + d + ' se otevře za ' + (T.tydny ? tydny(d - dnes) : dni(d - dnes)) + '.' : (T.tydny ? velke(T.den) : 'Den') + ' ' + d + ' už propadl. Otevřít jde jen ' + (T.tydny ? 'ten aktuální' : 'to dnešní') + '.';
+      zprava(txt);
+      if (el) bublina(el, txt, s);
+      return;
+    }
+    if (s === 'today') {
+      if (T.layout === 'pas') pasStrana = d > 7 ? 1 : 0;
+      if (tema === 'chalupa') chOd = d - 1;
+      odkryto[d] = true; padajici = d; vykresli(); padajici = 0;
+      zprava('');
+      var klid = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(function () { karta(d, true); }, klid ? 0 : (tema === 'raketa' ? 900 : 550));
+      return;
+    }
+    karta(d, false);
+  }
+
+  stage.addEventListener('click', function (e) {
+    var sip = e.target.closest('.pas-sip');
+    if (sip) { pasListuj(+sip.getAttribute('data-sip')); return; }
+    var b = e.target.closest('[data-den]');
+    if (b && !b.closest('.pas-hold, .pas-turn')) { klik(+b.getAttribute('data-den'), b); return; }
+    if (e.target.closest('.rk-start')) {
+      var svg = stage.querySelector('.rk'); if (!svg) return;
+      var tmp = document.createElement('div'); tmp.innerHTML = raketaSVG([], 0, true);
+      svg.parentNode.replaceChild(tmp.firstChild, svg);
+      zprava('Takhle vypadá desátý den, když zákazník posbírá všechny dílky.');
+      clearTimeout(startTimer);
+      startTimer = setTimeout(function () { if (tema === 'raketa') vykresli(); }, 5200);
+      return;
+    }
+    if (e.target.closest('.d-finale')) {
+      if (tema === 'pas') pasStrana = 1;
+      if (tema === 'chalupa') chOd = odkryto[dnes] ? dnes : dnes - 1;
+      finale = true; vykresli(); finale = false;
+      // replay the dimming transition instead of starting already dark
+      var sc = stage.querySelector('.scene.finale');
+      if (sc) { sc.classList.remove('finale'); void sc.offsetWidth; sc.classList.add('finale'); }
+      zprava('Takhle vypadá poslední den, když zákazník neprošvihne ani jeden.');
+      clearTimeout(startTimer);
+      startTimer = setTimeout(function () { vykresli(); }, 6000);
+    }
+  });
+  document.getElementById('demo-today-btn').addEventListener('click', function () { klik(dnes, stage.querySelector('[data-den="' + dnes + '"]:not([tabindex="-1"])')); });
+  reveal.addEventListener('click', function (e) {
+    if (e.target === reveal) { zavriKartu(); return; }
+    var b = e.target.closest('[data-akce]'); if (!b) return;
+    var a = b.getAttribute('data-akce');
+    if (a === 'zavrit') zavriKartu();
+    else if (a === 'kopirovat') {
+      var hotovo = function () { b.textContent = 'Zkopírováno ✓'; };
+      try { navigator.clipboard.writeText(b.getAttribute('data-kod')).then(hotovo, hotovo); } catch (err) { hotovo(); }
+    } else if (a === 'eshop') { zavriKartu(); zprava('V ostrém kalendáři tlačítko vede rovnou do e‑shopu a kód se vloží sám.'); }
+    else if (a === 'znovu') { delete odkryto[dnes]; zavriKartu(); vykresli(); zprava('Okénko je zase zavřené. Zkuste to znovu.'); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') zavriKartu(); });
+  var reload = document.getElementById('dm-reload');
+  if (reload) reload.addEventListener('click', function () {
+    reload.classList.remove('spin'); void reload.offsetWidth; reload.classList.add('spin');
+    nastavTema(tema); zprava('Kalendář je zase na začátku. Zkuste otevřít dnešní okénko.');
+  });
+
+  // the admin preview borrows the chosen calendar's brand colour and font
+  var ADMIN_BARVY = { fotoskoda: '#0d1f52', snehulak: '#0f3d2e', hracky: '#2b1a5e', jidlo: '#7a1a22', moda: '#8f1027', harfa: '#2f8f80', velikonoce: '#2e8b3a', raketa: '#004996', spani: '#0e8348', pas: '#e30613', chalupa: '#5c7600', vzorky: '#111111', obalky: '#b3262c' };
+  // the browser bars and the campaign picker follow the chosen look
+  var SUBDOMENY = { fotoskoda: 'advent', harfa: '30let', zlate: 'advent', sever: 'advent', snehulak: 'snehulak', hracky: 'pinball', moda: 'satnik', jidlo: 'dobroty', velikonoce: 'velikonoce', narozeniny: '50let', vyroci: '10let', raketa: 'start', obalky: 'obalky', spani: 'spanek', pas: 'pas', chalupa: 'chalupa', vzorky: 'vzorky' };
+  function adresy(t) {
+    var host = (SUBDOMENY[t] || 'advent') + '.vasweb.cz', u = document.querySelectorAll('.dm-url');
+    if (u[0]) u[0].lastChild.nodeValue = host;
+    if (u[1]) u[1].lastChild.nodeValue = host + '/admin';
+    Array.prototype.forEach.call(document.querySelectorAll('#kd .kd-camp .nm, #kd .kd-crumbs'), function (n) { n.firstChild.nodeValue = TEMATA[t].t; });
+    Array.prototype.forEach.call(document.querySelectorAll('#kd .kd-step .mut'), function (m) {
+      if (/\.vasweb\.cz/.test(m.textContent)) m.textContent = m.textContent.replace(/[a-z0-9-]+\.vasweb\.cz/, host);
+    });
+  }
+  function adminBarvy(t) {
+    adresy(t);
+    var kd = document.getElementById('kd'), c = ADMIN_BARVY[t];
+    if (!kd || !c) return;
+    kd.style.setProperty('--pb', c);
+    kd.style.setProperty('--pb-bright', 'color-mix(in srgb, ' + c + ' 85%, #000)');
+    kd.style.setProperty('--pb-soft', 'color-mix(in srgb, ' + c + ' 12%, transparent)');
+    kd.style.setProperty('--pb-shadow', 'color-mix(in srgb, ' + c + ' 30%, transparent)');
+    kd.style.setProperty('--side-grad', 'linear-gradient(180deg, ' + c + ' 0%, color-mix(in srgb, ' + c + ' 80%, #000) 100%)');
+    kd.style.setProperty('--tag-pb-bg', 'color-mix(in srgb, ' + c + ' 12%, #fff)');
+    kd.style.setProperty('--tag-pb-fg', 'color-mix(in srgb, ' + c + ' 85%, #000)');
+    kd.style.setProperty('--k-font', getComputedStyle(demo).getPropertyValue('--d-font') || 'inherit');
+    var mini = kd.querySelector('.kd-mini');
+    if (mini) { mini.querySelector('img').src = 'img/nahledy/' + t + '.webp'; mini.querySelector('.kd-mini-l span').textContent = TEMATA[t].t; }
+    if (!kd.getAttribute('data-typy')) {
+      // gift type cells get the same icons as the calendar windows
+      var TYPY = { 'Sleva': 'sleva', 'Doprava zdarma': 'doprava', 'Dárek k objednávce': 'darek', 'Služba na prodejně': 'prodejna', 'Plošná akce': 'akce' };
+      Array.prototype.forEach.call(kd.querySelectorAll('.kd-view[data-v="darky"] tbody tr'), function (tr) {
+        var td = tr.children[2], txt = td ? td.textContent.replace(/ /g, ' ').trim() : '', k = TYPY[txt];
+        if (k) td.innerHTML = '<span class="kd-typ"><span class="ti">' + ICO[k] + '</span>' + td.innerHTML.trim() + '</span>';
+      });
+      kd.setAttribute('data-typy', '1');
+    }
   }
   function nastavTema(t) {
-    tema = t; var T = TEMATA[t];
+    tema = t; var T = TEMATA[t], k, zdroj = T.odkryto || ODKRYTO;
+    odkryto = {}; for (k in zdroj) odkryto[k] = zdroj[k];
+    dnes = T.dnes || 7; finale = false; pasStrana = dnes > 7 ? 1 : 0;
+    clearTimeout(startTimer);
     demo.setAttribute('data-theme', t);
     document.getElementById('demo-top').innerHTML = T.top + '<span>' + T.eyebrow + '</span>';
     document.getElementById('demo-title').textContent = T.t;
     document.getElementById('demo-lead').textContent = T.l;
+    if (umiUl) umiUl.innerHTML = T.umi ? '<li>' + T.umi.join('</li><li>') + '</li>' : umiPuvodni;
     var im = document.getElementById('demo-hero-img');
     if (T.img) { im.src = T.img; im.hidden = false; } else { im.hidden = true; im.removeAttribute('src'); }
-    Array.prototype.forEach.call(document.querySelectorAll('.seg button[data-theme]'), function (o) { o.setAttribute('aria-pressed', o.getAttribute('data-theme') === t ? 'true' : 'false'); });
-    kresliDekor(t); zprava(''); vykresli();
+    Array.prototype.forEach.call(document.querySelectorAll('button[data-theme]'), function (o) { o.setAttribute('aria-pressed', o.getAttribute('data-theme') === t ? 'true' : 'false'); });
+    var vyb = document.querySelector('button.vz-th[data-theme="' + t + '"]');
+    if (vyb) {
+      document.getElementById('vz-cap-t').textContent = vyb.getAttribute('aria-label');
+      document.getElementById('vz-cap-m').textContent = vyb.getAttribute('data-meta');
+      var st = document.getElementById('vz-cap-s'); st.textContent = vyb.getAttribute('data-stitek'); st.hidden = !st.textContent;
+      // keep the chosen thumbnail visible in the scrollable strip without scrolling the page
+      var pas = vyb.closest('.vz-strip'), pr = pas.getBoundingClientRect(), vr = vyb.getBoundingClientRect();
+      if (vr.left < pr.left || vr.right > pr.right) pas.scrollLeft += vr.left - pr.left - (pr.width - vr.width) / 2;
+    }
+    zavriKartu();
+    adminBarvy(t);
+    kresliDekor(t); zprava(T.tip || 'Klikněte na' + NB + 'dnešní ' + T.den + ' a' + NB + 'odkryjte dárek.'); vykresli();
   }
   function zprava(t) { toast.textContent = t; }
 
-  Array.prototype.forEach.call(document.querySelectorAll('.seg button[data-theme]'), function (btn) { btn.addEventListener('click', function () { nastavTema(btn.getAttribute('data-theme')); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('button[data-theme]'), function (btn) { btn.addEventListener('click', function () { nastavTema(btn.getAttribute('data-theme')); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('.vz-th'), function (btn) {
+    var w = document.createElement('span'), tip = document.createElement('span');
+    w.className = 'vz-th-w'; tip.className = 'vz-tip'; tip.setAttribute('aria-hidden', 'true');
+    tip.innerHTML = '<b>' + btn.getAttribute('aria-label') + '</b><small>' + btn.getAttribute('data-meta') + '</small>';
+    btn.removeAttribute('title');
+    btn.parentNode.insertBefore(w, btn); w.appendChild(btn); w.appendChild(tip);
+  });
   var frame = document.getElementById('demo-frame');
   Array.prototype.forEach.call(document.querySelectorAll('.seg button[data-device]'), function (btn) {
     btn.addEventListener('click', function () {
@@ -1491,7 +2341,11 @@
   function kresliDekor(th) {
     var w = 1000, h = 700, r = rnd(th.length * 7 + 3), s = '', i;
     deco.setAttribute('viewBox', '0 0 ' + w + ' ' + h); deco.setAttribute('preserveAspectRatio', 'none');
-    if (th === 'fotoskoda' || th === 'snehulak') {
+    if (th === 'raketa') {
+      for (i = 0; i <= w; i += 50) s += '<path d="M' + i + ' 0V' + h + '" stroke="#004996" stroke-opacity=".06"/>';
+      for (i = 0; i <= h; i += 50) s += '<path d="M0 ' + i + 'H' + w + '" stroke="#004996" stroke-opacity=".06"/>';
+      for (i = 0; i < 14; i++) { var px = Math.round(r() * w), py = Math.round(r() * h); s += '<path d="M' + (px - 5) + ' ' + py + 'h10M' + px + ' ' + (py - 5) + 'v10" stroke="#004996" stroke-opacity=".25" stroke-width="1.5"/>'; }
+    } else if (th === 'fotoskoda' || th === 'snehulak') {
       for (i = 0; i < 80; i++) s += '<circle cx="' + (r() * w).toFixed(0) + '" cy="' + (r() * h).toFixed(0) + '" r="' + (0.8 + r() * 2).toFixed(1) + '" fill="#fff" opacity="' + (0.15 + r() * 0.45).toFixed(2) + '"/>';
     } else if (th === 'zlate') {
       for (i = 0; i < 40; i++) { var x = r() * w, y = r() * h, z = 2 + r() * 4; s += '<path d="M' + x + ' ' + (y - z) + 'L' + (x + z / 3) + ' ' + (y - z / 3) + 'L' + (x + z) + ' ' + y + 'L' + (x + z / 3) + ' ' + (y + z / 3) + 'L' + x + ' ' + (y + z) + 'L' + (x - z / 3) + ' ' + (y + z / 3) + 'L' + (x - z) + ' ' + y + 'L' + (x - z / 3) + ' ' + (y - z / 3) + 'Z" fill="#d9b45a" opacity="' + (0.25 + r() * 0.5).toFixed(2) + '"/>'; }
@@ -1554,9 +2408,6 @@
       Array.prototype.forEach.call(kd.querySelectorAll('.kd-view'), function (p) { p.hidden = p.getAttribute('data-v') !== v; });
       crumb.textContent = b.textContent.trim();
     });
-  });
-  document.getElementById('kd-tgl').addEventListener('click', function () {
-    kd.setAttribute('data-theme', kd.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
 })();
 
@@ -1630,5 +2481,9 @@
 })();
 </script>
 <button type="button" class="totop" id="totop" aria-label="Nahoru na začátek" title="Nahoru" data-review-id="totop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></button>
+<!-- INTERNAL: version switcher for comparing the landing page variants. Remove before publishing. -->
+<nav class="ver-switch" aria-label="Interní přepínač verzí" data-review-id="interni-prepinac-verzi"><span>Interní náhled</span><a href="index.html" data-ver aria-current="page">Původní</a><a href="index-v2.html" data-ver>Nová</a></nav>
+<style>.ver-switch{position:fixed;left:14px;bottom:14px;z-index:95;display:flex;align-items:center;gap:4px;padding:4px 4px 4px 12px;border-radius:100px;background:rgba(10,10,10,.88);color:#fff;font:600 12.5px/1 system-ui,Arial,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)}.ver-switch span{opacity:.7;margin-right:6px}.ver-switch a{color:#fff;border:0;padding:7px 12px;border-radius:100px}.ver-switch a[aria-current]{background:#fff;color:#0a0a0a}@media print{.ver-switch{display:none}}</style>
+<script>document.querySelectorAll(".ver-switch a[data-ver]").forEach(function(a){a.addEventListener("click",function(){a.href=a.getAttribute("href").split("#")[0]+location.hash;});});</script>
 </body>
 </html>
