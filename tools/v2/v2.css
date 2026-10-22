@@ -128,7 +128,7 @@
   /* Co kalendář přinese: the growth claim as a giant statement */
   #prinos .keybox.benefit { background: transparent; border: 0; box-shadow: none; padding: 0; color: var(--v2-on-red); }
   #prinos .keybox.benefit::before, #prinos .keybox.benefit::after { display: none; }
-  #prinos .big-num { grid-template-columns: 1fr 1fr; gap: 0; margin: 40px 0 40px; }
+  #prinos .big-num { grid-template-columns: 1fr 1fr; gap: 0; margin: 0 0 40px; }
   #prinos .big-num .bn:first-child { padding-right: 56px; }
   #prinos .big-num .bn { flex-direction: column; gap: 22px; padding: 8px 0 8px; }
   #prinos .big-num .bn + .bn { border-left-color: rgba(255,246,240,.3); padding-left: 56px; }
