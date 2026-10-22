@@ -33,10 +33,10 @@ Poznámka od Michala, 22. 10. 2026. Robí sa oddelene od nových vzhľadov kalen
 
 ## Stav: interná verzia 2 (22. 10. 2026)
 
-**Súbory a prepínač**
-- `index-v2.html` je vedľa pôvodného `index.html` a generuje sa skriptom z `index.html`, takže obsah je rovnaký.
-- **Nová verzia je predvolená:** `vercel.json` (routes, nie rewrites, lebo tie statický `index.html` neprebijú) servíruje na `/` súbor `index-v2.html`. `noindex` má teraz pôvodná `index.html` a v prepínači je „Nová“ prvá.
-- Interný prepínač „Původní / Nová“ je vľavo dole na oboch stránkach a zachová kotvu (`#ukazka` ostane `#ukazka`). Je to blok `.ver-switch` označený `INTERNAL` a pred publikáciou sa zmaže.
+**Súbory a prepínač** (upravené 22. 10. 2026 večer)
+- Nová stránka je hlavná: `index.html` na `/`. Generuje sa skriptom z pôvodnej stránky `index-old.html`, takže obsah je rovnaký.
+- `noindex` má `index-old.html`. Staré odkazy na `/index-v2.html` presmeruje `vercel.json` na `/`.
+- Interný prepínač „Původní / Nová“ je vypnutý (`SHOW_SWITCHER = False` v `tools/v2/build_v2.py`). Hodnota `True` ho vráti na obe stránky.
 
 **Hlavička a navigácia**
 - Lepkavá lišta zodpovedá hlavičke: logo, pilulka so sekciami a „Chci kalendář“. Po zoskrolovaní dostane rozmazané krémové pozadie, červený pásik priebehu a čiernu pilulku pri aktuálnej sekcii.
@@ -50,7 +50,7 @@ Poznámka od Michala, 22. 10. 2026. Robí sa oddelene od nových vzhľadov kalen
   - karty s ikonami PragueBest (`img/icons/`),
   - Tip ako tri karty vedľa seba.
 - Demo kalendára je na svetlom pase a dedí rám monitora z pôvodnej verzie.
-- Administrácia je v rovnakom monitore ako demo (rovnaké markup aj CSS ako `index.html`) a prefarbuje sa podľa zvoleného vzhľadu.
+- Administrácia je v rovnakom monitore ako demo (rovnaké markup aj CSS ako `index-old.html`) a prefarbuje sa podľa zvoleného vzhľadu.
 - „Jak to probíhá“ je červený pás so šiestimi krokmi s obrysovými číslami 01–06.
 - „Proč ne krabicová služba“ je porovnanie ako cenník: tlmená karta SaaS proti väčšej čiernej karte PragueBest so štítkom „Doporučujeme“ a CTA.
 - Technologické okénko:
@@ -74,7 +74,7 @@ Poznámka od Michala, 22. 10. 2026. Robí sa oddelene od nových vzhľadov kalen
 **Generovanie v2**
 - Skript je v repe: `tools/v2/build_v2.py` (+ `v2.css`, `logo.svg`). Spustenie: `python tools/v2/build_v2.py`.
 - Git hooky v `tools/v2/hooks` (zapnuté cez `git config core.hooksPath tools/v2/hooks`):
-  - `pre-commit` pregeneruje v2 pri každom commite, ktorý mení `index.html`,
+  - `pre-commit` pregeneruje `index.html` pri každom commite, ktorý mení `index-old.html`,
   - `post-merge` ju pregeneruje a commitne po merge vetvy `nove-vzhledy`.
-- Vzhľady sa robia v `index.html` na `nove-vzhledy`. Do v2 sa dostanú samy po merge do `landing-vizual`.
+- Vzhľady sa robia v `index-old.html` na `nove-vzhledy`, `index.html` sa ručne neupravuje. Do v2 sa dostanú samy po merge do `landing-vizual`.
 - Popisky náhľadov v hlavičke v2 sa berú z prepínača vzhľadov. Obrázky `img/hero/<id>.webp` (520×650) treba pri zmene vzhľadu pregenerovať.

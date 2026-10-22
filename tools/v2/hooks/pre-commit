@@ -1,6 +1,6 @@
 #!/bin/sh
-# Rebuild index-v2.html whenever index.html is part of the commit, so both pages stay in sync.
+# Rebuild index.html whenever index-old.html is part of the commit, so both pages stay in sync.
 [ -f tools/v2/build_v2.py ] || exit 0
-git diff --cached --name-only | grep -qE '^(index.html|tools/v2/)' || exit 0
-python -I tools/v2/build_v2.py >/dev/null || { echo "build_v2.py failed, index-v2.html not rebuilt" >&2; exit 1; }
-git add index-v2.html
+git diff --cached --name-only | grep -qE '^(index-old\.html|tools/v2/)' || exit 0
+python -I tools/v2/build_v2.py >/dev/null || { echo "build_v2.py failed, index.html not rebuilt" >&2; exit 1; }
+git add index.html index-old.html

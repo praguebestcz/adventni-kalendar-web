@@ -9,12 +9,12 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d92b48">
 <title>Letos obdarujte i své zákazníky | PragueBest</title>
-<meta name="robots" content="noindex">
 <meta name="description" content="Vánoce se blíží a všichni shánějí dárky. Co kdyby je zákazníci dostávali každý den od vás? Adventní kalendář na vašem webu, ve vašem designu. Plus 10 % obratu v prosinci.">
 <meta property="og:title" content="Letos obdarujte i své zákazníky | PragueBest">
 <meta property="og:description" content="Vánoce se blíží. Adventní kalendář na vašem webu: 24 dní, 24 dárků, plus 10 % obratu v prosinci.">
 <meta property="og:type" content="website">
 <link rel="preload" as="image" href="img/fotoskoda-dum.webp">
+<link rel="preload" href="fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Inter-Variable-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Inter-Variable-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -1211,6 +1211,294 @@
 
   @media print { html { background: #fff; } body::before, .keybox::before, #ukazka h2::after { display: none !important; } .card, .perk, .big-num .bn, .table-wrap, details.more, nav.toc-list { -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; } }
 </style>
+<style id="v2-styles">
+  /* ===== Varianta 2 (interní): PragueBest design system, rytmus sekcí jako givingli.com ===== */
+  @font-face { font-family: 'Satoshi'; src: url('fonts/Satoshi-Variable.woff2') format('woff2-variations'); font-weight: 300 900; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Satoshi Fallback'; src: local('Arial'); size-adjust: 102%; ascent-override: 96%; descent-override: 26%; line-gap-override: 0%; }
+  :root {
+    /* PragueBest tokens (website/src/styles/tokens): paper, ink, red */
+    --red-500: #e30613; --red-600: #c00410; --red-700: #9a030d; --paper-0: #ffffff; --paper-50: #fbf7ee; --paper-100: #f6f0e2; --paper-200: #f2ece0; --paper-300: #ebe3d1; --medal-gold: #c9a227; --ink-900: #0a0a0a;
+    --accent: var(--red-500); --accent-bright: #f75142; --accent-soft: rgba(227,6,19,0.06);
+    --bg: var(--paper-200); --bg-card: var(--paper-50);
+    --ink: #0a0a0a; --ink-2: #2a2a2a; --ink-3: #6b6862; --ink-4: #8a8680;
+    --line: rgba(10,10,10,0.14); --line-soft: rgba(10,10,10,0.08);
+    --v2-font: 'Satoshi', 'Satoshi Fallback', Arial, system-ui, sans-serif;
+    --v2-shadow-xl: 0 30px 60px -30px rgb(10 10 10 / 0.30), 0 12px 24px -18px rgb(10 10 10 / 0.18);
+    --v2-shadow-lg: 0 12px 32px rgb(10 10 10 / 0.10), 0 4px 8px rgb(10 10 10 / 0.06);
+    --v2-on-red: #fff6f0;
+  }
+  html, body { overflow-x: clip; }
+  body { font-family: var(--v2-font); font-feature-settings: normal; background: var(--bg); color: var(--ink); }
+  .container { padding-top: 0; }
+  a { color: var(--accent); border-bottom-color: rgba(227,6,19,0.25); }
+  .snowfall { display: none; }
+
+  /* --- sticky top bar (replaces the old sticky nav in this variant) --- */
+  .stickynav { display: none; }
+  .v2-navbar { position: sticky; top: 0; z-index: 60; }
+  .v2-navbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); background: rgba(242,236,224,.88); -webkit-backdrop-filter: saturate(160%) blur(14px); backdrop-filter: saturate(160%) blur(14px); box-shadow: 0 1px 0 var(--line-soft), 0 10px 30px -20px rgba(10,10,10,.35); opacity: 0; transition: opacity .25s ease; }
+  .v2-navbar.is-stuck::before { opacity: 1; }
+  .v2-prog { position: absolute; left: calc(50% - 50vw); right: calc(50% - 50vw); bottom: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; opacity: 0; transition: opacity .25s ease; }
+  .v2-navbar.is-stuck .v2-prog { opacity: 1; }
+  .v2-nav { display: flex; align-items: center; gap: 24px; padding: 22px 0; transition: padding .25s ease; }
+  .v2-navbar.is-stuck .v2-nav { padding: 10px 0; }
+  .v2-navbar.is-stuck .v2-logo svg { height: 32px; }
+  .v2-links a.is-on { background: var(--ink); color: var(--paper-100); }
+  .v2-logo svg { transition: height .25s ease; }
+  .v2-logo { display: inline-flex; border: 0; color: var(--ink); }
+  .v2-logo svg { display: block; height: 38px; width: auto; }
+  .v2-links { display: flex; gap: 4px; margin: 0 auto; padding: 4px; border-radius: 100px; background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1px var(--line-soft); }
+  .v2-links a { border: 0; padding: 8px 14px; border-radius: 100px; color: var(--ink); font-size: 14.5px; font-weight: 600; }
+  .v2-links a:hover { background: rgba(10,10,10,.06); }
+  .v2-btn { display: inline-flex; align-items: center; gap: 10px; border: 0; border-radius: 100px; padding: 15px 26px; font: inherit; font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+  .v2-btn:hover { transform: translateY(-2px); }
+  .v2-btn.primary { background: var(--accent); color: #fff; box-shadow: 0 10px 24px -10px rgba(227,6,19,.6); }
+  .v2-btn.primary:hover { background: var(--red-600); }
+  .v2-btn.dark { background: var(--ink); color: var(--paper-100); }
+  .v2-btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+  .v2-btn.sm { padding: 10px 18px; font-size: 14.5px; }
+
+  /* --- hero: big centred claim, four clickable calendar previews around it --- */
+  .v2-hero { position: relative; }
+  .v2-stage { position: relative; min-height: 780px; padding: 84px 0 70px; }
+  .v2-copy { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; text-align: center; }
+  .v2-copy h1 { font-family: var(--v2-font); font-size: clamp(40px, 5.2vw, 80px); font-weight: 500; letter-spacing: -0.045em; line-height: .98; color: var(--ink); margin: 0 auto 28px; max-width: 16.5ch; text-wrap: balance; }
+  .v2-copy h1 .accent { color: var(--accent); font-weight: 500; }
+  .v2-mark { padding: 0 .06em; background: linear-gradient(transparent 58%, rgba(227,6,19,.22) 58%, rgba(227,6,19,.22) 90%, transparent 90%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .v2-copy .cap svg { left: -0.42em; top: -0.36em; }
+  .v2-sub { font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; letter-spacing: -0.015em; color: var(--ink-2); max-width: 620px; margin: 0 auto 34px; text-wrap: pretty; }
+  .v2-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .v2-proof { margin: 30px auto 0; max-width: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 30px; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); }
+  .v2-proof span { display: inline-flex; align-items: center; gap: 10px; }
+  .v2-proof span::before { content: "✦"; font-size: 24px; line-height: 1; color: var(--medal-gold); text-shadow: 0 0 12px rgba(201,162,39,.45); }
+  .v2-shot { position: absolute; z-index: 1; display: block; width: var(--w); left: var(--x); right: var(--xr); top: var(--y); rotate: var(--r); border: 0; color: var(--ink); text-decoration: none; animation: v2Float var(--d, 7s) ease-in-out infinite; animation-delay: var(--dl, 0s); transition: rotate 1.1s cubic-bezier(.22,.61,.36,1), scale 1.1s cubic-bezier(.22,.61,.36,1); }
+  .v2-shot img { display: block; width: 100%; height: auto; border-radius: 16px; box-shadow: var(--v2-shadow-xl), 0 0 0 7px #fff; }
+  .v2-shot span { position: absolute; left: 50%; bottom: -16px; translate: -50% 0; padding: 7px 13px; border-radius: 100px; background: var(--paper-0); box-shadow: var(--v2-shadow-lg); font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+  .v2-shot span::after { content: " →"; color: var(--accent); }
+  .v2-shot:hover, .v2-shot:focus-visible { rotate: calc(var(--r) * .55); scale: 1.015; z-index: 3; }
+  .v2-shot:focus-visible { outline: 3px solid var(--accent); outline-offset: 10px; border-radius: 18px; }
+  @keyframes v2Float { 50% { translate: 0 -10px; } }
+  .v2-spark { position: absolute; z-index: 1; width: 22px; height: 22px; color: var(--medal-gold); animation: v2Tw 3.2s ease-in-out infinite; }
+  @keyframes v2Tw { 50% { opacity: .25; transform: scale(.7); } }
+
+  /* callouts below the hero */
+  .hero-callouts { margin: 0 0 56px; }
+  .hero-callouts .callout { background: var(--paper-50); border-radius: 24px; box-shadow: var(--v2-shadow-lg); }
+  .hero-callouts .callout .label { font-family: var(--v2-font); font-size: 19px; }
+
+  /* --- sections: full-bleed bands; cream, white, red and near-black like Givingli --- */
+  section { position: relative; z-index: 0; margin: 0; padding: 112px 0; }
+  section::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); background: var(--band, transparent); }
+  #ukazka, #srovnani, #aplikace { --band: var(--paper-50); }
+  #administrace { --band: var(--paper-200); }
+  /* clear the monitor stand and its shadow before the feature list */
+  @media (min-width: 900px) { #administrace .kd-frame { margin-bottom: 112px; } }
+  #prinos, #postup { --band: var(--red-500); }
+  #okenko { --band: var(--paper-100); }
+  #kontakt { --band: var(--ink-900); }
+  h2 { font-family: var(--v2-font); font-size: clamp(2.5rem, 3vw + 1.25rem, 5rem); font-weight: 600; letter-spacing: -0.045em; line-height: .98; margin-bottom: 22px; max-width: 16ch; text-wrap: balance; }
+  h3 { font-family: var(--v2-font); letter-spacing: -0.025em; }
+  .lead { font-size: clamp(18px, 1.3vw, 21px); line-height: 1.5; color: var(--ink-2); margin-bottom: 40px; text-wrap: pretty; }
+  p { color: var(--ink-2); }
+  .keybox { border-radius: 28px; padding: 40px 42px 34px; }
+  .table-wrap { border-radius: 22px; background: var(--paper-0); }
+  table.cmp th { background: var(--paper-100); }
+  /* look picker: no box; big centred thumbnails, the caption bar docks onto the monitor bezel */
+  #ukazka .demo-bar { background: transparent; border: 0; border-radius: 0; padding: 0; margin: 8px 0 0; box-shadow: none; }
+  #ukazka .vz-strip { justify-content: flex-start; gap: 28px; margin: 0 0 22px; padding: 22px 26px 26px; border: 1.5px dashed rgba(10,10,10,.26); border-radius: 24px; background: var(--paper-50); }
+  #ukazka .vz-head { margin: 0 0 14px 2px; }
+  #ukazka .vz-k { text-align: left; margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; text-transform: none; color: var(--ink); }
+  #ukazka .vz-thumbs { gap: 10px; padding: 12px 8px 26px; margin: -12px -8px -26px; scroll-padding: 8px; }
+  #ukazka .vz-arr { width: 32px; height: 32px; border-color: rgba(10,10,10,.18); background: var(--paper-50); }
+  #ukazka .vz-arr svg { width: 16px; height: 16px; }
+  #ukazka .vz-sep { margin: 30px 0 0; width: 0; background: none; border-left: 1.5px dashed rgba(10,10,10,.22); }
+  /* inactive: muted and desaturated; active: full colour, lifted, red ring and a check badge */
+  #ukazka .vz-th { width: 74px; height: 92px; border-radius: 14px; opacity: .58; filter: grayscale(.85); box-shadow: 0 0 0 1px rgba(10,10,10,.08); transition: opacity .4s ease, filter .4s ease, translate .6s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease; }
+  #ukazka .vz-th:hover { opacity: .95; filter: none; translate: 0 -3px; }
+  #ukazka .vz-th[aria-pressed="true"] { opacity: 1; filter: none; translate: 0 -6px; box-shadow: 0 0 0 3px var(--paper-50), 0 0 0 6px var(--accent), 0 18px 30px -12px rgba(10,10,10,.5); }
+  #ukazka .vz-th[aria-pressed="true"]::after { content: ""; position: absolute; left: 5px; bottom: 5px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 13px no-repeat; box-shadow: 0 0 0 2px #fff, 0 3px 8px rgba(0,0,0,.3); }
+  #ukazka .vz-cap { padding: 14px 6px; border-top: 0; }
+  #ukazka .vz-cap strong { font-size: 20px; letter-spacing: -0.02em; }
+  @media (min-width: 900px) {
+    #ukazka .vz-cap { margin: 0; padding: 16px 24px 14px; border-radius: 22px 22px 0 0; background: #111; color: #e6e6ea; box-shadow: inset 0 2px 0 #2a2a2a, inset 2px 0 0 #2a2a2a, inset -2px 0 0 #2a2a2a; }
+    #ukazka .vz-cap strong { color: #fff; }
+    #ukazka .vz-cap-m { color: #a1a1aa; }
+    #ukazka .vz-cap-s { background: #26262a; color: #e6e6ea; }
+    #ukazka .demo-bar .grp.device .seg { background: #26262a; }
+    #ukazka .demo-bar .grp.device .seg button { color: #c9c9cf; }
+    #ukazka .demo-bar .grp.device .seg button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+    #ukazka .demo-frame:not(.is-mobile) { border-top-left-radius: 0; border-top-right-radius: 0; padding-top: 12px; }
+    #ukazka .demo-bar:has(+ .demo-frame.is-mobile) .vz-cap { border-radius: 22px; margin-bottom: 28px; }
+  }
+
+  /* red bands: white type, black accent word, black buttons */
+  #prinos h2, #postup h2 { color: var(--v2-on-red); }
+  #prinos h2 .accent, #postup h2 .accent { color: var(--ink-900); }
+  #kontakt h2 { color: var(--paper-100); }
+  #kontakt h2 .accent { color: var(--accent); }
+  #prinos .lead, #postup .kb-lead, #kontakt .keybox p { color: rgba(255,246,240,.86); }
+
+  /* Co kalendář přinese: the +10 % claim as a giant statement */
+  #prinos .keybox.benefit { background: transparent; border: 0; box-shadow: none; padding: 0; color: var(--v2-on-red); }
+  #prinos .keybox.benefit::before, #prinos .keybox.benefit::after { display: none; }
+  #prinos .big-num { gap: 0 56px; margin-bottom: 40px; }
+  #prinos .big-num .bn { flex-direction: column; gap: 22px; padding: 8px 0 8px; }
+  #prinos .big-num .bn + .bn { border-left-color: rgba(255,246,240,.3); padding-left: 56px; }
+  #prinos .big-num .bn b { font-size: clamp(64px, 8.5vw, 136px); font-weight: 600; letter-spacing: -0.05em; line-height: 1.04; padding-bottom: .06em; color: var(--v2-on-red); }
+  #prinos .big-num .bn span { font-size: 18px; color: rgba(255,246,240,.86); max-width: 34ch; }
+  #prinos .keybox.benefit > h3 { color: var(--v2-on-red); opacity: .8; }
+  #prinos .perks { gap: 16px; }
+  #prinos .perk { background: var(--paper-50); border: 0; border-radius: 22px; padding: 22px 24px 22px 66px; box-shadow: 0 18px 40px -24px rgba(60,0,0,.5); }
+  #prinos .perk h3 { color: var(--ink); }
+  #prinos .perk p { color: var(--ink-2); }
+  #prinos .tip-head { border-top-color: rgba(255,246,240,.3); color: var(--v2-on-red); margin-top: 56px; }
+  #prinos .tip-head svg { color: #ffd36b; }
+  #prinos .muted-lead, #prinos .tip-list li { color: rgba(255,246,240,.86); }
+  #prinos .tip-list li strong { color: var(--v2-on-red); }
+  #prinos ul.dots li::before { background: var(--ink-900); }
+
+  /* Jak to probíhá: six steps with oversized outlined numbers, like "How it works" */
+  #postup .keybox.hero-flow { background: transparent; border: 0; box-shadow: none; padding: 0; }
+  #postup .keybox.hero-flow::before, #postup .keybox.hero-flow::after { display: none; }
+  #postup .kb-lead { font-size: clamp(18px, 1.4vw, 22px); margin-bottom: 44px; max-width: 46ch; }
+  #postup .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; max-width: none; }
+  #postup .flow > li { padding: 22px 0 34px; border-top: 1px solid rgba(255,246,240,.3); color: rgba(255,246,240,.86); }
+  #postup .flow > li::before { content: counter(step, decimal-leading-zero); position: static; display: block; width: auto; height: auto; margin-bottom: 16px; background: none; border-radius: 0; box-shadow: none; font-size: clamp(56px, 5vw, 84px); font-weight: 500; letter-spacing: -0.05em; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,240,.75); }
+  #postup .flow > li::after { display: none; }
+  #postup .flow > li b { color: var(--v2-on-red); font-size: 21px; margin-bottom: 6px; }
+  #postup .flow .who { background: rgba(10,10,10,.22); color: var(--v2-on-red); }
+  #postup .flow .who.you { background: var(--ink-900); color: var(--v2-on-red); }
+
+  /* boxes turned into plain text on bands: no clipping corner, full white for contrast */
+  #prinos .keybox.benefit, #postup .keybox.hero-flow, #kontakt .keybox[data-review-id="cta"] { border-radius: 0; overflow: visible; }
+  #prinos .lead, #postup .kb-lead, #kontakt .keybox p, #prinos .big-num .bn span, #postup .flow > li, #prinos .muted-lead, #prinos .tip-list li { color: #fff; }
+  #postup .flow > li::before { -webkit-text-stroke-color: #fff; }
+  #postup .flow .who { background: rgba(10,10,10,.4); color: #fff; }
+
+  /* PragueBest line icons replace numbers and generic glyphs */
+  .v2-ico { display: block; width: 56px; height: 56px; }
+  #prinos .perk.v2-has-ico { display: grid; grid-template-columns: 80px minmax(0, 1fr); column-gap: 22px; align-items: center; padding: 24px 26px; }
+  #prinos .perk.v2-has-ico .v2-ico { width: 80px; height: 80px; }
+  #prinos .perk.v2-has-ico::before { display: none; }
+  #prinos .perk.v2-has-ico .v2-ico { grid-row: 1 / span 2; }
+  #prinos .perk.v2-has-ico h3, #prinos .perk.v2-has-ico p { grid-column: 2; }
+  .hero-callouts .callout.v2-has-ico { padding-left: 128px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; }
+  .hero-callouts .callout.v2-has-ico::before { display: none; }
+  .hero-callouts .callout.v2-has-ico .v2-ico { position: absolute; left: 28px; top: 50%; translate: 0 -50%; width: 78px; height: 78px; }
+  .offer-card.v2-has-ico { border: 0; border-radius: 28px; padding: 34px 32px 32px; background: var(--paper-0); box-shadow: var(--v2-shadow-lg); }
+  .offer-card.v2-has-ico::after { display: none; }
+  .offer-card.v2-has-ico .tag { display: none; }
+  .offer-card.v2-has-ico .v2-ico { width: 96px; height: 96px; margin-bottom: 22px; }
+  .offer-card.v2-has-ico h3 { font-size: clamp(20px, 1.6vw, 24px); }
+  .v2-tez { margin: 28px 0 0; font-size: clamp(17px, 1.2vw, 19px); font-weight: 600; color: var(--ink); }
+  .v2-tez::before { content: "✦"; margin-right: 10px; color: var(--accent); }
+
+  /* tip: a light card with the three recommendations side by side */
+  #prinos .tip-head { margin: 64px 0 6px; padding: 0; border: 0; font-size: clamp(24px, 1.8vw, 30px); font-weight: 600; letter-spacing: -0.03em; }
+  #prinos .tip-head svg { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: #ffd36b; color: var(--ink-900); }
+  #prinos .muted-lead { margin: 0 0 20px 56px; font-size: 17px; }
+  #prinos ul.tip-list { columns: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: none; margin: 0; }
+  #prinos ul.tip-list li { margin: 0; padding: 24px 24px 24px; border-radius: 20px; background: var(--ink-900); box-shadow: 0 18px 40px -24px rgba(40,0,0,.7); font-size: 16px; line-height: 1.45; color: rgba(246,240,226,.8); }
+  #prinos ul.tip-list li::before { display: none; }
+  #prinos ul.tip-list li strong { display: block; margin-bottom: 6px; font-size: 19px; letter-spacing: -0.02em; }
+
+
+  /* comparison: two plan cards, ours bigger, darker and lifted */
+  .v2-cmp { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 22px; align-items: center; margin: 8px 0 28px; }
+  .v2-plan { position: relative; border-radius: 28px; padding: 32px 30px; }
+  .v2-plan h3 { margin: 0 0 22px; font-size: clamp(22px, 1.8vw, 30px); font-weight: 600; letter-spacing: -0.03em; }
+  .v2-plan ul { list-style: none; margin: 0; padding: 0; max-width: none; }
+  .v2-plan li { display: flex; gap: 14px; align-items: flex-start; padding: 13px 0; border-top: 1px solid var(--line-soft); font-size: 16px; line-height: 1.4; }
+  .v2-plan li svg { flex: none; width: 22px; height: 22px; margin-top: 1px; padding: 4px; border-radius: 50%; }
+  .v2-plan li b { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+  .v2-plan.box { background: var(--paper-100); color: var(--ink-3); }
+  .v2-plan.box h3 { color: var(--ink-3); }
+  .v2-plan.box li svg { background: rgba(10,10,10,.08); color: var(--ink-3); }
+  .v2-plan.box li b { color: var(--ink-4); }
+  .v2-plan.us { padding: 48px 44px 40px; background: var(--ink-900); color: var(--paper-100); box-shadow: 0 40px 80px -40px rgba(10,10,10,.6); }
+  .v2-plan.us h3 { color: var(--paper-100); font-size: clamp(28px, 2.4vw, 40px); }
+  .v2-plan.us li { border-top-color: rgba(246,240,226,.14); font-size: 18px; color: var(--paper-100); }
+  .v2-plan.us li svg { background: var(--accent); color: #fff; width: 26px; height: 26px; }
+  .v2-plan.us li b { color: rgba(246,240,226,.6); }
+  .v2-plan.us .v2-btn { margin-top: 26px; }
+  .v2-plan-tag { position: absolute; top: -14px; left: 44px; padding: 6px 14px; border-radius: 100px; background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 800; letter-spacing: .04em; }
+
+  /* Technologické okénko: graphite frame, PragueBest red shutters, classic terminal */
+  #okenko h2 .accent { color: var(--accent); }
+  #okenko .xwin .frame { background: linear-gradient(145deg, #2a2a2e, #161618); box-shadow: 0 30px 60px rgba(10,10,10,.35), inset 0 0 0 1px rgba(255,255,255,.08); }
+  #okenko .xwin .glass { background: #0d0d0f; }
+  #okenko .xwin .glass .snow { opacity: .35; }
+  #okenko .xwin .term { color: #e9e6df; }
+  #okenko .xwin .term .hd { color: #8a8680; }
+  #okenko .xwin .term .p { color: #f75142; }
+  #okenko .xwin .term .d { color: #8a8680; }
+  #okenko .xwin .term .y { color: #e4b84a; }
+  #okenko .xwin .term .cur { background: #e9e6df; }
+  #okenko .xwin .shut { background: linear-gradient(160deg, var(--red-500), var(--red-700)); }
+  #okenko .xwin .shut.l { border-right-color: #161618; }
+  #okenko .xwin .shut.r { border-left-color: #161618; }
+  #okenko .xwin .shut .lbl b { font-family: var(--v2-font); font-weight: 600; letter-spacing: -0.03em; }
+  #okenko .xwin .shut .lbl span { color: var(--red-600); }
+  #okenko .xwin .sill { background: #2a2a2e; }
+
+  /* contact: black closing band, red accent word and red button */
+  #kontakt { text-align: center; padding: 128px 0; }
+  #kontakt h2 { max-width: 14ch; margin: 0 auto 26px; font-size: clamp(3rem, 4vw + 1.25rem, 6rem); }
+  #kontakt .keybox[data-review-id="cta"] { background: transparent; border: 0; box-shadow: none; padding: 0; max-width: 760px; margin: 0 auto; }
+  #kontakt .keybox[data-review-id="cta"] p { font-size: clamp(18px, 1.4vw, 21px); margin: 0 auto; }
+  #kontakt .keybox[data-review-id="cta"] p { color: rgba(246,240,226,.82); }
+  #kontakt .keybox[data-review-id="cta"] strong { color: var(--paper-100); }
+  #kontakt .keybox[data-review-id="cta"] a { color: var(--accent-bright); border-bottom-color: rgba(247,81,66,.5); }
+  #kontakt .v2-ctas { margin-top: 36px; }
+  #kontakt .v2-btn.primary { background: var(--accent); color: #fff; box-shadow: 0 14px 30px -14px rgba(227,6,19,.7); }
+  #kontakt .v2-btn.ghost { color: var(--paper-100); box-shadow: inset 0 0 0 1.5px rgba(246,240,226,.6); }
+
+  /* footer */
+  footer.doc-footer { border-top: 0; margin-top: 0; padding: 30px 0 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  footer.doc-footer .v2-logo svg { height: 30px; }
+  footer.doc-footer p { margin: 0; font-size: 14.5px; color: var(--ink-3); }
+  footer.doc-footer .v2-heart { color: var(--accent); }
+  footer.doc-footer a { color: var(--ink); border-bottom-color: var(--line); font-weight: 600; }
+
+  /* --- snow canvas (layered) --- */
+  .v2-snow { position: fixed; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; }
+
+  /* --- responsive --- */
+  @media (max-width: 1340px) {
+    .v2-shot { width: calc(var(--w) * .86); margin-inline: 8.5%; }
+  }
+  @media (max-width: 1180px) {
+    .v2-shot { width: calc(var(--w) * .74); margin-inline: 8%; }
+    .v2-stage { min-height: 700px; }
+    #postup .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .v2-links { display: none; }
+    .v2-nav { justify-content: space-between; }
+    .v2-stage { min-height: 0; padding: 18px 0 48px; display: flex; flex-direction: column; }
+    .v2-shots { order: -1; display: flex; justify-content: center; margin: 4px -16px 40px; padding-top: 22px; }
+    .v2-shot { position: relative; left: auto; right: auto; top: auto; width: 122px; margin: 0 -8px; }
+    .v2-shot span { display: none; }
+    .v2-spark { display: none; }
+    section { padding: 76px 0; }
+    .keybox { padding: 28px 22px 24px; }
+    #prinos .big-num .bn + .bn { padding-left: 0; border-top-color: rgba(255,246,240,.3); }
+    #postup .flow { grid-template-columns: 1fr; }
+    #ukazka .vz-strip { padding: 18px 16px 20px; gap: 20px; }
+    #prinos ul.tip-list { grid-template-columns: 1fr; }
+    #prinos .muted-lead { margin-left: 0; }
+    .v2-cmp { grid-template-columns: 1fr; }
+    .v2-plan.us { padding: 40px 24px 30px; }
+    .v2-plan-tag { left: 24px; }
+  }
+  @media (max-width: 480px) {
+    .v2-shot { width: 96px; margin: 0 -9px; }
+    .v2-btn { padding: 14px 22px; font-size: 15.5px; }
+    .v2-logo svg { height: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .v2-navbar::before, .v2-prog, .v2-nav, .v2-logo svg { transition: none; } .v2-shot, .v2-spark { animation: none; transition: none; } .v2-btn { transition: none; } .v2-snow { display: none; } }
+  @media print { .v2-snow, .v2-shots, .ver-switch { display: none !important; } }
+</style>
 </head>
 <body>
 <a class="skip" href="#obsah" data-review-id="skip-link">Přeskočit na obsah</a>
@@ -1237,38 +1525,42 @@
 </div>
 <div class="snowfall" id="snowfall" aria-hidden="true"></div>
 <div class="container">
+<div class="v2-navbar" id="v2-navbar" data-review-id="sticky-nav"><div class="v2-nav"><a class="v2-logo" href="#" aria-label="PragueBest, na začátek"><svg class="v2-logo-svg" viewBox="0 0 166 40" fill="none" aria-hidden="true">
+      <path fill="#e30613" d="M1.79041 25.423L0.637525 23.4336L28.1216 7.51338L29.2753 9.50334L1.79041 25.423Z"/>
+      <path fill="#e30613" d="M19.0059 35.5041L19.2587 4.1619L21.559 4.17965L21.3065 35.5232L19.0059 35.5041Z"/>
+      <path fill="#e30613" d="M0.568497 16.2366L1.68542 14.2259L29.2727 29.5546L28.1554 31.564L0.568497 16.2366Z"/>
+      <path fill="#e30613" d="M20.1767 36.8541L0.000174803 25.2051L0 14.5804L20.629 2.67036L29.8973 8.02143L29.8975 31.2418L20.1767 36.8541ZM27.5984 9.35088L20.6279 5.32647L2.30171 15.9082L2.30111 23.878L20.1764 34.1983L27.5976 29.9129L27.5984 9.35088Z"/>
+      <path fill="currentColor" d="M50.88 22.952H47.016V29H43.944V11.456H50.88C54.408 11.456 56.688 13.76 56.688 17.192C56.688 20.576 54.384 22.952 50.88 22.952ZM50.28 14.192H47.016V20.216H50.232C52.344 20.216 53.472 19.088 53.472 17.168C53.472 15.248 52.32 14.192 50.28 14.192ZM65.8001 17.096V19.808H64.7201C62.6081 19.808 61.2881 20.936 61.2881 23.24V29H58.3601V17.168H61.1201L61.2881 18.896C61.7921 17.72 62.9201 16.928 64.5041 16.928C64.9121 16.928 65.3201 16.976 65.8001 17.096ZM70.3613 29.312C67.8413 29.312 66.3053 27.848 66.3053 25.616C66.3053 23.432 67.8893 22.064 70.6973 21.848L74.2493 21.584V21.32C74.2493 19.712 73.2893 19.064 71.8013 19.064C70.0733 19.064 69.1133 19.784 69.1133 21.032H66.6173C66.6173 18.464 68.7293 16.784 71.9453 16.784C75.1373 16.784 77.1053 18.512 77.1053 21.8V29H74.5373L74.3213 27.248C73.8173 28.472 72.2093 29.312 70.3613 29.312ZM71.3213 27.104C73.1213 27.104 74.2733 26.024 74.2733 24.2V23.576L71.8013 23.768C69.9773 23.936 69.2813 24.536 69.2813 25.496C69.2813 26.576 70.0013 27.104 71.3213 27.104ZM78.8297 22.808C78.8297 19.352 81.0857 16.76 84.4697 16.76C86.2457 16.76 87.6377 17.504 88.3337 18.776L88.5017 17.144H91.2137V28.4C91.2137 32.36 88.8377 34.832 84.9977 34.832C81.5897 34.832 79.2617 32.888 78.9017 29.72H81.8297C82.0217 31.256 83.1977 32.168 84.9977 32.168C87.0137 32.168 88.3097 30.896 88.3097 28.928V26.96C87.5657 28.064 86.1017 28.76 84.3977 28.76C81.0377 28.76 78.8297 26.24 78.8297 22.808ZM81.7817 22.736C81.7817 24.728 83.0537 26.216 84.9737 26.216C86.9897 26.216 88.2377 24.8 88.2377 22.736C88.2377 20.72 87.0137 19.328 84.9737 19.328C83.0297 19.328 81.7817 20.792 81.7817 22.736ZM101.804 17.144H104.732V29H102.02L101.804 27.416C101.084 28.544 99.5479 29.312 97.9639 29.312C95.2279 29.312 93.6199 27.464 93.6199 24.56V17.144H96.5479V23.528C96.5479 25.784 97.4359 26.696 99.0679 26.696C100.916 26.696 101.804 25.616 101.804 23.36V17.144ZM112.346 29.312C108.818 29.312 106.346 26.744 106.346 23.072C106.346 19.352 108.77 16.784 112.25 16.784C115.802 16.784 118.058 19.16 118.058 22.856V23.744L109.13 23.768C109.346 25.856 110.45 26.912 112.394 26.912C114.002 26.912 115.058 26.288 115.394 25.16H118.106C117.602 27.752 115.442 29.312 112.346 29.312ZM112.274 19.184C110.546 19.184 109.49 20.12 109.202 21.896H115.154C115.154 20.264 114.026 19.184 112.274 19.184ZM120.353 29V11.456H127.337C130.793 11.456 132.905 13.256 132.905 16.184C132.905 18.128 132.041 19.52 130.385 20.216C132.233 20.816 133.169 22.208 133.169 24.248C133.169 27.248 131.081 29 127.457 29H120.353ZM127.073 14.168H123.425V18.944H127.145C128.825 18.944 129.761 18.056 129.761 16.496C129.761 14.984 128.801 14.168 127.073 14.168ZM127.337 21.536H123.425V26.288H127.337C129.065 26.288 130.025 25.448 130.025 23.864C130.025 22.376 129.041 21.536 127.337 21.536ZM140.378 29.312C136.85 29.312 134.378 26.744 134.378 23.072C134.378 19.352 136.802 16.784 140.282 16.784C143.834 16.784 146.09 19.16 146.09 22.856V23.744L137.162 23.768C137.378 25.856 138.482 26.912 140.426 26.912C142.034 26.912 143.09 26.288 143.426 25.16H146.138C145.634 27.752 143.474 29.312 140.378 29.312ZM140.306 19.184C138.578 19.184 137.522 20.12 137.234 21.896H143.186C143.186 20.264 142.058 19.184 140.306 19.184ZM147.041 25.4H149.825C149.849 26.432 150.617 27.08 151.961 27.08C153.329 27.08 154.073 26.528 154.073 25.664C154.073 25.064 153.761 24.632 152.705 24.392L150.569 23.888C148.433 23.408 147.401 22.4 147.401 20.504C147.401 18.176 149.369 16.784 152.105 16.784C154.769 16.784 156.569 18.32 156.593 20.624H153.809C153.785 19.616 153.113 18.968 151.985 18.968C150.833 18.968 150.161 19.496 150.161 20.384C150.161 21.056 150.689 21.488 151.697 21.728L153.833 22.232C155.825 22.688 156.833 23.6 156.833 25.424C156.833 27.824 154.793 29.312 151.865 29.312C148.913 29.312 147.041 27.728 147.041 25.4ZM162.615 29H159.687V19.592H157.407V17.144H159.687V13.448H162.615V17.144H164.919V19.592H162.615V29Z"/>
+    </svg></a>
+    <nav class="v2-links" aria-label="Sekce stránky"><a href="#ukazka">Vzhledy</a><a href="#administrace">Administrace</a><a href="#postup">Jak to probíhá</a><a href="#srovnani">Proč my</a><a href="#aplikace">Aplikace na míru</a></nav>
+    <a class="v2-btn dark sm" href="#kontakt" data-review-id="nav-kontakt">Chci kalendář</a></div><i class="v2-prog" id="v2-prog" aria-hidden="true"></i></div>
 
-<div class="top-bar" data-review-id="topbar">
-  <span class="brand">PragueBest s.r.o.</span>
-  <span>Pro klienty s láskou · 20. 10. 2026</span>
-</div>
-
-<header class="doc-header" data-review-id="header">
-  <svg class="xmas-tree" viewBox="0 0 300 340" fill="none" aria-hidden="true">
-    <g stroke="#DA2A49" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity=".16">
-      <path d="M150 20 L95 110 H125 L75 190 H115 L55 280 H245 L185 190 H225 L175 110 H205 Z"/>
-      <path d="M135 280 V318 H165 V280"/>
-      <path d="M100 205 Q150 235 200 200"/><path d="M85 255 Q150 290 215 250"/><path d="M118 150 Q150 170 182 145"/>
-    </g>
-    <g font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" text-anchor="middle"><line x1="120" y1="154" x2="120" y2="160" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="120" cy="170" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="117" cy="166.5" r="2.6" fill="#fff" opacity=".55"/><text x="120" y="173.5" fill="#fff">1</text><line x1="178" y1="150" x2="178" y2="156" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="178" cy="166" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="175" cy="162.5" r="2.6" fill="#fff" opacity=".55"/><text x="178" y="169.5" fill="#fff">2</text><line x1="140" y1="109" x2="140" y2="115" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="140" cy="125" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="137" cy="121.5" r="2.6" fill="#fff" opacity=".55"/><text x="140" y="128.5" fill="#fff">3</text><line x1="100" y1="219" x2="100" y2="225" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="100" cy="235" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="97" cy="231.5" r="2.6" fill="#fff" opacity=".55"/><text x="100" y="238.5" fill="#fff">4</text><line x1="150" y1="189" x2="150" y2="195" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="150" cy="205" r="10.5" fill="#ffd21f" opacity="1"/><circle cx="147" cy="201.5" r="2.6" fill="#fff" opacity=".55"/><text x="150" y="208.5" fill="#5a0d16">5</text><line x1="205" y1="212" x2="205" y2="218" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="205" cy="228" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="202" cy="224.5" r="2.6" fill="#fff" opacity=".55"/><text x="205" y="231.5" fill="#fff">6</text><line x1="85" y1="259" x2="85" y2="265" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="85" cy="275" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="82" cy="271.5" r="2.6" fill="#fff" opacity=".55"/><text x="85" y="278.5" fill="#fff">7</text><line x1="150" y1="246" x2="150" y2="252" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="150" cy="262" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="147" cy="258.5" r="2.6" fill="#fff" opacity=".55"/><text x="150" y="265.5" fill="#fff">8</text><line x1="215" y1="256" x2="215" y2="262" stroke="#DA2A49" stroke-width="1.2" opacity=".6"/><circle cx="215" cy="272" r="10.5" fill="#DA2A49" opacity=".8"/><circle cx="212" cy="268.5" r="2.6" fill="#fff" opacity=".55"/><text x="215" y="275.5" fill="#fff">9</text></g>
-    <path d="M150 4 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1z" fill="#DA2A49" opacity=".85"/>
-  </svg>
-  <h1><span class="cap">V<svg viewBox="0 0 80 60" aria-hidden="true"><g transform="rotate(-18 40 30)"><path d="M40 34 C 28 36, 16 30, 8 20 C 18 14, 32 16, 40 30 Z" fill="#2f6b3a"/><path d="M40 34 C 52 36, 64 30, 72 20 C 62 14, 48 16, 40 30 Z" fill="#3c8a4a"/><path d="M40 34 L 12 21" stroke="#1f4d29" stroke-width="1.5"/><path d="M40 34 L 68 21" stroke="#2a6a36" stroke-width="1.5"/><circle cx="40" cy="40" r="6.5" fill="#DA2A49"/><circle cx="31" cy="44" r="5.5" fill="#DA2A49"/><circle cx="49" cy="44" r="5.5" fill="#DA2A49"/><circle cx="38" cy="38" r="1.8" fill="#fff" opacity=".8"/><circle cx="29" cy="42" r="1.4" fill="#fff" opacity=".8"/><circle cx="47" cy="42" r="1.4" fill="#fff" opacity=".8"/></g></svg></span>ánoce se blíží. Letos obdarujte i své zákazníky. <span class="accent">Originálně.</span></h1>
-  <p class="subtitle">Adventní kalendář má kdekdo. Ten váš bude originál: ve vašem designu, s vašimi akcemi a na vaší subdoméně. 24 dní, 24 dárků a 24 důvodů vrátit se na váš web.</p>
-  <div class="meta-row">
-    <span class="pill">Vlastní design</span>
-    <span class="pill">+10 % obratu v prosinci</span>
-    <a class="pill link" href="#ukazka" data-review-id="da-ukazka">Prohlédnout vzhledy →</a>
+<header class="v2-hero" data-review-id="header">
+  <div class="v2-stage">
+    <div class="v2-shots">
+      <a class="v2-shot s1" href="#ukazka" data-vzhled="fotoskoda" style="--x:-8%;--y:30px;--w:250px;--r:-7deg;--d:7s" aria-label="Ukázka vzhledu Dům s okny"><img src="img/hero/fotoskoda.webp" alt="" width="520" height="650" decoding="async"><span>Dům s okny</span></a>
+      <a class="v2-shot s2" href="#ukazka" data-vzhled="chata" style="--x:-3%;--y:420px;--w:214px;--r:5deg;--d:8.5s;--dl:-3s" aria-label="Ukázka vzhledu Zasněžená chalupa"><img src="img/hero/chata.webp" alt="" width="520" height="650" decoding="async"><span>Zasněžená chalupa</span></a>
+      <a class="v2-shot s3" href="#ukazka" data-vzhled="hracky" style="--xr:-8%;--y:50px;--w:240px;--r:6deg;--d:7.5s;--dl:-1.5s" aria-label="Ukázka vzhledu Santova dílna"><img src="img/hero/hracky.webp" alt="" width="520" height="650" decoding="async"><span>Santova dílna</span></a>
+      <a class="v2-shot s4" href="#ukazka" data-vzhled="snehulak" style="--xr:-3%;--y:430px;--w:214px;--r:-5deg;--d:9s;--dl:-4.5s" aria-label="Ukázka vzhledu Zimní zahrada"><img src="img/hero/snehulak.webp" alt="" width="520" height="650" decoding="async"><span>Zimní zahrada</span></a>
+    </div>
+    <span class="v2-spark" style="left:21%;top:70px" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg></span>
+    <span class="v2-spark" style="right:22%;top:400px;animation-delay:-1.4s" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg></span>
+    <span class="v2-spark" style="left:23%;top:660px;width:16px;height:16px;animation-delay:-2.2s" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg></span>
+    <div class="v2-copy">
+      <h1><span class="cap">V<svg viewBox="0 0 80 60" aria-hidden="true"><g transform="rotate(-18 40 30)"><path d="M40 34 C 28 36, 16 30, 8 20 C 18 14, 32 16, 40 30 Z" fill="#2f6b3a"/><path d="M40 34 C 52 36, 64 30, 72 20 C 62 14, 48 16, 40 30 Z" fill="#3c8a4a"/><path d="M40 34 L 12 21" stroke="#1f4d29" stroke-width="1.5"/><path d="M40 34 L 68 21" stroke="#2a6a36" stroke-width="1.5"/><circle cx="40" cy="40" r="6.5" fill="#DA2A49"/><circle cx="31" cy="44" r="5.5" fill="#DA2A49"/><circle cx="49" cy="44" r="5.5" fill="#DA2A49"/><circle cx="38" cy="38" r="1.8" fill="#fff" opacity=".8"/><circle cx="29" cy="42" r="1.4" fill="#fff" opacity=".8"/><circle cx="47" cy="42" r="1.4" fill="#fff" opacity=".8"/></g></svg></span>ánoce se blíží. Letos obdarujte zákazníky <span class="v2-mark">adventním kalendářem</span>. <span class="accent">Originálně.</span></h1>
+      <p class="v2-sub">Adventní kalendář má kdekdo. Ten váš bude originál: ve vašem designu, s vašimi akcemi a na vaší subdoméně. 24 dní, 24 dárků a 24 důvodů vrátit se na váš web.</p>
+      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout vzhledy</a><a class="v2-btn ghost" href="#kontakt" data-review-id="hero-kontakt">Chci kalendář na míru →</a></div>
+      <p class="v2-proof"><span>Vlastní design</span><span>+10&nbsp;% obratu v prosinci</span><span>Bez licencí</span></p>
+    </div>
   </div>
-  
 </header>
 
 <div class="kb-callouts hero-callouts" data-review-id="hero-callouts">
-  <div class="callout" data-review-id="callout-vcas">
+  <div class="callout v2-has-ico" data-review-id="callout-vcas"><img class="v2-ico" src="img/icons/raketa.svg" alt="" width="56" height="56" decoding="async">
     <span class="label">Objednáte dnes, do 2 dnů máte kalendář</span>
     <p>Do prvního okénka zbývá pár týdnů. Ozvěte se včas, aby byl kalendář 1. prosince připravený a akce v okénkách domluvené.</p>
   </div>
-  <div class="callout ok" data-review-id="callout-nejen-advent">
+  <div class="callout ok v2-has-ico" data-review-id="callout-nejen-advent"><img class="v2-ico" src="img/icons/rok.svg" alt="" width="56" height="56" decoding="async">
     <span class="label">Nejen na advent, na celý rok</span>
     <p><strong>Stejný kalendář funguje na jakoukoli akci během roku:</strong> narozeniny firmy, Velikonoce, výročí, letní výprodej nebo start nové kolekce. Počet dnů i termín si zvolíte sami.</p>
   </div>
@@ -1277,7 +1569,6 @@
 
 <main id="obsah">
 <section id="prinos" data-review-id="section-prinos">
-  <span class="section-label">01 - Co přinese</span>
   <h2>Co kalendář <span class="accent">přinese</span></h2>
   <p class="lead">Obdarovaný zákazník se vrací.</p>
   <div class="keybox benefit" data-review-id="prinos-box">
@@ -1287,10 +1578,10 @@
   </div>
   <h3>Co získáte</h3>
   <div class="perks" data-review-id="vyhody">
-    <div class="perk"><h3>Hravost a gamifikace</h3><p>Odkrývání okének baví, lidé ho sdílejí a vracejí se každý den. Jedna stránka zastřeší celou vánoční kampaň.</p></div>
-    <div class="perk"><h3>Vlastní design</h3><p>Podle vaší Figmy, nebo vám design navrhneme my. Barvy, písma, ilustrace i rozložení.</p></div>
-    <div class="perk"><h3>Měření ve vaší analytice</h3><p>Zobrazení, odkrytí i prokliky do e&#8209;shopu uvidíte ve svém GTM a Google Analytics. Kontakty si po kampani vyexportujete.</p></div>
-    <div class="perk"><h3>Funkce na míru a vlastní subdoména</h3><p>Do kalendáře přidáme, co kampaň potřebuje. E&#8209;maily přizpůsobíme vaší komunikaci. Běží na vaší subdoméně, třeba advent.vasweb.cz. Cena podle rozsahu, bez licencí.</p></div>
+    <div class="perk v2-has-ico"><img class="v2-ico" src="img/icons/hra.svg" alt="" width="56" height="56" decoding="async"><h3>Hravost a gamifikace</h3><p>Odkrývání okének baví, lidé ho sdílejí a vracejí se každý den. Jedna stránka zastřeší celou vánoční kampaň.</p></div>
+    <div class="perk v2-has-ico"><img class="v2-ico" src="img/icons/design.svg" alt="" width="56" height="56" decoding="async"><h3>Vlastní design</h3><p>Podle vaší Figmy, nebo vám design navrhneme my. Barvy, písma, ilustrace i rozložení.</p></div>
+    <div class="perk v2-has-ico"><img class="v2-ico" src="img/icons/mereni.svg" alt="" width="56" height="56" decoding="async"><h3>Měření ve vaší analytice</h3><p>Zobrazení, odkrytí i prokliky do e&#8209;shopu uvidíte ve svém GTM a Google Analytics. Kontakty si po kampani vyexportujete.</p></div>
+    <div class="perk v2-has-ico"><img class="v2-ico" src="img/icons/kod.svg" alt="" width="56" height="56" decoding="async"><h3>Funkce na míru a vlastní subdoména</h3><p>Do kalendáře přidáme, co kampaň potřebuje. E&#8209;maily přizpůsobíme vaší komunikaci. Běží na vaší subdoméně, třeba advent.vasweb.cz. Cena podle rozsahu, bez licencí.</p></div>
   </div>
 </div>
 
@@ -1298,18 +1589,16 @@
   <h3 id="doporuceni" class="h3-muted tip-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>Tip: co dát do okének</h3>
   <p class="muted-lead">Podle dosavadních zkušeností fungují nejlépe:</p>
   <ul class="dots cols tip-list" data-review-id="doporuceni-karty">
-    <li><strong>Sleva na kategorii nebo značku</strong>, nebo jejich kombinace - třeba 20 % na zimní bundy jedné značky.</li>
-    <li><strong>Doprava zdarma</strong> - srozumitelná výhoda, která pomůže dotáhnout nákup.</li>
-    <li><strong>Hero produkty</strong> - zboží, které točíte ve velkém, může v okénku fungovat taky.</li>
+    <li><strong>Sleva na kategorii nebo značku</strong>Nebo jejich kombinace - třeba 20 % na zimní bundy jedné značky.</li>
+    <li><strong>Doprava zdarma</strong>Srozumitelná výhoda, která pomůže dotáhnout nákup.</li>
+    <li><strong>Hero produkty</strong>Zboží, které točíte ve velkém, může v okénku fungovat taky.</li>
   </ul>
 
 </section>
 
 <section id="ukazka" data-review-id="section-ukazka">
-  <span class="section-label">02 - Vzhledy</span>
   <h2>Prohlédněte <span class="accent">si ho</span></h2>
   <p class="lead">Letos už kalendář chystáme pro dva klienty: adventní pro prodejce fototechniky a narozeninový ke 30 letům sportovního e&#8209;shopu. Každý vypadá úplně jinak. Přidali jsme návrhy, jak by mohl vypadat ten váš: sněhulák s okénky z knoflíků, vánoční pinball, velikonoční kraslici nebo oslavu výročí firmy.</p>
-  <p>Přepněte vzhled a&nbsp;porovnejte je. Dnešní okénko svítí.</p>
 
   <div class="demo-bar" data-review-id="demo-ovladani">
     <div class="vz" data-review-id="demo-vzhledy">
@@ -1390,7 +1679,6 @@
 </section>
 
 <section id="administrace" data-review-id="section-administrace">
-  <span class="section-label">03 - Administrace</span>
   <h2>Administrace, <span class="accent">kterou zvládne každý</span></h2>
   <p class="lead">Funkce a&nbsp;vzhled ladíme na&nbsp;webu pro zákazníky. Administrace zůstává jednoduchá: dárky a&nbsp;texty máte pod kontrolou sami, bez programování.</p>
   <div class="demo-frame kd-frame" data-review-id="admin-ram">
@@ -1499,7 +1787,6 @@
 </section>
 
 <section id="postup" data-review-id="section-postup">
-  <span class="section-label">04 - Postup</span>
   <h2>Jak to <span class="accent">probíhá</span></h2>
 <div class="keybox hero-flow" data-review-id="keybox">
   <p class="kb-lead">Od vás potřebujeme návrh a akce do okének. Zbytek zařídíme my.</p>
@@ -1516,26 +1803,15 @@
 </section>
 
 <section id="srovnani" data-review-id="section-srovnani">
-  <span class="section-label">05 - Srovnání</span>
   <h2>Proč ne <span class="accent">krabicová služba</span></h2>
   <p class="lead">Díky AI máme recepturu: ověřený základ a postup, podle kterého vzniká každý kalendář znovu a na míru. Nejde o krabicovou SaaS službu, takže nás neomezuje funkčnost ani design.</p>
-    <div class="table-wrap cmp-wrap" data-review-id="tabulka-srovnani">
-    <table class="cmp">
-      <thead><tr><th scope="col">Oblast</th><th scope="col">Krabicová SaaS služba</th><th scope="col" class="us">Kalendář od PragueBest</th></tr></thead>
-      <tbody>
-        <tr><td>Design</td><td data-l="Krabicová služba">šablona s vaším logem a barvami</td><td class="us" data-l="Od PragueBest">přesně podle vašeho návrhu</td></tr>
-        <tr><td>Akce v okénkách</td><td data-l="Krabicová služba">jen typy akcí, které služba umí</td><td class="us" data-l="Od PragueBest">jakákoli akce, kterou potřebujete prodat</td></tr>
-        <tr><td>Adresa</td><td data-l="Krabicová služba">často adresa poskytovatele</td><td class="us" data-l="Od PragueBest">vaše subdoména</td></tr>
-        <tr><td>Analytika</td><td data-l="Krabicová služba">vlastní statistiky služby</td><td class="us" data-l="Od PragueBest">ve vašem nástroji pro měření</td></tr>
-        <tr><td>Kontakty</td><td data-l="Krabicová služba">u poskytovatele</td><td class="us" data-l="Od PragueBest">vaše, po kampani je smažeme</td></tr>
-        <tr><td>Originalita</td><td data-l="Krabicová služba">stejný kalendář má i konkurence</td><td class="us" data-l="Od PragueBest">originál, který má jen váš web</td></tr>      </tbody>
-    </table>
+    <div class="v2-cmp" data-review-id="tabulka-srovnani">
+    <div class="v2-plan box"><h3>Krabicová SaaS služba</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Design</b>šablona s vaším logem a barvami</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Akce v okénkách</b>jen typy akcí, které služba umí</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Adresa</b>často adresa poskytovatele</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Analytika</b>vlastní statistiky služby</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Kontakty</b>u poskytovatele</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span><b>Originalita</b>stejný kalendář má i konkurence</span></li></ul></div>
+    <div class="v2-plan us"><span class="v2-plan-tag">Doporučujeme</span><h3>Kalendář od PragueBest</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Design</b>přesně podle vašeho návrhu</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Akce v okénkách</b>jakákoli akce, kterou potřebujete prodat</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Adresa</b>vaše subdoména</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Analytika</b>ve vašem nástroji pro měření</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Kontakty</b>vaše, po kampani je smažeme</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Originalita</b>originál, který má jen váš web</span></li></ul><a class="v2-btn primary" href="#kontakt">Chci kalendář na míru</a></div>
   </div>
-  <p>Stejně postavíme i&nbsp;soutěže, kvízy nebo samostatné stránky ke&nbsp;kampaním.</p>
 </section>
 
 <section id="okenko" data-review-id="section-okenko">
-  <span class="section-label">06 - Pro zvídavé</span>
   <h2>Technologické <span class="accent">okénko</span></h2>
   <p class="lead">Rychlost nesmí jít na úkor spolehlivosti. Otevřete okénko a podívejte se, co je pod kapotou.</p>
   <div class="xwin-wrap">
@@ -1553,7 +1829,7 @@
         <div class="glass">
           <svg class="snow" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"></svg>
           <div class="term" aria-label="Technické zajímavosti">
-            <div class="hd"><i></i><i></i><i></i><span>okénko č. 25 · pod kapotou</span></div>
+            <div class="hd"><i></i><i></i><i></i><span>pod kapotou</span></div>
             <span class="ln"><span class="p">$</span> udělej kalendář podle Figmy</span>
             <span class="ln"><span class="g">✓</span> recept (Claude skill) načetl návrh: okna, barvy, písma <span class="d">→ kalendář na míru</span></span>
             <span class="ln"><span class="g">✓</span> každá změna: kontrola kódu, typů, 54 automatických testů, build <span class="d">(GitHub Actions)</span></span>
@@ -1570,45 +1846,51 @@
             <!-- MÍSTO PRO DALŠÍ ŘÁDKY z prezentace Krtečka: zkopírovat řádek span.ln výše -->
           </div>
           <button type="button" class="shut l" aria-label="Otevřít technologické okénko" data-review-id="tech-okenko-otevrit-l"><span class="lbl"><b>Technologické<br>okénko</b></span></button>
-          <button type="button" class="shut r" aria-label="Otevřít technologické okénko" data-review-id="tech-okenko-otevrit"><span class="num">25</span><span class="lbl"><span>Otevřít okénko</span></span></button>
+          <button type="button" class="shut r" aria-label="Otevřít technologické okénko" data-review-id="tech-okenko-otevrit"><span class="lbl"><span>Otevřít okénko</span></span></button>
         </div>
       </div>
       <div class="sill" aria-hidden="true"></div>
     </div>
-    <p class="xwin-cap">Okénko č. 25 je navíc.</p>
   </div>
 </section>
 
 <section id="aplikace" data-review-id="section-aplikace">
-  <span class="section-label">07 - Nejen kalendář</span>
   <h2>Aplikace na míru <span class="accent">s garancí kvality</span></h2>
   <p class="lead">Kalendář je jen jedna z aplikací, které dnes s pomocí AI stavíme rychle a na míru. Stejně mohou vzniknout soutěže, konfigurátory, interní nástroje nebo celé řešení podle vašich potřeb.</p>
   <div class="offer" data-review-id="nabidka">
-    <div class="offer-card" data-review-id="nabidka-vyvoj">
+    <div class="offer-card v2-has-ico" data-review-id="nabidka-vyvoj"><img class="v2-ico" src="img/icons/vyvoj.svg" alt="" width="56" height="56" decoding="async">
       <span class="tag">Vývoj</span>
       <h3>Aplikace na míru s garancí kvality a bezpečnosti</h3>
       <p>Od malých jednorázových aplikací po velká řešení na míru vašim potřebám. Vývoj s AI, ale s garancí kvality, návrhu architektury i zabezpečení.</p>
     </div>
-    <div class="offer-card" data-review-id="nabidka-audit">
+    <div class="offer-card v2-has-ico" data-review-id="nabidka-audit"><img class="v2-ico" src="img/icons/audit.svg" alt="" width="56" height="56" decoding="async">
       <span class="tag">Audit</span>
       <h3>Audit aplikací vytvořených s AI</h3>
       <p>Máte vlastní koncepty nebo aplikace napsané s AI a chcete mít jistotu, že fungují správně a jsou bezpečné, než je pošlete do produkce? Prověříme kód, architekturu i zabezpečení.</p>
     </div>
   </div>
+  <p class="v2-tez">Stejně postavíme i&nbsp;soutěže, kvízy nebo samostatné stránky ke&nbsp;kampaním.</p>
 </section>
 
 <section id="kontakt" data-review-id="section-kontakt">
-  <span class="section-label">08 - Kontakt</span>
+  <h2>Další <span class="accent">krok</span></h2>
   <div class="keybox" data-review-id="cta">
-    <span class="label">Další krok</span>
     <p><strong>Chcete rozdávat dárky, máte nápad na vlastní aplikaci, nebo chcete mít jistotu, že ta vaše je bezpečná?</strong> Ozvěte se svému projektovému manažerovi v PragueBest, nebo napište na <a href="mailto:produktaci@praguebest.cz?subject=Adventni%20kalendar%20a%20aplikace%20na%20miru&amp;body=Dobry%20den%2C%20mame%20zajem%20o%20schuzku.">produktaci@praguebest.cz</a>.</p>
   </div>
+  <div class="v2-ctas"><a class="v2-btn primary" href="mailto:produktaci@praguebest.cz">Napsat PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout vzhledy</a></div>
 </section>
 
 </main>
 
 <footer class="doc-footer" data-review-id="footer">
-  <p>PragueBest s.r.o. · nápad pro klienty</p>
+  <a class="v2-logo" href="#obsah" aria-label="PragueBest"><svg class="v2-logo-svg" viewBox="0 0 166 40" fill="none" aria-hidden="true">
+      <path fill="#e30613" d="M1.79041 25.423L0.637525 23.4336L28.1216 7.51338L29.2753 9.50334L1.79041 25.423Z"/>
+      <path fill="#e30613" d="M19.0059 35.5041L19.2587 4.1619L21.559 4.17965L21.3065 35.5232L19.0059 35.5041Z"/>
+      <path fill="#e30613" d="M0.568497 16.2366L1.68542 14.2259L29.2727 29.5546L28.1554 31.564L0.568497 16.2366Z"/>
+      <path fill="#e30613" d="M20.1767 36.8541L0.000174803 25.2051L0 14.5804L20.629 2.67036L29.8973 8.02143L29.8975 31.2418L20.1767 36.8541ZM27.5984 9.35088L20.6279 5.32647L2.30171 15.9082L2.30111 23.878L20.1764 34.1983L27.5976 29.9129L27.5984 9.35088Z"/>
+      <path fill="currentColor" d="M50.88 22.952H47.016V29H43.944V11.456H50.88C54.408 11.456 56.688 13.76 56.688 17.192C56.688 20.576 54.384 22.952 50.88 22.952ZM50.28 14.192H47.016V20.216H50.232C52.344 20.216 53.472 19.088 53.472 17.168C53.472 15.248 52.32 14.192 50.28 14.192ZM65.8001 17.096V19.808H64.7201C62.6081 19.808 61.2881 20.936 61.2881 23.24V29H58.3601V17.168H61.1201L61.2881 18.896C61.7921 17.72 62.9201 16.928 64.5041 16.928C64.9121 16.928 65.3201 16.976 65.8001 17.096ZM70.3613 29.312C67.8413 29.312 66.3053 27.848 66.3053 25.616C66.3053 23.432 67.8893 22.064 70.6973 21.848L74.2493 21.584V21.32C74.2493 19.712 73.2893 19.064 71.8013 19.064C70.0733 19.064 69.1133 19.784 69.1133 21.032H66.6173C66.6173 18.464 68.7293 16.784 71.9453 16.784C75.1373 16.784 77.1053 18.512 77.1053 21.8V29H74.5373L74.3213 27.248C73.8173 28.472 72.2093 29.312 70.3613 29.312ZM71.3213 27.104C73.1213 27.104 74.2733 26.024 74.2733 24.2V23.576L71.8013 23.768C69.9773 23.936 69.2813 24.536 69.2813 25.496C69.2813 26.576 70.0013 27.104 71.3213 27.104ZM78.8297 22.808C78.8297 19.352 81.0857 16.76 84.4697 16.76C86.2457 16.76 87.6377 17.504 88.3337 18.776L88.5017 17.144H91.2137V28.4C91.2137 32.36 88.8377 34.832 84.9977 34.832C81.5897 34.832 79.2617 32.888 78.9017 29.72H81.8297C82.0217 31.256 83.1977 32.168 84.9977 32.168C87.0137 32.168 88.3097 30.896 88.3097 28.928V26.96C87.5657 28.064 86.1017 28.76 84.3977 28.76C81.0377 28.76 78.8297 26.24 78.8297 22.808ZM81.7817 22.736C81.7817 24.728 83.0537 26.216 84.9737 26.216C86.9897 26.216 88.2377 24.8 88.2377 22.736C88.2377 20.72 87.0137 19.328 84.9737 19.328C83.0297 19.328 81.7817 20.792 81.7817 22.736ZM101.804 17.144H104.732V29H102.02L101.804 27.416C101.084 28.544 99.5479 29.312 97.9639 29.312C95.2279 29.312 93.6199 27.464 93.6199 24.56V17.144H96.5479V23.528C96.5479 25.784 97.4359 26.696 99.0679 26.696C100.916 26.696 101.804 25.616 101.804 23.36V17.144ZM112.346 29.312C108.818 29.312 106.346 26.744 106.346 23.072C106.346 19.352 108.77 16.784 112.25 16.784C115.802 16.784 118.058 19.16 118.058 22.856V23.744L109.13 23.768C109.346 25.856 110.45 26.912 112.394 26.912C114.002 26.912 115.058 26.288 115.394 25.16H118.106C117.602 27.752 115.442 29.312 112.346 29.312ZM112.274 19.184C110.546 19.184 109.49 20.12 109.202 21.896H115.154C115.154 20.264 114.026 19.184 112.274 19.184ZM120.353 29V11.456H127.337C130.793 11.456 132.905 13.256 132.905 16.184C132.905 18.128 132.041 19.52 130.385 20.216C132.233 20.816 133.169 22.208 133.169 24.248C133.169 27.248 131.081 29 127.457 29H120.353ZM127.073 14.168H123.425V18.944H127.145C128.825 18.944 129.761 18.056 129.761 16.496C129.761 14.984 128.801 14.168 127.073 14.168ZM127.337 21.536H123.425V26.288H127.337C129.065 26.288 130.025 25.448 130.025 23.864C130.025 22.376 129.041 21.536 127.337 21.536ZM140.378 29.312C136.85 29.312 134.378 26.744 134.378 23.072C134.378 19.352 136.802 16.784 140.282 16.784C143.834 16.784 146.09 19.16 146.09 22.856V23.744L137.162 23.768C137.378 25.856 138.482 26.912 140.426 26.912C142.034 26.912 143.09 26.288 143.426 25.16H146.138C145.634 27.752 143.474 29.312 140.378 29.312ZM140.306 19.184C138.578 19.184 137.522 20.12 137.234 21.896H143.186C143.186 20.264 142.058 19.184 140.306 19.184ZM147.041 25.4H149.825C149.849 26.432 150.617 27.08 151.961 27.08C153.329 27.08 154.073 26.528 154.073 25.664C154.073 25.064 153.761 24.632 152.705 24.392L150.569 23.888C148.433 23.408 147.401 22.4 147.401 20.504C147.401 18.176 149.369 16.784 152.105 16.784C154.769 16.784 156.569 18.32 156.593 20.624H153.809C153.785 19.616 153.113 18.968 151.985 18.968C150.833 18.968 150.161 19.496 150.161 20.384C150.161 21.056 150.689 21.488 151.697 21.728L153.833 22.232C155.825 22.688 156.833 23.6 156.833 25.424C156.833 27.824 154.793 29.312 151.865 29.312C148.913 29.312 147.041 27.728 147.041 25.4ZM162.615 29H159.687V19.592H157.407V17.144H159.687V13.448H162.615V17.144H164.919V19.592H162.615V29Z"/>
+    </svg></a>
+  <p>©2026 – S láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořilo studio <a href="https://www.praguebest.cz/">PragueBest</a></p>
 </footer>
 
 </div>
@@ -2493,9 +2775,75 @@
 })();
 </script>
 <button type="button" class="totop" id="totop" aria-label="Nahoru na začátek" title="Nahoru" data-review-id="totop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></button>
-<!-- INTERNAL: version switcher for comparing the landing page variants. Remove before publishing. -->
-<nav class="ver-switch" aria-label="Interní přepínač verzí" data-review-id="interni-prepinac-verzi"><span>Interní náhled</span><a href="index-v2.html" data-ver>Nová</a><a href="index.html" data-ver aria-current="page">Původní</a></nav>
-<style>.ver-switch{position:fixed;left:14px;bottom:14px;z-index:95;display:flex;align-items:center;gap:4px;padding:4px 4px 4px 12px;border-radius:100px;background:rgba(10,10,10,.88);color:#fff;font:600 12.5px/1 system-ui,Arial,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)}.ver-switch span{opacity:.7;margin-right:6px}.ver-switch a{color:#fff;border:0;padding:7px 12px;border-radius:100px}.ver-switch a[aria-current]{background:#fff;color:#0a0a0a}@media print{.ver-switch{display:none}}</style>
-<script>document.querySelectorAll(".ver-switch a[data-ver]").forEach(function(a){a.addEventListener("click",function(){a.href=a.getAttribute("href").split("#")[0]+location.hash;});});</script>
+<script>
+// Sticky bar: solid background once the page scrolls, reading progress and the current section.
+(function () {
+  var bar = document.getElementById('v2-navbar'), prog = document.getElementById('v2-prog'), links = [].slice.call(bar.querySelectorAll('.v2-links a'));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function on() {
+    var y = scrollY, h = document.documentElement.scrollHeight - innerHeight, cur = -1;
+    bar.classList.toggle('is-stuck', y > 30);
+    prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, y / h) : 0) + ')';
+    secs.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top < innerHeight * 0.35) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('is-on', i === cur); });
+  }
+  addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); on();
+})();
+// Hero previews: clicking one selects that look in the demo below and scrolls to it.
+document.querySelectorAll('.v2-shot[data-vzhled]').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    var b = document.querySelector('button[data-theme="' + a.getAttribute('data-vzhled') + '"]');
+    if (!b) return;
+    e.preventDefault(); b.click();
+    var klid = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('ukazka').scrollIntoView({ behavior: klid ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(null, '', '#ukazka');
+  });
+});
+</script>
+<canvas class="v2-snow" id="v2-snow" aria-hidden="true"></canvas>
+<script>
+// Layered snow and gold sparks: far, mid and near layers with their own size, speed and sway.
+(function () {
+  var c = document.getElementById('v2-snow');
+  if (!c || !c.getContext || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var x = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0, flakes = [], run = true;
+  var LAYERS = [{ n: 34, r: [1, 2], v: [12, 22], a: .55 }, { n: 22, r: [2.2, 3.4], v: [24, 38], a: .7 }, { n: 9, r: [4.5, 7], v: [40, 58], a: .9 }];
+  var COLORS = ['#ffffff', '#ffffff', '#c9a227', '#e30613'];
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function resize() {
+    W = innerWidth; H = innerHeight; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var k = Math.max(.45, Math.min(1.2, W / 1280));
+    flakes = [];
+    LAYERS.forEach(function (L, li) {
+      for (var i = 0; i < Math.round(L.n * k); i++) flakes.push({ x: rnd(0, W), y: rnd(-H, H), r: rnd(L.r[0], L.r[1]), v: rnd(L.v[0], L.v[1]), a: L.a, ph: rnd(0, 6.28), sw: rnd(8, 22) * (li + 1) / 2, col: COLORS[(Math.random() * COLORS.length) | 0], star: li === 2 && Math.random() < .5 });
+    });
+  }
+  function star(f, px) {
+    x.beginPath();
+    for (var i = 0; i < 8; i++) { var ang = i * Math.PI / 4, rr = i % 2 ? f.r * .38 : f.r; x.lineTo(px + Math.cos(ang) * rr, f.y + Math.sin(ang) * rr); }
+    x.closePath(); x.fill();
+  }
+  var last = 0;
+  function frame(t) {
+    if (!run) return;
+    var dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+    x.clearRect(0, 0, W, H);
+    for (var i = 0; i < flakes.length; i++) {
+      var f = flakes[i]; f.y += f.v * dt; f.ph += dt * .8;
+      if (f.y > H + 10) { f.y = -10; f.x = rnd(0, W); }
+      var px = f.x + Math.sin(f.ph) * f.sw;
+      x.globalAlpha = f.col === '#e30613' ? f.a * .35 : f.col === '#c9a227' ? f.a * .55 : f.a;
+      x.fillStyle = f.col;
+      if (f.col === '#ffffff') { x.shadowColor = 'rgba(120,90,60,.35)'; x.shadowBlur = 3; } else x.shadowBlur = 0;
+      if (f.star) star(f, px); else { x.beginPath(); x.arc(px, f.y, f.r, 0, 6.283); x.fill(); }
+    }
+    requestAnimationFrame(frame);
+  }
+  resize(); addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', function () { run = !document.hidden; if (run) requestAnimationFrame(function (t) { last = t; frame(t); }); });
+  requestAnimationFrame(function (t) { last = t; frame(t); });
+})();
+</script>
 </body>
 </html>

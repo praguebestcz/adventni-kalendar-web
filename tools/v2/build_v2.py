@@ -1,13 +1,15 @@
-"""Build index-v2.html (the redesigned landing page) from index.html.
+"""Build index.html (the redesigned landing page, served at /) from index-old.html.
 
 Usage: python tools/v2/build_v2.py [repo_dir]
-The calendar demo, looks and admin are copied from index.html as they are, so any
-change there reaches v2 by re-running this script (the git hooks in tools/v2/hooks do it).
+The calendar demo, looks and admin are copied from index-old.html as they are, so any
+change there reaches index.html by re-running this script (the git hooks in tools/v2/hooks do it).
 """
 import re, sys, os
 S = os.path.dirname(os.path.abspath(__file__))
 W = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(S))
-src = open(os.path.join(W, 'index.html'), encoding='utf-8').read()
+src = open(os.path.join(W, 'index-old.html'), encoding='utf-8').read()
+# the internal "Původní / Nová" switcher; True puts it back on both pages
+SHOW_SWITCHER = False
 css = open(os.path.join(S, 'v2.css'), encoding='utf-8').read().replace('.vz-switch', '.ver-switch')
 logo = open(os.path.join(S, 'logo.svg'), encoding='utf-8').read().strip()
 logo = re.sub(r'class="logo-svg"', 'class="v2-logo-svg"', logo)
@@ -20,22 +22,24 @@ def one(s, a, b):
 
 # --- internal version switcher, shared by both pages (remove before publishing) ---
 def switcher(active):
+    if not SHOW_SWITCHER:
+        return ''
     return ('<!-- INTERNAL: version switcher for comparing the landing page variants. Remove before publishing. -->\n'
             '<nav class="ver-switch" aria-label="Interní přepínač verzí" data-review-id="interni-prepinac-verzi"><span>Interní náhled</span>'
-            '<a href="index-v2.html" data-ver' + (' aria-current="page"' if active == 2 else '') + '>Nová</a>'
-            '<a href="index.html" data-ver' + (' aria-current="page"' if active == 1 else '') + '>Původní</a></nav>\n'
+            '<a href="index.html" data-ver' + (' aria-current="page"' if active == 2 else '') + '>Nová</a>'
+            '<a href="index-old.html" data-ver' + (' aria-current="page"' if active == 1 else '') + '>Původní</a></nav>\n'
             '<style>.ver-switch{position:fixed;left:14px;bottom:14px;z-index:95;display:flex;align-items:center;gap:4px;padding:4px 4px 4px 12px;border-radius:100px;background:rgba(10,10,10,.88);color:#fff;font:600 12.5px/1 system-ui,Arial,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)}'
             '.ver-switch span{opacity:.7;margin-right:6px}.ver-switch a{color:#fff;border:0;padding:7px 12px;border-radius:100px}.ver-switch a[aria-current]{background:#fff;color:#0a0a0a}'
             '@media print{.ver-switch{display:none}}</style>\n'
             '<script>document.querySelectorAll(".ver-switch a[data-ver]").forEach(function(a){a.addEventListener("click",function(){a.href=a.getAttribute("href").split("#")[0]+location.hash;});});</script>\n')
 
 
-# v2 is the default page (a vercel.json route serves it at /), so the old page is the one kept out of search
+# the new page is index.html, served at /, so the old page is the one kept out of search
 v1 = re.sub(r'<!-- INTERNAL: version switcher[\s\S]*?</script>\n', '', src)
 v1 = one(v1, '\n</body>', '\n' + switcher(1) + '</body>')
 if '<meta name="robots" content="noindex">' not in v1:
     v1 = re.sub(r'(<title>[^<]*</title>)', r'\1\n<meta name="robots" content="noindex">', v1, count=1)
-open(os.path.join(W, 'index.html'), 'w', encoding='utf-8').write(v1)
+open(os.path.join(W, 'index-old.html'), 'w', encoding='utf-8').write(v1)
 
 s = re.sub(r'<!-- INTERNAL: version switcher[\s\S]*?</script>\n', '', src)
 s = s.replace('<meta name="robots" content="noindex">\n', '')
@@ -215,5 +219,5 @@ document.querySelectorAll('.v2-shot[data-vzhled]').forEach(function (a) {
 </script>
 """
 s = one(s, '\n</body>', '\n' + pick + snow + switcher(2) + '</body>')
-open(os.path.join(W, 'index-v2.html'), 'w', encoding='utf-8').write(s)
+open(os.path.join(W, 'index.html'), 'w', encoding='utf-8').write(s)
 print('ok', len(s))
