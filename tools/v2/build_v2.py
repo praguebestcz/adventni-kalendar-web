@@ -75,7 +75,7 @@ hero = ('<header class="v2-hero" data-review-id="header">\n'
         '    <span class="v2-spark" style="right:22%;top:400px;animation-delay:-1.4s" aria-hidden="true">' + spark + '</span>\n'
         '    <span class="v2-spark" style="left:23%;top:660px;width:16px;height:16px;animation-delay:-2.2s" aria-hidden="true">' + spark + '</span>\n'
         '    <div class="v2-copy">\n      <h1>' + h1 + '</h1>\n      <p class="v2-sub">' + sub + '</p>\n'
-        '      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout inspirace</a><a class="v2-btn ghost" href="#kontakt" data-review-id="hero-kontakt">Chci kalendář</a></div>\n'
+        '      <div class="v2-ctas"><a class="v2-btn primary" href="#ukazka" data-review-id="da-ukazka">Prohlédnout inspirace</a></div>\n'
         '      <p class="v2-proof"><span>Vlastní design</span><span>Nárůst obratu v prosinci</span><span>Bez licencí</span></p>\n'
         '    </div>\n  </div>\n</header>')
 s = s[:a] + hero + s[b:]
@@ -139,7 +139,7 @@ e = s.index('</section>', k)
 s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout inspirace</a></div>\n' + s[e:]
 f0 = s.index('<footer class="doc-footer" data-review-id="footer">')
 f1 = s.index('</footer>', f0)
-s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 – S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořil <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
+s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 - S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořil <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
 
 # --- layered snow canvas ---
 snow = r'''<canvas class="v2-snow" id="v2-snow" aria-hidden="true"></canvas>
