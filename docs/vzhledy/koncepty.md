@@ -177,3 +177,80 @@ Je to čisté SVG/CSS, bez Higgsfieldu a bez videa.
 
 ## Prepínač vzhľadov
 Pás malých náhľadov (60×75 px, `img/nahledy/*.webp` 240×300) vľavo hore vedľa prepínača Zobrazení, ako galéria vo Fancyboxe. Dve sady: **Vánoce a advent** a **Kdykoli během roku**. Pod pásom je hlavička vybraného vzhľadu: kategória, názov, typ klienta a dĺžka, štítok „Skutečná kampaň“. Červená bodka a štítok „Nový návrh“ sú interné a pred publikáciou sa odstránia (`.vz-new`, `.vz-cap-s.new`). Náhľady sa robia screenshotom `#demo-stage > *` cez Playwright a orezom na 4:5.
+
+---
+
+## Vánoční inspirace s vylamovacími okénky (22. 10. 2026)
+Pôvodné vianočné vzhľady (`snehulak` s kreslenými gombíkmi, pinball, kôš, skriňa) boli placeholdery. Nová sada vyzerá ako klasický tlačený adventný kalendár.
+
+**Princíp (layout `advent`, `adventHTML()` a dáta `ADV` v `index.html`):**
+- Higgsfield robí jednu scénu bez okienok a čísel.
+- **Každé okienko sedí na skutočnom predmete v obraze**, ako okná domu pri `fotoskoda`. Prompt preto chce asi 24 veľkých, spočítateľných a oddelených predmetov s rovným čelom k divákovi.
+- Súradnice sa zamerajú cez mriežku 640 × 800 (x, y, w, h, voliteľne tvar `kruh` alebo `oblouk`).
+- Líce dvierok je výrez tej istej fotky s perforáciou. Dnešné okienko sa vylomí na pante, vnútri je ikona odmeny.
+- 24. deň je vždy veľká odmena (`stedry()` v `DARKY`) a tlačidlo „Ukázat Štědrý den“ otvorí všetko.
+- Obrázky: GPT Image 2.5, high, 2k, 4:5, 2,75 kreditu, WebP 1280 × 1600.
+
+### Zimní zahrada (`snehulak`)
+- Klient: akýkoľvek e-shop
+- Obrázok: `img/zimni-zahrada.webp`
+- Okienka: 13 gúľ na stromčeku, 2 sklá lampášov, vtáčia búdka, 3 gombíky snehuliaka, 5 darčekov na saniach
+- 24. deň: veľký červený darček; na Štedrý deň sa rozsvieti hviezda na stromčeku
+
+```
+Hand-painted gouache storybook illustration in the style of a classic European printed advent calendar picture, snowy garden at blue-hour dusk, vertical 4:5, soft paper texture, cosy and premium. On the right half a big full-height Christmas spruce dusted with snow, decorated with about fourteen LARGE round glass baubles (red, gold, white, green), each bauble big, perfectly round, clearly separated from the others and evenly spread over the whole tree, plus a golden star on top. On the left half a large friendly snowman with a red bobble hat, striped red-and-white scarf and three big round coal buttons down his belly, next to two old cast-iron garden lanterns with large square glowing glass panes. In the front centre a wooden sledge loaded with six wrapped gift boxes stacked neatly, each box shown with a large flat square front face, one box clearly bigger than the others. A small wooden birdhouse with a round entrance hole on a post at the far left. Night sky with a few soft stars, fresh snow on the ground. Every object large, simple and well spaced, no overlapping of the baubles, gift boxes, buttons and lantern panes. No advent calendar doors, no numbers, no text, no letters, no logos, no people.
+```
+
+### Perníková vesnička (`vesnicka`)
+- Klient: cukrárne a delikatesy (nahrádza `jidlo`)
+- Obrázok: `img/pernikova-vesnicka.webp`
+- Okienka: okná a dvere štyroch perníkových domčekov, oblúkové okná a dvere kostolíka
+- 24. deň: rozeta kostolíka
+
+```
+Close-up food photograph of a handmade gingerbread village on a wooden table, Christmas, vertical 4:5, warm cosy light with soft bokeh fairy lights behind. Five gingerbread houses arranged in two rows, all facing the camera straight on, each decorated with white royal icing, snowy icing roofs, gumdrops and candy canes. Each house has several large rectangular windows outlined in white icing with warm yellow candied-glass panes and a front door, about twenty windows and doors in total. In the middle at the back a taller gingerbread church with a big round rose window and a tall arched door. Powdered-sugar snow on the table, small icing-covered gingerbread trees, cinnamon sticks, star anise and a few gingerbread stars around. Straight-on front view so all fronts face the viewer. No advent calendar doors, no numbers, no text, no letters, no labels, no logos, no people.
+```
+
+### Santova dílna (`hracky`)
+- Klient: hračkárstva, typ Sparkys / Albi (nahrádza pinball)
+- Obrázok: `img/santova-dilna.webp`
+- Okienka: krabice v regáli, vagóny vláčika, stoh spoločenských hier, kocky, bubienok, káča
+- 24. deň: veľký darček na zemi
+
+```
+Warm hand-painted gouache storybook illustration in the style of a classic printed advent calendar picture, vertical 4:5. A big old wooden toy shop shelving unit filling the whole frame, seen straight from the front, five shelves, Christmas garland with fairy lights along the top. On the shelves about twenty-two wrapped gift boxes and toy boxes of different sizes standing upright with large flat plain fronts facing the viewer, in red, green, navy blue, mustard yellow and cream with ribbons, each clearly separated. Between the boxes classic toys: a wooden toy train on the top shelf, a teddy bear, a rocking horse, a doll, wooden building blocks, a stack of board game boxes with plain lids, a toy drum, a spinning top. On the floor in front one extra large gift box with a big red bow. Cosy, colourful, premium. Straight-on front view so all fronts face the viewer. No advent calendar doors, no numbers, no text, no letters, no labels, no logos, no people.
+```
+
+### Vánoční obývák (`obyvak`)
+- Klient: nábytok a bytové doplnky, typ Konsepti (nahrádza `moda`)
+- Obrázok: `img/vanocni-obyvak.webp`
+- Okienka: 12 šuplíkov komody, 6 rámov na stene, 3 vankúše, 2 darčeky pod stromčekom, tienidlo lampy
+- 24. deň: veľký rám v strede
+
+```
+Editorial interior photograph of a calm Scandinavian designer living room at Christmas, vertical 4:5, soft warm evening light. Straight-on view of one wall. Against the wall a long low oak sideboard with a grid of twelve equal drawers and doors with flat fronts and no handles visible. Above it a gallery wall of six empty light-oak picture frames with plain cream mats and nothing inside. On the right a slim decorated Christmas tree with large matte baubles in sage, cream and terracotta, three wrapped gift boxes in kraft paper under it. In front of the sideboard a sofa edge with three square linen cushions, a woven pouf, a ceramic vase with dried branches, a floor lamp glowing. Muted palette of oak, cream, sage green and terracotta, premium furniture catalogue look. Straight-on front view so all fronts face the viewer. No advent calendar doors, no numbers, no text, no letters, no labels, no logos, no people.
+```
+
+### 24 nocí do Vánoc (`loznice`)
+- Klient: ložná bielizeň a textil, typ MK Ložkoviny
+- Obrázok: `img/vanocni-loznice.webp`
+- Okienka: 9 tabúľ okna, 5 vankúšov, 4 šuplíky nočných stolíkov, 4 darčeky, lampa a lampáš; za oknom padá sneh
+- 24. deň: veľký červený vankúš v strede
+
+```
+Editorial interior photograph of a cosy winter bedroom on a snowy Christmas evening, vertical 4:5, warm lamplight. Straight-on view from the foot of the bed. Behind the bed a large white wooden window divided into twelve equal square glass panes (three across, four high), outside a snowy night garden and falling snow. A double bed with crisp cream and soft red linen bedding, five plump square pillows and cushions lined up against the headboard, a chunky knitted throw at the foot. On both sides small bedside chests each with two flat drawers, a glowing lamp on one, a lantern with a candle on the other. Four wrapped gift boxes with red ribbon on the floor in front of the bed, a pair of wool slippers. Warm fairy light garland around the window. Premium bed linen catalogue look. Straight-on front view so all fronts face the viewer. No advent calendar doors, no numbers, no text, no letters, no labels, no logos, no people.
+```
+
+### Zasněžená chalupa (`chata`)
+- Klient: chaty a chalupy
+- Obrázok: `img/zasnezena-chalupa.webp`
+- Okienka: polovice okien chalupy, okrúhle okno v štíte, okná chalúpky, vráta stodoly, studňa, drevo, sánky
+- 24. deň: vchodové dvere chalupy
+
+```
+Hand-painted gouache storybook illustration in the style of a classic European printed advent calendar picture, vertical 4:5, soft paper texture. A snowy mountain hamlet on Christmas evening at blue hour. In the centre one big two-storey wooden log chalet seen straight from the front, steep snowy roof, stone chimney with a little smoke, a wooden front door with a wreath, and many windows: two rows of large rectangular windows with wooden frames and glowing warm light behind closed curtains, plus a small round window in the gable. On the left a smaller snowy cottage with four large windows and a door, on the right a wooden barn with two large square wooden hay doors. In the front a wooden well, a sledge, a stack of firewood, a small decorated spruce. Snowy hills, spruce forest and a starry night sky behind. Every window and door is large, rectangular, flat to the viewer and clearly separated, about twenty-four in total across all buildings. Straight-on front view so all fronts face the viewer. No advent calendar doors, no numbers, no text, no letters, no labels, no logos, no people.
+```
+
+### Advent v šatníku (`moda`) a Vánoční regál (`regal`)
+- **Advent v šatníku** (móda): butikový šatník. Okienka sú 20 šuplíkov, 3 klobúkové škatule a 24. deň je darček pod vešiakom (`img/advent-v-satniku.webp`). Nahrádza starú fotku skrine.
+- **Vánoční regál** (duty free na hranici, farby Travel Free: #e30613, #242527, #f1c86f, bez loga): vianočný regál v predajni. Okienka sú pralinky, plechovky, káva, čaj, parfumy, kozmetika, destiláty, med a čokolády, 24. deň je veľký darčekový kôš pod regálom (`img/vanocni-regal.webp`). Nahrádza „Koš plný dobrot“.

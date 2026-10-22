@@ -34,7 +34,8 @@ Poznámka od Michala, 22. 10. 2026. Robí sa oddelene od nových vzhľadov kalen
 ## Stav: interná verzia 2 (22. 10. 2026)
 
 **Súbory a prepínač**
-- `index-v2.html` je vedľa pôvodného `index.html` a má `noindex`. Generuje sa skriptom z `index.html`, takže obsah je rovnaký.
+- `index-v2.html` je vedľa pôvodného `index.html` a generuje sa skriptom z `index.html`, takže obsah je rovnaký.
+- **Nová verzia je predvolená:** `vercel.json` (routes, nie rewrites, lebo tie statický `index.html` neprebijú) servíruje na `/` súbor `index-v2.html`. `noindex` má teraz pôvodná `index.html` a v prepínači je „Nová“ prvá.
 - Interný prepínač „Původní / Nová“ je vľavo dole na oboch stránkach a zachová kotvu (`#ukazka` ostane `#ukazka`). Je to blok `.ver-switch` označený `INTERNAL` a pred publikáciou sa zmaže.
 
 **Hlavička a navigácia**
@@ -69,3 +70,11 @@ Poznámka od Michala, 22. 10. 2026. Robí sa oddelene od nových vzhľadov kalen
 ## Čo platí ďalej
 - Obsah a význam textov ostávajú. Meníme formu, poradie a vizuál, nie posolstvo.
 - Zmeny landing page sa držia oddelene od vzhľadov kalendára, aby bolo vidno, čo sa zmenilo.
+
+**Generovanie v2**
+- Skript je v repe: `tools/v2/build_v2.py` (+ `v2.css`, `logo.svg`). Spustenie: `python tools/v2/build_v2.py`.
+- Git hooky v `tools/v2/hooks` (zapnuté cez `git config core.hooksPath tools/v2/hooks`):
+  - `pre-commit` pregeneruje v2 pri každom commite, ktorý mení `index.html`,
+  - `post-merge` ju pregeneruje a commitne po merge vetvy `nove-vzhledy`.
+- Vzhľady sa robia v `index.html` na `nove-vzhledy`. Do v2 sa dostanú samy po merge do `landing-vizual`.
+- Popisky náhľadov v hlavičke v2 sa berú z prepínača vzhľadov. Obrázky `img/hero/<id>.webp` (520×650) treba pri zmene vzhľadu pregenerovať.

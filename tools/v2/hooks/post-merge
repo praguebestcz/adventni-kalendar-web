@@ -1,0 +1,7 @@
+#!/bin/sh
+# After merging the look work (nove-vzhledy) in, rebuild index-v2.html and commit it if it changed.
+[ -f tools/v2/build_v2.py ] || exit 0
+python -I tools/v2/build_v2.py >/dev/null || { echo "build_v2.py failed, index-v2.html not rebuilt" >&2; exit 0; }
+git diff --quiet -- index-v2.html && exit 0
+git add index-v2.html
+git commit -q --no-verify -m "Rebuild index-v2.html from the merged index.html"
