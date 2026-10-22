@@ -6,6 +6,7 @@
   "redirects": [
     { "source": "/index-v2.html", "destination": "/", "permanent": true },
     { "source": "/email-v2", "destination": "/email/", "permanent": true },
+    { "source": "/email-v2/", "destination": "/email/", "permanent": true },
     { "source": "/email-v2/:path*", "destination": "/email/", "permanent": true }
   ]
 }
