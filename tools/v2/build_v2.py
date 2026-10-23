@@ -136,7 +136,7 @@ assert n == 8, n
 s = one(s, '  <div class="keybox" data-review-id="cta">\n    <span class="label">Další krok</span>', '  <h2>Další <span class="accent">krok</span></h2>\n  <div class="keybox" data-review-id="cta">')
 k = s.index('<section id="kontakt"')
 e = s.index('</section>', k)
-s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout inspirace</a></div>\n' + s[e:]
+s = s[:e] + '  <div class="v2-ctas"><a class="v2-btn ghost" href="mailto:produktaci@praguebest.cz?subject=Adventni%20kalendar%20a%20aplikace%20na%20miru&amp;body=Dobry%20den%2C%20mame%20zajem%20o%20schuzku.">Napsat do PragueBest</a><a class="v2-btn ghost" href="#ukazka">Prohlédnout inspirace</a></div>\n' + s[e:]
 f0 = s.index('<footer class="doc-footer" data-review-id="footer">')
 f1 = s.index('</footer>', f0)
 s = s[:f0] + '<footer class="doc-footer" data-review-id="footer">\n  <a class="v2-logo" href="#obsah" aria-label="PragueBest">' + logo + '</a>\n  <p>©2026 - S\u00a0láskou ke klientům <span class="v2-heart" aria-label="srdce">♥</span> vytvořil <a href="https://www.praguebest.cz/">PragueBest</a></p>\n' + s[f1:]
